@@ -1,0 +1,54 @@
+//LOCAL EMPRESA
+###
+POST  http://localhost:8000/api/empresa/usuario/login?email=wetemawete@gmail.com&password=12345
+###
+POST  http://localhost:8000/api/empresa/usuario/logout
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9lbXByZXNhXC91c3VhcmlvXC9sb2dpbiIsImlhdCI6MTYyMTMyNTExMywiZXhwIjoxNjIxMzI4NzEzLCJuYmYiOjE2MjEzMjUxMTMsImp0aSI6InZNam9STU9pRTIzMThGNXIiLCJzdWIiOjI4LCJwcnYiOiI0YjQ0OGNjNWU4YWQ1NzJkMGI2MmNhMzRiOWY5MWRmZmM5Y2NlYmNkIn0.UyKxFi0FaqQDWvrKKv_WDXA7iTMz7lIesZdB_Ke2tqk
+###
+GET  http://localhost:8000/api/empresa/facturas
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9lbXByZXNhXC91c3VhcmlvXC9sb2dpbiIsImlhdCI6MTYyMTMyNDM1MSwiZXhwIjoxNjIxMzI3OTUxLCJuYmYiOjE2MjEzMjQzNTEsImp0aSI6IjZWR2szY0daelp0WGVYSloiLCJzdWIiOjI4LCJwcnYiOiI0YjQ0OGNjNWU4YWQ1NzJkMGI2MmNhMzRiOWY5MWRmZmM5Y2NlYmNkIn0.DehsVXuUdP6YNGUHK7ywYb7qd7jTLAvAvOt9R13CZDA
+###
+GET  http://localhost:8000/api/empresa/taxas
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9lbXByZXNhXC91c3VhcmlvXC9sb2dpbiIsImlhdCI6MTYyMTMyNTY3MCwiZXhwIjoxNjIxMzI5MjcwLCJuYmYiOjE2MjEzMjU2NzAsImp0aSI6IlVIZXNnVEhlbXZXSXloWTUiLCJzdWIiOjI4LCJwcnYiOiI0YjQ0OGNjNWU4YWQ1NzJkMGI2MmNhMzRiOWY5MWRmZmM5Y2NlYmNkIn0.NTUEUX-I_VmbizcNfoG44dQvE15DPD3gk3dO1UxHovw
+###
+GET http://localhost:8000/api/listarTipoEmpresa
+###
+GET http://localhost:8000/api/listarRegimeEmpresa
+
+//LOCAL ADMIN
+###
+POST  http://localhost:8000/api/admin/usuario/login?email=mutuenegocio@gmail.com&password=12345
+###
+POST  http://localhost:8000/api/admin/usuario/logout
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hZG1pblwvdXN1YXJpb1wvbG9naW4iLCJpYXQiOjE2MjEyNjk3MzMsImV4cCI6MTYyMTI3MzMzMywibmJmIjoxNjIxMjY5NzMzLCJqdGkiOiI3S0NWeDdZSUhKTlpWSUU2Iiwic3ViIjoxLCJwcnYiOiI0OGY3ZTRjNTg0YmYwNTBkMmYzZmU2ODJjMGE2OTM0ZWMyODkxMThlIn0.dxav62ntn4vQhOmxqwdn07Ju9VqDjDtddAM8hPxSGMo
+
+
+
+
+
+
+
+
+
+//servidor
+POST  http://mutue-negocios.ao/api/admin/login?email=ana.figueroa@uma.co.ao&password=mutue123
+
+###
+GET  http://mutue-negocios.ao/api/empresa/facturas
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9tdXR1ZS1uZWdvY2lvcy5hb1wvYXBpXC9hZG1pblwvbG9naW4iLCJpYXQiOjE2MjAzMDE5OTksImV4cCI6MTYyMDMwNTU5OSwibmJmIjoxNjIwMzAxOTk5LCJqdGkiOiIxQVVnZEFUYzhtcUlZc05GIiwic3ViIjo4MSwicHJ2IjoiNDhmN2U0YzU4NGJmMDUwZDJmM2ZlNjgyYzBhNjkzNGVjMjg5MTE4ZSJ9.BvelTtUl-hJzosQUtfvqu5lkobgX3A_gZ1aAvjTphQc
+
+
+//local
+###
+POST  http://localhost:8000/api/admin/login?email=anafigueroa@uma.co.ao&password=mutue123
+
+
+###
+GET  http://localhost:8000/api/empresa/facturas?page=3
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hZG1pblwvbG9naW4iLCJpYXQiOjE2MjAyOTI4MjYsImV4cCI6MTYyMDI5NjQyNiwibmJmIjoxNjIwMjkyODI2LCJqdGkiOiJKaHNvTlNKVW1zdnZpNk5aIiwic3ViIjo3OSwicHJ2IjoiNDhmN2U0YzU4NGJmMDUwZDJmM2ZlNjgyYzBhNjkzNGVjMjg5MTE4ZSJ9.8T5aZ0PcvsOuPnKulZjevDlqbq6Eb55978SR4hMmLLg

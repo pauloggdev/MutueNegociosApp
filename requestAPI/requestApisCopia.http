@@ -1,0 +1,28 @@
+
+//local
+###
+POST  http://localhost:8000/api/admin/login?email=suporte00tecnico@gmail.com&password=12345
+
+
+
+
+
+//servidor
+POST  http://mutue-negocios.ao/api/admin/login?email=ana.figueroa@uma.co.ao&password=mutue123
+
+###
+GET  http://mutue-negocios.ao/api/empresa/facturas
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9tdXR1ZS1uZWdvY2lvcy5hb1wvYXBpXC9hZG1pblwvbG9naW4iLCJpYXQiOjE2MjAzMDE5OTksImV4cCI6MTYyMDMwNTU5OSwibmJmIjoxNjIwMzAxOTk5LCJqdGkiOiIxQVVnZEFUYzhtcUlZc05GIiwic3ViIjo4MSwicHJ2IjoiNDhmN2U0YzU4NGJmMDUwZDJmM2ZlNjgyYzBhNjkzNGVjMjg5MTE4ZSJ9.BvelTtUl-hJzosQUtfvqu5lkobgX3A_gZ1aAvjTphQc
+
+
+//local
+###
+POST  http://localhost:8000/api/admin/login?email=anafigueroa@uma.co.ao&password=mutue123
+###
+GET http://localhost:8000/api/admin/listarTipoEmpresa
+
+###
+GET  http://localhost:8000/api/empresa/facturas?page=3
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hZG1pblwvbG9naW4iLCJpYXQiOjE2MjAyOTI4MjYsImV4cCI6MTYyMDI5NjQyNiwibmJmIjoxNjIwMjkyODI2LCJqdGkiOiJKaHNvTlNKVW1zdnZpNk5aIiwic3ViIjo3OSwicHJ2IjoiNDhmN2U0YzU4NGJmMDUwZDJmM2ZlNjgyYzBhNjkzNGVjMjg5MTE4ZSJ9.8T5aZ0PcvsOuPnKulZjevDlqbq6Eb55978SR4hMmLLg

@@ -1,0 +1,1096 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuditFile  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="urn:OECD:StandardAuditFile-Tax:AO_1.01_01 SAFTAO1.01_01.xsd" xmlns="urn:OECD:StandardAuditFile-Tax:AO_1.01_01">
+   <Header>
+    <AuditFileVersion>1.01_01</AuditFileVersion>
+    <CompanyID>5402126925C</CompanyID>
+    <TaxRegistrationNumber>5402126925C</TaxRegistrationNumber>
+    <TaxAccountingBasis>F</TaxAccountingBasis>
+    <CompanyName>LAVANDARIA ECOSIL</CompanyName>
+    <BusinessName>LAVANDARIA ECOSIL</BusinessName>
+    <CompanyAddress>
+      <AddressDetail>PATRIOTA-LUANDA</AddressDetail>
+      <City>Luanda</City>
+      <Country>AO</Country>
+    </CompanyAddress>
+    <FiscalYear>2021</FiscalYear>
+    <StartDate>2021-03-25</StartDate>
+    <EndDate>2021-03-25</EndDate>
+    <CurrencyCode>AOA</CurrencyCode>
+    <DateCreated>2021-03-25</DateCreated>
+    <TaxEntity>Global</TaxEntity>
+    <ProductCompanyTaxID>AO503140600</ProductCompanyTaxID>
+    <SoftwareValidationNumber>32/AGT/2019</SoftwareValidationNumber>
+    <ProductID>WinMarket Pro/OSVALDO MANUEL RAMOS-RAMOS SOFT P. DE SERVICOS</ProductID>
+    <ProductVersion>10.5.19</ProductVersion>
+    <Telephone>923651025</Telephone>
+    <Fax>948100</Fax>
+    <Email></Email>
+    <Website></Website>
+  </Header>
+  <MasterFiles>
+        <Customer>
+          <CustomerID>1150</CustomerID>
+          <AccountID>Desconhecido</AccountID>
+          <CustomerTaxID>999999999</CustomerTaxID>
+          <CompanyName>ABEL NUNDA</CompanyName>
+          <BillingAddress>
+            <AddressDetail>Nao definido</AddressDetail>
+            <City>Luanda</City>
+            <PostalCode>*</PostalCode>
+            <Country>AO</Country>
+          </BillingAddress>
+          <SelfBillingIndicator>0</SelfBillingIndicator>
+        </Customer>
+        <Customer>
+          <CustomerID>2171</CustomerID>
+          <AccountID>Desconhecido</AccountID>
+          <CustomerTaxID>999999999</CustomerTaxID>
+          <CompanyName>01</CompanyName>
+          <BillingAddress>
+            <AddressDetail>Nao definido</AddressDetail>
+            <City>Luanda</City>
+            <PostalCode>*</PostalCode>
+            <Country>AO</Country>
+          </BillingAddress>
+          <SelfBillingIndicator>0</SelfBillingIndicator>
+        </Customer>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>19</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CAMISA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>15</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALÇA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>23</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO BLAISER - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>91</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>POLO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>33</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO 2 PCS - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>58</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>SAIA CURTA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>56</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>MACACAO COMPRIDO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>94</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>TUNICA CURTA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>64</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. SIMP-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>47</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSA SEDA (COM  MANGA) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>95</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSA SIMPLES - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>96</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>T-SHIRT - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>66</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. SIMP SD - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>72</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE VOL-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>16</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALÇA/FD - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>109</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALÇA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>110</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>112</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>EDREDON CASAL NORMAL - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>35</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO 3 PCS - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>78</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE C/ ARM. E LANTEJ-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>50</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO BLAISER FARDO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>69</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE SIMP - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>84</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA MED SIMP C/ LANTEJ-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>107</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>17</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALCAO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>1</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BALALAICA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>73</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE VOL C/ LANTEJ-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>21</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CAMISOLA (PULLOVER-MANGA COMPRIDA) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>34</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO 2 PCS/FD - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>74</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE VOL C/ LANTEJ-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>70</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. C/ BLASER-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>100</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>GRAVATA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>82</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA MED SIMP-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>103</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>TÚNICA MÉDIA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>7</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSA SEDA (SEM MANGA) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>62</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>SAIA PLISSADA/MACHOS - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>51</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO MEDIO (COM VOLUME) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>27</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO MEDIO (SEM VOLUME) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>61</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>SAIA COMPRIDA - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>48</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSA SEDA (COM  MANGA) - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>98</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CAMISOLA INTERIOR - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>79</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE C/ ARM. E LANTEJ-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>67</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. SIMP SD - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>65</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. SIMP-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>25</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO DE NAPA E/OU CABEDAL - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>52</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO COMPRIDO/GABARDINE (COM VOLUME) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>20</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CAMISA - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>24</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO BLAISER/FD - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>75</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE C/ FOLHOS SIMP-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>49</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALÇA - FD - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>41</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>MACACAO CERIMONIA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>115</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>EDREDON CASAL KING SIZE - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>114</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>COBERTA CASAL - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>54</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO 2 PÇS/FD</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>105</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CAMISA AFRICANA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>76</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE C/ FOLHOS VOL-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>2</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BALALAICA - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>63</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>SAIA PLISSADA/MACHOS - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>36</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO 3 PCS/FD - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>5</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BECA LISA -  TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>32</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>COLETE/FARDO - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>31</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>COLETE - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>99</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>T-SHIRT - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>59</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>SAIA COMPRIDA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>71</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. C/ BLASER-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>92</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>PANTALONA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>37</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO DE TREINO/JUDO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>108</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLAISER - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>80</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA SIMP-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>45</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BECA PLISSADA - MAGISTRADOS - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>11</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSAO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>97</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALÇA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>3</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BATA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>39</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>MACACAO CURTO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>101</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSA SIMPLES - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>29</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO COMPRIDO/GABARDINE (SEM VOLUME) - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>77</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NTE C/ FOLHOS-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>60</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>SAIA CURTA - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>86</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VESTIDO DE NOIVA VOLUMOSO - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>87</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA VOL C/ LANTJ - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>85</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VESTIDO DE NOIVA VOLUMOSO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>53</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>COLETE-FARDO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>40</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>MACACAO COMPRIDO-CURTO - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>8</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BLUSA SEDA (SEM MANGA) - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>90</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA C/ ARM. E LANTEJ - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>44</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>ROBE/ROUPAO TURCO - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>55</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO 3 PCS-FD - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>57</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>ROBE - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>116</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST NTE VOL - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>81</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA SIMP-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>9</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BERMUDA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>42</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>MACACAO CERIMONIA - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>117</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FRONHA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>83</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST.NOIVA MED SIMP C/ LANTEJ-TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>18</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CALCAO - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>28</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>CASACO MEDIO (COM E SEM VOLUME) - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>89</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>VEST. NOIVA C/ ARM. E  LANTEJ-SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>102</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>TUNICA CURTA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>104</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>TÚNICA COMPRIDA - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>43</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>ROUPAO TURCO - TN</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>38</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>FATO DE TREINO/JUDO - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+        <Product>
+          <ProductType>P</ProductType>
+          <ProductCode>6</ProductCode>
+          <ProductGroup>N/A</ProductGroup>
+          <ProductDescription>BECA LISA - SP</ProductDescription>
+          <ProductNumberCode>1</ProductNumberCode>
+        </Product>
+    <TaxTable>
+          <TaxTableEntry>
+            <TaxType>IVA</TaxType>
+            <TaxCountryRegion>AO</TaxCountryRegion>
+            <TaxCode>NOR</TaxCode>
+            <Description>Taxa Normal</Description>
+            <TaxPercentage>14</TaxPercentage>
+          </TaxTableEntry>
+    </TaxTable>
+  </MasterFiles>
+  <SourceDocuments>
+    <SalesInvoices>
+      <NumberOfEntries>5</NumberOfEntries>
+      <TotalDebit>2000.00</TotalDebit>
+      <TotalCredit>3100.00</TotalCredit>
+          <Invoice>
+              <InvoiceNo>FR AGT2021/4680</InvoiceNo>
+              <DocumentStatus>
+                <InvoiceStatus>N</InvoiceStatus>
+                <InvoiceStatusDate>2021-03-25T10:10:42</InvoiceStatusDate>
+                <SourceID>5</SourceID>
+                <SourceBilling>P</SourceBilling>
+              </DocumentStatus>
+              <Hash>KNpTWeHGNpqDHK56BWBvmqrkA92l3EyHAY6kYsS+L0fpBjOlgzQfovRHOOg+zBCUSKIQl4r56eHqHdJ87wF5l4YADY8vpVsUqbPWXq24CaUw/GXQnWtsb+yBh+l4YyuQQlcOaUYOiod1aKcxf4eaecQtVhsCTUC/J/hg5nj27ts=</Hash>
+              <HashControl>1</HashControl>
+              <Period>3</Period>
+              <InvoiceDate>2021-03-25</InvoiceDate>
+              <InvoiceType>FR</InvoiceType>
+              <SpecialRegimes>
+                <SelfBillingIndicator>0</SelfBillingIndicator>
+                <CashVATSchemeIndicator>0</CashVATSchemeIndicator>
+                <ThirdPartiesBillingIndicator>0</ThirdPartiesBillingIndicator>
+              </SpecialRegimes>
+              <SourceID>5</SourceID>
+              <SystemEntryDate>2021-03-25T10:10:42</SystemEntryDate>
+              <CustomerID>1150</CustomerID>
+                  <Line>
+                    <LineNumber>1</LineNumber>
+                    <ProductCode>16</ProductCode>
+                    <ProductDescription>CALÇA/FD - SP</ProductDescription>
+                    <Quantity>1.00</Quantity>
+                    <UnitOfMeasure>Unid</UnitOfMeasure>
+                    <UnitPrice>1200.00</UnitPrice>
+                    <TaxPointDate>2021-03-25</TaxPointDate>
+                    <Description>bom</Description>
+                    <CreditAmount>1200.00</CreditAmount>
+                    <Tax>
+                      <TaxType>IVA</TaxType>
+                      <TaxCountryRegion>AO</TaxCountryRegion>
+                      <TaxCode>NOR</TaxCode>
+                      <TaxPercentage>14</TaxPercentage>
+                    </Tax>
+                    <SettlementAmount>0</SettlementAmount>
+                  </Line>
+              <DocumentTotals>
+                <TaxPayable>168.00</TaxPayable>
+                <NetTotal>1200.00</NetTotal>
+                <GrossTotal>1368.00</GrossTotal>
+                <Payment>
+                  <PaymentMechanism>OU</PaymentMechanism>
+                  <PaymentAmount>1368.00</PaymentAmount>
+                  <PaymentDate>2021-03-25</PaymentDate>
+                </Payment>
+              </DocumentTotals>
+          </Invoice>
+          <Invoice>
+              <InvoiceNo>FR AGT2021/4681</InvoiceNo>
+              <DocumentStatus>
+                <InvoiceStatus>N</InvoiceStatus>
+                <InvoiceStatusDate>2021-03-25T10:28:27</InvoiceStatusDate>
+                <SourceID>1</SourceID>
+                <SourceBilling>P</SourceBilling>
+              </DocumentStatus>
+              <Hash>BY2RTR3bnfkYNYz9Eda1fpNHeVimr6Vy5hfYOk1GQjuQFsrMWNQk+4IZYiBIO7G+QREyaJ9ns51D9YkLQbsYpKjbomNIfaFKkeXTRFJrn7t6iiEgtL07NTYPgRKJe1bfxl4i7lo0t7zl8lnen/vvnnnh4t4ERr0hB32kZjfLUdg=</Hash>
+              <HashControl>1</HashControl>
+              <Period>3</Period>
+              <InvoiceDate>2021-03-25</InvoiceDate>
+              <InvoiceType>FR</InvoiceType>
+              <SpecialRegimes>
+                <SelfBillingIndicator>0</SelfBillingIndicator>
+                <CashVATSchemeIndicator>0</CashVATSchemeIndicator>
+                <ThirdPartiesBillingIndicator>0</ThirdPartiesBillingIndicator>
+              </SpecialRegimes>
+              <SourceID>1</SourceID>
+              <SystemEntryDate>2021-03-25T10:28:27</SystemEntryDate>
+              <CustomerID>1150</CustomerID>
+                  <Line>
+                    <LineNumber>1</LineNumber>
+                    <ProductCode>16</ProductCode>
+                    <ProductDescription>CALÇA/FD - SP</ProductDescription>
+                    <Quantity>1.00</Quantity>
+                    <UnitOfMeasure>Unid</UnitOfMeasure>
+                    <UnitPrice>1000.00</UnitPrice>
+                    <TaxPointDate>2021-03-25</TaxPointDate>
+                    <Description>bom</Description>
+                    <CreditAmount>1000.00</CreditAmount>
+                    <Tax>
+                      <TaxType>IVA</TaxType>
+                      <TaxCountryRegion>AO</TaxCountryRegion>
+                      <TaxCode>NOR</TaxCode>
+                      <TaxPercentage>14</TaxPercentage>
+                    </Tax>
+                    <SettlementAmount>0</SettlementAmount>
+                  </Line>
+              <DocumentTotals>
+                <TaxPayable>140.00</TaxPayable>
+                <NetTotal>1000.00</NetTotal>
+                <GrossTotal>1140.00</GrossTotal>
+                <Payment>
+                  <PaymentMechanism>OU</PaymentMechanism>
+                  <PaymentAmount>1140.00</PaymentAmount>
+                  <PaymentDate>2021-03-25</PaymentDate>
+                </Payment>
+              </DocumentTotals>
+          </Invoice>
+          <Invoice>
+              <InvoiceNo>FR AGT2021/4682</InvoiceNo>
+              <DocumentStatus>
+                <InvoiceStatus>A</InvoiceStatus>
+                <InvoiceStatusDate>2021-03-25T10:38:48</InvoiceStatusDate>
+                <SourceID>5</SourceID>
+                <SourceBilling>P</SourceBilling>
+              </DocumentStatus>
+              <Hash>IQhWivTAlQHHGEZFMybvW8zLRRmdtxcuxQmrGRbgjYoMFe/W7F83AfnBexKwfvSpeKnZdixN4HT9G5Ew3vLVQ8E+c/4Cmv2Xi5Vkn/DI7oMkfsh/1uTzdL+4luwXB0ZPbY0TKWQvhZLIfZF55rESV3P1InjFXTp6W8WUO5/R5p8=</Hash>
+              <HashControl>1</HashControl>
+              <Period>3</Period>
+              <InvoiceDate>2021-03-25</InvoiceDate>
+              <InvoiceType>FR</InvoiceType>
+              <SpecialRegimes>
+                <SelfBillingIndicator>0</SelfBillingIndicator>
+                <CashVATSchemeIndicator>0</CashVATSchemeIndicator>
+                <ThirdPartiesBillingIndicator>0</ThirdPartiesBillingIndicator>
+              </SpecialRegimes>
+              <SourceID>5</SourceID>
+              <SystemEntryDate>2021-03-25T10:38:48</SystemEntryDate>
+              <CustomerID>1150</CustomerID>
+                  <Line>
+                    <LineNumber>1</LineNumber>
+                    <ProductCode>16</ProductCode>
+                    <ProductDescription>CALÇA/FD - SP</ProductDescription>
+                    <Quantity>2.00</Quantity>
+                    <UnitOfMeasure>Unid</UnitOfMeasure>
+                    <UnitPrice>1000.00</UnitPrice>
+                    <TaxPointDate>2021-03-25</TaxPointDate>
+                    <Description>bom</Description>
+                    <CreditAmount>2000.00</CreditAmount>
+                    <Tax>
+                      <TaxType>IVA</TaxType>
+                      <TaxCountryRegion>AO</TaxCountryRegion>
+                      <TaxCode>NOR</TaxCode>
+                      <TaxPercentage>14</TaxPercentage>
+                    </Tax>
+                    <SettlementAmount>0</SettlementAmount>
+                  </Line>
+              <DocumentTotals>
+                <TaxPayable>280.00</TaxPayable>
+                <NetTotal>2000.00</NetTotal>
+                <GrossTotal>2280.00</GrossTotal>
+                <Payment>
+                  <PaymentMechanism>OU</PaymentMechanism>
+                  <PaymentAmount>2280.00</PaymentAmount>
+                  <PaymentDate>2021-03-25</PaymentDate>
+                </Payment>
+              </DocumentTotals>
+          </Invoice>
+          <Invoice>
+              <InvoiceNo>FT AGT2021/2559</InvoiceNo>
+              <DocumentStatus>
+                <InvoiceStatus>N</InvoiceStatus>
+                <InvoiceStatusDate>2021-03-25T10:40:42</InvoiceStatusDate>
+                <SourceID>5</SourceID>
+                <SourceBilling>P</SourceBilling>
+              </DocumentStatus>
+              <Hash>EMjnweNah40FFmXcXDkh64xO+l+s6blrgDjet7Y7fl5Bsug7s4Y8YHuKWY2tMgOzncr+yAkAtn+B1g2VakCEHMOWtyC1UvxmUdNwxzNh6LrzHkzDqp9lSpayiZ2uy7VDXRBKcXASICmgL+yzWQ5z5YZVvr5mp+8Ct4NFAehdE3A=</Hash>
+              <HashControl>1</HashControl>
+              <Period>3</Period>
+              <InvoiceDate>2021-03-25</InvoiceDate>
+              <InvoiceType>FT</InvoiceType>
+              <SpecialRegimes>
+                <SelfBillingIndicator>0</SelfBillingIndicator>
+                <CashVATSchemeIndicator>0</CashVATSchemeIndicator>
+                <ThirdPartiesBillingIndicator>0</ThirdPartiesBillingIndicator>
+              </SpecialRegimes>
+              <SourceID>5</SourceID>
+              <SystemEntryDate>2021-03-25T10:40:42</SystemEntryDate>
+              <CustomerID>2171</CustomerID>
+                  <Line>
+                    <LineNumber>1</LineNumber>
+                    <ProductCode>16</ProductCode>
+                    <ProductDescription>CALÇA/FD - SP</ProductDescription>
+                    <Quantity>1.00</Quantity>
+                    <UnitOfMeasure>Unid</UnitOfMeasure>
+                    <UnitPrice>900.00</UnitPrice>
+                    <TaxPointDate>2021-03-25</TaxPointDate>
+                    <Description>bom</Description>
+                    <CreditAmount>900.00</CreditAmount>
+                    <Tax>
+                      <TaxType>IVA</TaxType>
+                      <TaxCountryRegion>AO</TaxCountryRegion>
+                      <TaxCode>NOR</TaxCode>
+                      <TaxPercentage>14</TaxPercentage>
+                    </Tax>
+                    <SettlementAmount>100</SettlementAmount>
+                  </Line>
+              <DocumentTotals>
+                <TaxPayable>126.00</TaxPayable>
+                <NetTotal>900.00</NetTotal>
+                <GrossTotal>1026.00</GrossTotal>
+                <Payment>
+                  <PaymentMechanism>OU</PaymentMechanism>
+                  <PaymentAmount>1026.00</PaymentAmount>
+                  <PaymentDate>2021-03-25</PaymentDate>
+                </Payment>
+              </DocumentTotals>
+          </Invoice>
+          <Invoice>
+              <InvoiceNo>NC AGT2021/2124</InvoiceNo>
+              <DocumentStatus>
+                <InvoiceStatus>N</InvoiceStatus>
+                <InvoiceStatusDate>2021-03-25T00:00:00</InvoiceStatusDate>
+                <SourceID>5</SourceID>
+                <SourceBilling>P</SourceBilling>
+              </DocumentStatus>
+              <Hash>b/r+6iChFbPlRwwAX0VeYEirNYmzKKtQMCm5IXWcTNLx9eTD65iguShNwyT4eVYpcXK81OftlhoSo26wPZCoMksxGgEoiMB7elUh/XcF9nfwgAqZSEsLjZGpdBlyuwQ7s77c1Mx5rgkt8BtZms8l06HhWC+/neTsE86dAt2xltU=</Hash>
+              <HashControl>1</HashControl>
+              <Period>3</Period>
+              <InvoiceDate>2021-03-25</InvoiceDate>
+              <InvoiceType>NC</InvoiceType>
+              <SpecialRegimes>
+                <SelfBillingIndicator>0</SelfBillingIndicator>
+                <CashVATSchemeIndicator>0</CashVATSchemeIndicator>
+                <ThirdPartiesBillingIndicator>0</ThirdPartiesBillingIndicator>
+              </SpecialRegimes>
+              <SourceID>5</SourceID>
+              <SystemEntryDate>2021-03-25T00:00:00</SystemEntryDate>
+              <CustomerID>1150</CustomerID>
+                  <Line>
+                    <LineNumber>1</LineNumber>
+                    <ProductCode>16</ProductCode>
+                    <ProductDescription>CALÇA/FD - SP</ProductDescription>
+                    <Quantity>2.00</Quantity>
+                    <UnitOfMeasure>Unid</UnitOfMeasure>
+                    <UnitPrice>1000.00</UnitPrice>
+                    <TaxPointDate>2021-03-25</TaxPointDate>
+                    <References>
+                        <Reference>FR AGT2021/4682</Reference>
+                        <Reason>erro, Cliente: ABEL NUNDA</Reason>
+                    </References>
+                    <Description>bom</Description>
+                    <DebitAmount>2000.00</DebitAmount>
+                    <Tax>
+                      <TaxType>IVA</TaxType>
+                      <TaxCountryRegion>AO</TaxCountryRegion>
+                      <TaxCode>NOR</TaxCode>
+                      <TaxPercentage>14</TaxPercentage>
+                    </Tax>
+                    <SettlementAmount>0</SettlementAmount>
+                  </Line>
+              <DocumentTotals>
+                <TaxPayable>280.00</TaxPayable>
+                <NetTotal>2000.00</NetTotal>
+                <GrossTotal>2280.00</GrossTotal>
+                <Payment>
+                  <PaymentMechanism>OU</PaymentMechanism>
+                  <PaymentAmount>2280.00</PaymentAmount>
+                  <PaymentDate>2021-03-25</PaymentDate>
+                </Payment>
+              </DocumentTotals>
+          </Invoice>
+    </SalesInvoices>
+    <MovementOfGoods>
+      <NumberOfMovementLines>0</NumberOfMovementLines>
+      <TotalQuantityIssued>0.00</TotalQuantityIssued>
+    </MovementOfGoods>
+    <WorkingDocuments>
+      <NumberOfEntries>0</NumberOfEntries>
+      <TotalDebit>0.00</TotalDebit>
+      <TotalCredit>0.00</TotalCredit>
+    </WorkingDocuments>
+    <Payments>
+      <NumberOfEntries>1</NumberOfEntries>
+      <TotalDebit>0.00</TotalDebit>
+      <TotalCredit>500.00</TotalCredit>
+          <Payment>
+              <PaymentRefNo>RC AGT2021/2</PaymentRefNo>
+              <Period>3</Period>
+              <TransactionDate>2021-03-25</TransactionDate>
+              <PaymentType>RC</PaymentType>
+              <Description>pgt FT 7238, Cliente: 01</Description>
+              <SystemID>9924</SystemID>
+              <DocumentStatus>
+                <PaymentStatus>N</PaymentStatus>
+                <PaymentStatusDate>2021-03-25T00:00:00</PaymentStatusDate>
+                <SourceID>5</SourceID>
+                <SourcePayment>P</SourcePayment>
+              </DocumentStatus>
+              <PaymentMethod>
+                <PaymentMechanism>CD</PaymentMechanism>
+                <PaymentAmount>500.00</PaymentAmount>
+                <PaymentDate>2021-03-25</PaymentDate>
+              </PaymentMethod>
+              <SourceID>5</SourceID>
+              <SystemEntryDate>2021-03-25T00:00:00</SystemEntryDate>
+              <CustomerID>2171</CustomerID>
+                  <Line>
+                    <LineNumber>1</LineNumber>
+                    <SourceDocumentID>
+                      <OriginatingON>FT arlete2021/2559 </OriginatingON>
+                      <InvoiceDate>2021-03-25</InvoiceDate>
+                      <Description>pgt FT 7238</Description>
+                    </SourceDocumentID>
+                    <CreditAmount>500.00</CreditAmount>
+                  </Line>
+              <DocumentTotals>
+                <TaxPayable>0.00</TaxPayable>
+                <NetTotal>500.00</NetTotal>
+                <GrossTotal>500.00</GrossTotal>
+              </DocumentTotals>
+          </Payment>
+    </Payments>
+    <PurchaseInvoices>
+      <NumberOfEntries>0</NumberOfEntries>
+    </PurchaseInvoices>
+  </SourceDocuments>
+</AuditFile>

@@ -1,0 +1,382 @@
+<section class="content">
+        <div class="row">
+            <div class="space-6"></div>
+                <div class="page-header" style="left: 0.5%; position: relative">
+                <h1>
+                CADASTRO DE PRODUTOS
+                    <small>
+                    <i class="ace-icon fa fa-angle-double-right"></i>
+                    Cadastro
+                    </small>
+                </h1>
+            </div>
+    
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- AVISO -->
+                    <div class="alert alert-warning hidden-sm hidden-xs">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="ace-icon fa fa-times"></i>
+                        </button>
+                        Os campos marcados com <b class="red"><i class="fa fa-question-circle bold text-danger"></i></b> são de preenchimento obrigatório.
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            @if (Session::has('success'))
+    <div class="alert alert-success alert-success col-xs-12" style="left: 0%;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h5><i class="icon fa fa-check-square-o bigger-150"></i>{{ Session::get('success') }}</h5>
+    </div>
+    @endif
+
+    @if (Session::has('errors'))
+    <div class="alert alert-danger alert-danger col-xs-12" style="left: 0%;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="icon fa fa-exclamation-triangle bigger-150"> Ups!!</i><br/> 
+        <h5>
+            @foreach($errors->all() as $erro)
+            <span style="left: 2.5%; position: relative">{{$erro}}<br/></span>
+            @endforeach
+        </h5>
+    </div>
+    @endif
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="search-form-text">
+                        <div class="search-text">
+                            <i class="fa fa-product-hunt"></i>
+                            Dados Referentes ao Produto
+                        </div>
+                    </div>
+
+                    <form method = 'POST' action='{!!url("/empresa/produtos/adicionar")!!}' enctype="multipart/form-data" class="filter-form form-horizontal validation-form" id="validation-form">
+                        @csrf
+                        <div class="second-row">
+                            <div class="tabbable">
+                                <div class="tab-content profile-edit-tab-content">
+
+                                    <div id="dados_fornecedor" class="tab-pane in active" style="">
+                                        <h4 class="header bolder smaller" style="color: #3d5476">Geral</h4>
+                                        <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                            <div class="col-md-6">
+                                                <label class="control-label bold" for="designacao">Nome do Produto<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                <div class="input-group">
+                                                    <input type="text" name="designacao" id="designacao" required class="col-md-12 col-xs-12 col-sm-4" />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-info-circle bigger-110 text-info"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label bold" for="referencia">Referência<b class="red bolder">*</b></label>
+                                                    <div class="input-group">
+                                                        <input type="text" name="referencia" id="referencia" class="col-md-12 col-xs-12 col-sm-3" required />
+                                                        <span class="input-group-addon">
+                                                            <i class="glyphicon glyphicon-qrcode bigger-110 text-info"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label class="control-label bold" for="total">Código de Barras<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                    <div class="input-group">
+                                                        <input type="text" name="codigo_barra" id="total" class="col-md-12 col-xs-12 col-sm-3" required />
+                                                        <span class="input-group-addon">
+                                                            <i class="glyphicon glyphicon-barcode bigger-110 text-info"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">O Fabricante<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                <div class="">
+                                                    <select name="fabricante_id" style="height: 34px" class="col-md-12 col-xs-12 col-sm-4" data-placeholder="Selecione o Fabricante" id="status_id" required>
+                                                        <option value=""></option>
+                                                        @foreach($fabricantes as $fabricante)
+                                                            <option value="{{$fabricante->id}}">{{$fabricante->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">Status<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                <div class="">
+                                                    <select name="status_id" class="col-md-12 col-xs-12 col-sm-4" id="status_id" style="height: 35px" data-placeholder="Selecione o status">
+                                                        <option value=""></option>
+                                                        @foreach($status_gerais as $statu)
+                                                            <option value="{{$statu->id}}">{{$statu->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                            <div class="col-md-6">
+                                                <label class="control-label bold" for="descricao">Descrição<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                <div class="input-icon">
+                                                    <i class="ace-icon fa fa-comment"></i>
+                                                    <textarea type="text" name="descricao" id="descricao" class="col-md-12 col-xs-12 col-sm-4"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="id-input-file-3" class="text-info">Imagem do Produto</label>
+                                                <div class="file-upload-wrapper">
+                                                    <input type="file" name="imagem_produto" accept="application/pdf,image/*" id="id-input-file-3" class="imagem" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header bolder smaller" style="color: #3d5476">Vendas</h4>
+                                        <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">Imposto/Taxas<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                <div class="">
+                                                    <select name="codigo_taxa" class="col-md-12 col-xs-12 col-sm-4" id="status_id" style="height: 35px" data-placeholder="Selecione a Categoria" required>
+                                                        <option value=""></option>
+                                                        @foreach($tipotaxas as $tipotaxa)
+                                                            <option value="{{$tipotaxa->codigo}}">{{$tipotaxa->descricao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="motivo_isencao_id">Motivo de Isenção<b class="red"><i class="fa fa-question-circle bold text-danger"></i></b></label>
+                                                <div class="">
+                                                    <select name="motivo_isencao_id" class="col-md-12 col-xs-12 col-sm-4" id="motivo_isencao_id" style="height: 35px" data-placeholder="Selecione a Marca">
+                                                        <option value=""></option>
+                                                        @foreach($motivos as $motivo)
+                                                            <option value="{{$motivo->codigo}}">{{$motivo->descricacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group has-info">
+                                            <div class="col-md-3">
+                                                <label class="control-label bold label-select2" for="armazen_id">Armazén <b class="red fa fa-question-circle"></b></label>
+                                                <div class="">
+                                                    <select multiple name="armazen_id[]" class="col-md-12 col-xs-12 col-sm-4" id="controlo_stock" style="height: 35px" data-placeholder="Selecione o Armazén" required>
+                                                        <option value=""></option>
+                                                        @foreach($armazens as $armazen)
+                                                            <option value="{{$armazen->id}}">{{$armazen->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="control-label bold" for="id-date-picker-1">Data de Expiração</label>
+                                                <div class="input-group">
+                                                    <input type="text" name="data_expiracao" class="form-control date-picker" style="height: 35px;" autocomplete="off" id="id-date-picker-1" data-date-format="yyyy-mm-dd" required />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar bigger-110 text-info"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label bold" for="spinner3">Quantidade mínima</label>
+                                                    <div class="input-icon" >
+                                                        <input type="number" name="quantidade_minima" class="form-control" id="" min="1" style="height: 35px;" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label class="control-label bold" for="spinner4">Quantidade crítica</label>
+                                                    <div class="input-icon">
+                                                        <input type="number" class="form-control" name="quantidade_critica" id="" min="1" style="height: 35px;" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group has-info bold">
+                                            <div class="col-sm-6">
+                                                <table id="smart-prices" class="table table-striped" style="margin:0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th colspan="" title="Preço que custou o produto.">Preço de compra <span class="tooltip-target" data-toggle="tooltip" data-placement="top"><i class="fa fa-question-circle bold text-danger"></i></span></th>
+                                                            <th colspan="" ><span class="tooltip-target" data-toggle="tooltip" data-placement="top"></span></th>
+                                                            <th colspan=""><span class="tooltip-target" data-toggle="tooltip" data-placement="top"></span></th>
+                                                        </tr>
+                                                        
+                                                        <tr class="smart-price-produto">
+                                                            <td width="100%" >
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">Kz</div>
+                                                                    <input type="text" name="preco_compra" class="form-control" data-target="form_supply_price" style="height: 35px; font-size: 13pt" required>
+                                                                    <span class="input-group-addon" id="basic-addon1">
+                                                                        <i class="fa fa-calculator price-popup-icon" data-target="form_supply_price_smartprice"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <div class="col-sm-6">
+                                                <table id="smart-prices" class="table table-striped" data-list="[{&quot;ukey_id&quot;:48822116,&quot;saas_id_join&quot;:36403,&quot;title&quot;:&quot;Normal&quot;,&quot;is_default&quot;:&quot;yes&quot;,&quot;group_title&quot;:&quot;Normal&quot;}]" style="margin:0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th colspan="" title="Margem de lucro que pretende ter na venda do produto.">Margem <span class="tooltip-target" data-toggle="tooltip" data-placement="top"><i class="fa fa-question-circle bold text-danger"></i></span></th>
+                                                            <th colspan="" title="Preço de venda ao público calculado com imposto.">Preço de Venda <span class="tooltip-target" data-toggle="tooltip" data-placement="top"><i class="fa fa-question-circle bold text-danger"></i></span></th>
+                                                            <th colspan="" title="Preço normal ou calculado sem o IVA">Preço Normal <span class="tooltip-target" data-toggle="tooltip" data-placement="top"></span></th>
+                                                        </tr>
+                                                        <tr class="smart-price-produto">
+                                                            <td width="34%">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">%</div>
+                                                                    <input name="margem_lucro" class="markup form-control" title="Margem de lucro que pretende ter na venda do produto." style="height: 35px; font-size: 13pt" required>
+                                                                </div>
+                                                            </td>
+
+                                                            <td width="34%">
+                                                                <span class="input-group">
+                                                                    <div class="input-group-addon">Kz</div>
+                                                                    <input type="text" name="preco_venda" class="price_with_tax form-control" required title="Preço de venda ao público calculado com imposto." style="height: 35px; font-size: 13pt">
+                                                                </span>            
+                                                            </td>
+                                                            <td width="20%" nowrap="">
+                                                                <span class="price-tax-note text-muted">
+                                                                    <span class="price_without_tax_html">Kz 0,00</span>
+                                                                </span>
+                                                                <input class="price_without_tax" placeholder="" type="hidden" value="0" title="Preço normal ou calculado sem o IVA">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr style="margin-top: -1%">
+                                        
+                                        <div class="form-group has-info bold">
+                                            <div style="margin-top: -1%;">
+                                                <div class="col-md-3">
+                                                    <label class="control-label bold label-select2" for="controlo_stock">Controlar Stock <b class="red fa fa-question-circle"></b></label>
+                                                    <div class="">
+                                                        <select name="stocavel" class="col-md-12 col-xs-12 col-sm-4" id="controlo_stock" style="height: 35px" data-placeholder="Sim / Não" required>
+                                                            <option value=""></option>
+                                                            <option value="Sim">Sim</option>
+                                                            <option value="Não">Não</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label class="control-label bold" for="spinner3">Exitência no Stock</label>
+                                                    <div class="input-icon" >
+                                                        <input type="number" name="quantidade" class="form-control" id="" min="1" style="height: 35px;" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="control-label bold label-select2" for="tipo_stock">Tipo de Stock <b class="red fa fa-question-circle"></b></label>
+                                                    <div class="">
+                                                        <select name="tipo_stocagem_id" class="col-md-12 col-xs-12 col-sm-4" id="tipo_stock" style="height: 35px" data-placeholder="Selecione o Stock">
+                                                            <option value=""></option>
+                                                            @foreach($tipos_stocagens as $tipos_stocagem)
+                                                                <option value="{{$tipos_stocagem->id}}">{{$tipos_stocagem->designacao}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <br/>
+
+                                        <h4 class="header bolder smaller" style="color: #3d5476">Características</h4>
+                                        <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">Classe de Bem<b class="red"></b></label>
+                                                <div class="">
+                                                    <select name="classe_id" class="col-md-12 col-xs-12 col-sm-4" id="status_id" style="height: 35px" data-placeholder="Selecione a Classe">
+                                                        <option value=""></option>
+                                                        @foreach($classes as $classe)
+                                                            <option value="{{$classe->id}}">{{$classe->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">Unidade<b class="red"></b></label>
+                                                <div class="">
+                                                    <select name="unidade_medida_id" class="col-md-12 col-xs-12 col-sm-4" id="status_id" style="height: 35px" data-placeholder="Selecione a Unidade">
+                                                        <option value=""></option>
+                                                        @foreach($unidade_medidas as $unidade_medida)
+                                                            <option value="{{$unidade_medida->id}}">{{$unidade_medida->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">Categoria<b class="red"></b></label>
+                                                <div class="">
+                                                    <select name="categoria_id" class="col-md-12 col-xs-12 col-sm-4" id="status_id" style="height: 35px" data-placeholder="Selecione a Categoria">
+                                                        <option value=""></option>
+                                                        @foreach($categorias as $categoria)
+                                                            <option value="{{$categoria->id}}">{{$categoria->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="control-label bold label-select2" for="status_id">Marca<b class="red"></b></label>
+                                                <div class="">
+                                                    <select name="marca_id" class="col-md-12 col-xs-12 col-sm-4" id="status_id" style="height: 35px" data-placeholder="Selecione a Marca">
+                                                        <option value=""></option>
+                                                        @foreach($marcas as $marca)
+                                                            <option value="{{$marca->id}}">{{$marca->designacao}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix form-actions">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button class="search-btn" type="submit" style="border-radius: 10px">
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        Salvar
+                                    </button>
+
+                                    &nbsp; &nbsp;
+                                    <button class="btn btn-danger" type="reset" style="border-radius: 10px">
+                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.row -->
+        </div>
+    </section>

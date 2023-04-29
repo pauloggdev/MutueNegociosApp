@@ -1,0 +1,6 @@
+1 - Adicionar o campo venda_online na tabela produtos;
+2 - Adicionar a tabela produtos_imagens no banco de dados;
+3 - Adicionar a tabela taxas_regimes no banco de dados;
+
+ALTERAÇÕES PARA MOBILE
+crud produto, crud categoria
