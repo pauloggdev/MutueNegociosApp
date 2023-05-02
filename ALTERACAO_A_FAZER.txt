@@ -4,3 +4,7 @@
 
 ALTERAÇÕES PARA MOBILE
 crud produto, crud categoria
+
+
+1 - Aumentar um campo descontoValor da tabela entrada_stock_items
+2 - Adicionar o campo totalSemImposto na tabela entrada estock

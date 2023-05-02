@@ -621,10 +621,10 @@ Route::group(['middleware' => ['auth:empresa']], function () {
 
             //entrada estoque
             Route::get('/empresa/produtos/entrada', EntradaProdutoIndexController::class)->name('entradasProdutosIndex');
-            // Route::get('/empresa/produtos/entrada/novo', EntradaProdutoCreateController::class)->name('entradasProdutosCreate');
+            Route::get('/empresa/produtos/entrada/novo', EntradaProdutoCreateController::class)->name('entradasProdutosCreate');
             // Route::get('/empresa/produtos/entrada', [OperacaoController::class, 'entradaProdutoStockIndex']);
 
-            Route::get('/empresa/produtos/entrada/novo', [OperacaoController::class, 'entradaProdutoStockNovo'])->name('entradasProdutosCreate')->middleware('hasPermission:gerir entrada produto');
+            // Route::get('/empresa/produtos/entrada/novo', [OperacaoController::class, 'entradaProdutoStockNovo'])->name('entradasProdutosCreate')->middleware('hasPermission:gerir entrada produto');
             Route::get('/empresa/produto/actualizar-stock', [ExistenciaStockController::class, 'index']);
 
 

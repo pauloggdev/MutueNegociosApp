@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Armazens\ArmazemUpdateController;
 use App\Http\Controllers\Api\Auth\EmpresaAuthController;
 use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Auth\ClienteAuthController;
+use App\Http\Controllers\Api\Auth\MvClienteAuthController;
 use App\Http\Controllers\Api\Bancos\BancoCreateController;
 use App\Http\Controllers\Api\Bancos\BancoIndexController;
 use App\Http\Controllers\Api\Bancos\BancoShowController;
@@ -68,6 +69,8 @@ use App\Http\Controllers\TipoEmpresaController;
 /**
  *ROTAS EMPRESA
  */
+
+    
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
 Route::post('/admin/usuario/login', [AdminAuthController::class, 'auth']);
 Route::get('/listarRegimeEmpresa', [RegimeController::class, 'index']);
@@ -76,12 +79,24 @@ Route::get('/listarPaises', [PaisController::class, 'index']);
 Route::get('/listarStatusGeral', [StatuGeralController::class, 'index']);
 Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'listarTipoClienteApi']);
 
+// @Zuadas MUTUE VENDAS ONLINE
+Route::group(['prefix' => 'portal'], function () {
+    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
+    // @Zuadas Rotas do Carrinho
+    Route::middleware(['auth:sanctum'])->prefix('carrinho')->group(function () {
+        Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);    
+        Route::get('/decrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);    
+        Route::get('/add/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);    
+        Route::get('/get/my/produtos', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'getCarrinhoProdutos']);    
+    });  
+    // @Zuadas Rotas do Carrinho
+});
+// @Zuadas MUTUE VENDAS ONLINE
 
-Route::post('/user/login', [ClienteAuthController::class, 'auth']);
-Route::get("/user/meAuth", [ClienteAuthController::class, 'me']);
+Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
+Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
 
-
-
+Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
 //CLIENTES
 Route::post('validarEmpresa', [RegisterController::class, 'validarEmpresa']);
@@ -199,7 +214,7 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
 
 //empresa api mutue vendas api
 Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
-Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+// Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
 //admin
 Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {

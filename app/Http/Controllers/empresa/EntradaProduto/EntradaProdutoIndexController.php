@@ -14,7 +14,6 @@ class EntradaProdutoIndexController extends Component
 
     public function boot(EntradaProdutoRepository $entradaProdutoRepository)
     {
-
         $this->entradaProdutoRepository = $entradaProdutoRepository;
     }
 
@@ -32,8 +31,10 @@ class EntradaProdutoIndexController extends Component
         // $caminho = public_path() . '/upload/documentos/empresa/relatorios/';
 
         $filename = "entradaProdutos";
-
-
+        //158
+        //C:\laragon\www\MutueNegociosApp\public/upload//utilizadores/cliente/8Uqt70O49rPjYAT2ykWoOEGiktDzHaXuifqJoFCi.png
+        //31
+        
         $reportController = new ReportShowController();
 
         $report = $reportController->show([

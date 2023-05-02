@@ -56,6 +56,17 @@ class ProdutoRepository implements ProdutoRepositoryInterface
 
         return $produtos;
     }
+    public function getProdutosSemPaginacao($armazemId)
+    {
+        $produtos = $this->entity::with(['tipoTaxa', 'statuGeral', 'motivoIsencao'])
+            ->whereHas('existenciaEstock', function ($query) use ($armazemId) {
+                $query->where('armazem_id', $armazemId);
+            })
+            ->where('empresa_id', auth()->user()->empresa_id)
+            ->where('stocavel', 'Sim')
+            ->get();
+        return $produtos;
+    }
 
     public function getProdutos($search = null, $vendaOnline = 'N')
     {

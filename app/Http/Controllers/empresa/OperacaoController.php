@@ -62,8 +62,6 @@ class OperacaoController extends Controller
             return view('admin.dashboard');
         }
 
-
-
         $data['entradastock'] = EntradaStock::with(['entradaStockItems', 'entradaStockItems.produto', 'armazem', 'fornecedor', 'formaPagamento'])->where('empresa_id', $empresa['empresa']['id'])->get();
         return view('empresa.operacao.entradaProdutoStockIndex', $data);
     }
