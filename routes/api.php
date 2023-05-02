@@ -69,8 +69,6 @@ use App\Http\Controllers\TipoEmpresaController;
 /**
  *ROTAS EMPRESA
  */
-
-    
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
 Route::post('/admin/usuario/login', [AdminAuthController::class, 'auth']);
 Route::get('/listarRegimeEmpresa', [RegimeController::class, 'index']);
@@ -101,6 +99,8 @@ Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
 Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
 
 Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+
+
 
 //CLIENTES
 Route::post('validarEmpresa', [RegisterController::class, 'validarEmpresa']);
