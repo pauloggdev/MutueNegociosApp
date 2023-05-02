@@ -81,7 +81,11 @@ Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'list
 
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
-    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
+    Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
+    //empresa api mutue vendas api
+    Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
+    Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+
     // @Zuadas Rotas do Carrinho
     Route::middleware(['auth:sanctum'])->prefix('carrinho')->group(function () {
         Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);    
@@ -212,9 +216,6 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
 });
 
 
-//empresa api mutue vendas api
-Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
-// Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
 //admin
 Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {

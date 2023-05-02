@@ -56,7 +56,6 @@ class CarrinhoProdutoController extends Controller
     public function decreaseCarrinhoQtyProduto($id)
     {
         $produto_id = base64_decode(base64_decode(base64_decode($id)));
-        
         $produto = CarrinhoProduto::with('produto')->where('produto_id',$produto_id)->first();
         
         if ($produto->quantidade!=1){
@@ -67,7 +66,6 @@ class CarrinhoProdutoController extends Controller
         {
             CarrinhoProduto::where('produto_id',$produto_id)->delete();
         }
-
         $produtosNoCarrinho = CarrinhoProduto::with('produto')->get();
         return response()->json($produtosNoCarrinho); 
     }
