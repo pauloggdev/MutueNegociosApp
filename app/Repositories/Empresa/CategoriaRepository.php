@@ -39,18 +39,10 @@ class CategoriaRepository
             if ($cat['categoria_pai'] == NULL) {
                 $this->categoria[] = $this->arrayCat($cat);
             } else {
-
-                $this->arrayIds = [];
-                if (!in_array($cat['categoria_pai'], $this->arrayIds)) {
-                    $subCategorias = $this->entity::where('categoria_pai', $cat['categoria_pai'])
-                    ->get();
-                    array_push($this->arrayIds, $cat['categoria_pai']);
-
-                    $key = $this->posicaoPai($subCategorias[0]['categoria_pai']);
-                    foreach ($subCategorias as $subCategoria) {
-                        $this->categoria[$key]['subCategoria'][] = $this->arrayCat($subCategoria);
-                    }
-
+                $subCategorias = $this->entity::where('categoria_pai', $cat['categoria_pai'])->get();
+                $key = $this->posicaoPai($subCategorias[0]['categoria_pai']);
+                foreach ($subCategorias as $subCategoria) {
+                    $this->categoria[$key]['subCategoria'][] = $this->arrayCat($subCategoria);
                 }
             }
         }
