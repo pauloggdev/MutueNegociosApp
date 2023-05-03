@@ -87,7 +87,7 @@ Route::group(['prefix' => 'portal'], function () {
     Route::get("/produtos/pesquisar/{id}",  [PortalProdutoController::class, 'pesquisarProdutoById']);
     Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
-
+    Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     // @Zuadas Rotas do Carrinho
     Route::middleware(['auth:sanctum'])->prefix('carrinho')->group(function () {
         Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);    
