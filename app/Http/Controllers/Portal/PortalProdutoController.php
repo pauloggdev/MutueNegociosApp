@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Portal;
-use App\Models\Produto;
+use App\Models\Empresa\Produto;
+// use App\Repositories\Empresa\contracts\ProdutoRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,9 +13,10 @@ class PortalProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function pesquisarProdutoById($id)
+    public function pesquisarProdutoById($key)
     {
-        return "Produto Pesquisado";
+        $produtos = Produto::query()->where('designacao','LIKE',"%{$key}%")->get();
+        return response()->json($produtos);
     }
     public function index()
     {
