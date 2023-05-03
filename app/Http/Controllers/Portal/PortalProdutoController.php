@@ -16,7 +16,7 @@ class PortalProdutoController extends Controller
 
     public function getPodutoDetalhes($id)
     {
-        $produtos = Produto::with('produtoImagens', 'categoria', 'status', 'classificacao')
+        $produtos = Produto::with('produtoImagens', 'categoria', 'status', 'classificacao','empresa')
         ->where('venda_online', 'Y')->where('id',$id)->first();
         return response()->json($produtos);
     }

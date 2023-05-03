@@ -49,7 +49,7 @@ class ProdutoRepository implements ProdutoRepositoryInterface
     }
     public function mv_listarProdutos($search)
     {
-        $produtos = $this->entity::with(['produtoImagens', 'categoria', 'status', 'classificacao'])
+        $produtos = $this->entity::with(['produtoImagens', 'categoria', 'status', 'classificacao','empresa'])
             ->where('venda_online', 'Y')
             ->search(trim($search))
             ->paginate();
