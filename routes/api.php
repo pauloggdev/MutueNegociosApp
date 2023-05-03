@@ -55,6 +55,8 @@ use App\Http\Controllers\empresa\UnidadeController;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\TipoEmpresaController;
 
+
+use App\Http\Controllers\Portal\PortalProdutoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -81,6 +83,7 @@ Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'list
 Route::group(['prefix' => 'portal'], function () {
     Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
     //empresa api mutue vendas api
+    Route::get("/produtos/pesquisar/{id}",  [PortalProdutoController::class, 'pesquisarProdutoById']);
     Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
