@@ -81,8 +81,9 @@ Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'list
 
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
-    Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
+    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
     //empresa api mutue vendas api
+    Route::get("/produto/detalhes/{id}",  [PortalProdutoController::class, 'getPodutoDetalhes']);
     Route::get("/produtos/pesquisar/{id}",  [PortalProdutoController::class, 'pesquisarProdutoById']);
     Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);

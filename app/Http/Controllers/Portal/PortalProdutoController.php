@@ -13,9 +13,18 @@ class PortalProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getPodutoDetalhes($id)
+    {
+        $produtos = Produto::with('produtoImagens', 'categoria', 'status', 'classificacao')
+        ->where('venda_online', 'Y')->where('id',$id)->first();
+        return response()->json($produtos);
+    }
+
     public function pesquisarProdutoById($key)
     {
-        $produtos = Produto::query()->where('designacao','LIKE',"%{$key}%")->get();
+        $produtos = Produto::with('produtoImagens', 'categoria', 'status', 'classificacao')
+        ->where('venda_online', 'Y')->where('designacao','LIKE',"%{$key}%")->get();
         return response()->json($produtos);
     }
     public function index()
