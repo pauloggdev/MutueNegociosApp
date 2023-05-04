@@ -79,6 +79,8 @@ Route::get('/listarPaises', [PaisController::class, 'index']);
 Route::get('/listarStatusGeral', [StatuGeralController::class, 'index']);
 Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'listarTipoClienteApi']);
 
+Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);    
+        
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
@@ -89,6 +91,7 @@ Route::group(['prefix' => 'portal'], function () {
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
     Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     // @Zuadas Rotas do Carrinho
+  
     Route::middleware(['auth:sanctum'])->prefix('carrinho')->group(function () {
         Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);    
         Route::get('/decrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);    
