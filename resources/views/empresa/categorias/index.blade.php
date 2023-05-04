@@ -74,7 +74,11 @@
                                         @foreach($categorias as $categoria)
                                         <tr>
                                             <td><img src="{{$categoria['imagem']}}" width="120px" height="80px" alt="{{$categoria['designacao']}}"></td>
+                                            @if(isset($categoria['categoria']))
                                             <td>{{$categoria['categoria']['designacao'] == $categoria['designacao']? $categoria['categoria']['designacao']:$categoria['categoria']['designacao']."/". $categoria['designacao']}}</td>
+                                            @else
+                                            <td>{{ $categoria['designacao'] }}</td>
+                                            @endif
                                             <td class="hidden-480" style="text-align: center">
                                                 <span class="label label-sm <?= $categoria['statuGeral']['id'] == 1 ? 'label-success' : 'label-warning' ?>" style="border-radius: 20px;">{{$categoria['statuGeral']['designacao'] }}</span>
                                             </td>
@@ -88,7 +92,7 @@
                                                     <a href="{{ route('categorias.addSubCategoria', $categoria->id) }}" class="pink" title="Adicionar sub categorias">
                                                         <i class="ace-icon fa fa-pencil bigger-150 bolder success text-success"></i>
                                                     </a>
-                                                    @endif;
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

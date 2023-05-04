@@ -32,9 +32,8 @@ class MailCancelarLicenca extends Mailable
     public function build()
     {
 
-        $this->subject($this->data['assunto']);
-        $this->to($this->data['emailEmpresa']);
-        
+        $this->to($this->data['emails']);
+        $this->subject('Pedido de Activação de licença rejeitado');
         return $this->view('mail.cancelarPedidoLicenca', $this->data);
     }
 }

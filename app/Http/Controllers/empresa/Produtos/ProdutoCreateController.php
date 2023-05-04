@@ -144,6 +144,7 @@ class ProdutoCreateController extends Component
 
     public function store()
     {
+
         $rules = [
             'produto.designacao' => ['required'],
             'produto.categoria_id' => ['required'],

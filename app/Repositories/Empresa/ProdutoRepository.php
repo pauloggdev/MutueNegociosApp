@@ -49,13 +49,56 @@ class ProdutoRepository implements ProdutoRepositoryInterface
     }
     public function mv_listarProdutos($search)
     {
-        $produtos = $this->entity::with(['produtoImagens', 'categoria', 'status', 'classificacao'])
+        $produtos = $this->entity::with(['produtoImagens', 'categoria', 'status', 'empresa'])
             ->where('venda_online', 'Y')
             ->search(trim($search))
             ->paginate();
 
+        foreach ($produtos as $key => $produto) {
+            $produtos[$key]['classificacao'] = [
+                [
+                    'classificacao' => 1,
+                    'users' => $this->countUsers(1, $produto['id'])
+                ], [
+                    'classificacao' => 2,
+                    'users' => $this->countUsers(2, $produto['id'])
+                ],
+                [
+                    'classificacao' => 3,
+                    'users' => $this->countUsers(3, $produto['id'])
+                ],
+                [
+                    'classificacao' => 4,
+                    'users' => $this->countUsers(4, $produto['id'])
+                ],
+                [
+                    'classificacao' => 5,
+                    'users' => $this->countUsers(5, $produto['id'])
+                ]
+            ];
+            $produtos[$key]['totalClassificacao'] = 0;
+            $subClassificado = 0;
+            $users = 0;
+            foreach ($produtos[$key]['classificacao'] as $subtotal) {
+                $subClassificado += $subtotal['classificacao'] * $subtotal['users'];
+                $users += $subtotal['users'];
+            }
+            if ($subClassificado == 0 || $users == 0) {
+                $produtos[$key]['totalClassificacao'] = 0;
+            }else{
+                $produtos[$key]['totalClassificacao'] = $subClassificado / $users;
+            }
+        }
         return $produtos;
     }
+    public function countUsers($classificacao, $produtoId)
+    {
+        return DB::connection('mysql2')->table('classificacao')
+            ->where('produto_id', $produtoId)
+            ->where('num_classificacao', $classificacao)
+            ->count();
+    }
+
     public function getProdutosSemPaginacao($armazemId)
     {
         $produtos = $this->entity::with(['tipoTaxa', 'statuGeral', 'motivoIsencao'])

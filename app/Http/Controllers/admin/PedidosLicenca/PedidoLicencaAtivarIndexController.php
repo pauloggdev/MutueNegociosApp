@@ -4,6 +4,9 @@ namespace App\Http\Controllers\admin\PedidosLicenca;
 
 use App\Http\Controllers\admin\Traits\TraitEmpresa;
 use App\Http\Controllers\admin\Traits\TraitPathRelatorio;
+use App\Jobs\JobMailAtivacaoLicenca;
+use App\Jobs\JobNotificacaoAtivacaoLicenca;
+use App\Jobs\JobNotificacaoPedidoAceiteAtivacaoLicenca;
 use App\Models\admin\Licenca;
 use App\Repositories\Admin\FacturaRepository;
 use App\Repositories\Admin\PagamentoRepository;
@@ -54,8 +57,14 @@ class PedidoLicencaAtivarIndexController extends Component
 
     public function activarLicenca($pedidoLicencaId)
     {
+        $data['emails'] = DB::connection('mysql')->table('users_admin')
+        ->where('notificarAtivacaoLicenca', 'Y')
+        ->pluck('email')->toArray();
 
         $ativacaoLicenca = $this->pedidosLicencaRepository->getPedidosLicenca($pedidoLicencaId);
+
+        $data['emails'][] = $ativacaoLicenca['empresa']['email'];
+
         $ultimaDataLicencaAtiva = $this->pedidosLicencaRepository->pegarUltimaDataLicencaDaEmpresa($ativacaoLicenca->empresa_id);
 
 
@@ -93,6 +102,14 @@ class PedidoLicencaAtivarIndexController extends Component
             $this->facturaRepository->alterarStatuFacturaParaPago($pagamento->referenciaFactura, $ativacaoLicenca->empresa_id);
 
             //preparar aqui os dados para envio de email
+            $data['nomeEmpresa'] = $ativacaoLicenca['empresa']['nome'];
+            $data['linkLogin'] = env('APP_URL');
+            $data['data_final'] = $data_fim->format('d/m/Y');
+            $data['data_inicio'] = $data_inicio->format('d/m/Y');
+            $data['tipoLicenca'] = $ativacaoLicenca['licenca']['designacao'];
+
+            JobMailAtivacaoLicenca::dispatch($data)->delay(now()->addSecond('5'));
+
             DB::commit();
             $this->flash('success', 'Operação realizada com sucesso', [], '/admin/pedidos/licenca');
         } catch (\Throwable $th) {

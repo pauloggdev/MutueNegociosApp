@@ -4,6 +4,7 @@ namespace App\Http\Controllers\empresa\Assinaturas;
 
 use App\Http\Controllers\admin\ReportShowAdminController;
 use App\Jobs\JobNotificacaoAtivacaoLicenca;
+use App\Models\admin\Bancos;
 use App\Repositories\Admin\CoordernadaBancariaRepository;
 use App\Repositories\Admin\FacturaRepository;
 use App\Repositories\Admin\FormaPagamentoRepository;
@@ -200,9 +201,6 @@ class AssinaturaIndexController extends Component
 
     public function pagamentoFactura()
     {
-
-
-
         if (!$this->facturaData) {
             $this->alert('warning', 'Selecione a factura');
             return;
@@ -239,10 +237,23 @@ class AssinaturaIndexController extends Component
 
         $pagamentoId = $this->pagamentoRepository->salvarPagamento($this->facturaData);
 
-        $data['emails'] = DB::connection('mysql')->table('users_admin')->pluck('email')->toArray();
+        $data['emails'] = DB::connection('mysql')->table('users_admin')
+            ->where('notificarAtivacaoLicenca', 'Y')
+            ->pluck('email')->toArray();
+
+        $banco = Bancos::with(['coordernadaBancaria'])->where('id', $this->facturaData['conta_movimentada_id'])->first();
         $data['licenca'] = $this->facturaData['descricao'];
         $data['assunto'] = 'Solicitação para activação de licença';
         $data['nomeEmpresa'] = $this->facturaData['nome_do_cliente'];
+        $data['enderecoEmpresa'] = $this->facturaData['endereco_cliente'];
+        $data['emailEmpresa'] = $this->facturaData['email_cliente'];
+        $data['contatoEmpresa'] = $this->facturaData['telefone_cliente'];
+        $data['nomeLicenca'] = $this->facturaData['descricao'];
+        $data['valorLicença'] = $this->facturaData['valor_a_pagar'];
+        $data['numOperacaoBancaria'] = $this->facturaData['numero_operacao_bancaria'];
+        $data['contaMovimentada'] = $banco['coordernadaBancaria']['iban'];
+        $data['banco'] = $banco['designacao'];
+
         JobNotificacaoAtivacaoLicenca::dispatch($data)->delay(now()->addSecond('5'));
 
         $this->confirm('Pedido enviado, Aguarde a validação', [
@@ -278,6 +289,5 @@ class AssinaturaIndexController extends Component
         flush();
         $this->reset();
         return;
-
     }
 }

@@ -12,6 +12,8 @@ class Produto extends Model
     protected $primaryKey = "id";
     protected $guarded = ['id'];
 
+
+
     public static function boot()
     {
 

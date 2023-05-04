@@ -4,9 +4,11 @@ namespace App\Http\Controllers\admin\PedidosLicenca;
 
 use App\Http\Controllers\admin\Traits\TraitEmpresa;
 use App\Http\Controllers\admin\Traits\TraitPathRelatorio;
+use App\Jobs\JobMailCancelarPedidoLicenca;
 use App\Repositories\Admin\FacturaRepository;
 use App\Repositories\Admin\PagamentoRepository;
 use App\Repositories\Admin\PedidosLicencaRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -64,14 +66,30 @@ class PedidoLicencaRejeitadoIndexController extends Component
             DB::beginTransaction();
 
             $pedido = $this->pedidosLicencaRepository->getPedidosLicenca($this->pedidoId);
+
+
             if ($pedido->pagamento_id) {
                 $pagamento = $this->pagamentoRepository->getPagamento($pedido->pagamento_id, $pedido->empresa_id);
                 $this->facturaRepository->alterarStatuFacturaParaDivida($pagamento->factura_id, $pedido->empresa_id);
             }
             $this->pedidosLicencaRepository->alterarStatuPedidoLicencaParaAnulado($pedido->id, $pedido->empresa_id, $this->observacao);
-            return redirect()->back()->with('success', 'Operação realizada com sucesso!');
-
             DB::commit();
+
+            $data['emails'] = DB::connection('mysql')->table('users_admin')
+                ->where('notificarAtivacaoLicenca', 'Y')
+                ->pluck('email')->toArray();
+            $data['emails'][] = $pedido['empresa']['email'];
+
+            $dataPedidoLicenca = new carbon($pedido['created_at']);
+            $dataPedidoLicenca = $dataPedidoLicenca->format('d/m/Y');
+
+            $data['dataPedidoLicenca'] = $dataPedidoLicenca;
+            $data['motivo'] = $this->observacao;
+            $data['tipoLicenca'] = $pedido['licenca']['designacao'];
+            $data['empresa'] = $pedido['empresa']['nome'];
+            JobMailCancelarPedidoLicenca::dispatch($data)->delay(now()->addSecond('5'));
+
+            return redirect()->back()->with('success', 'Operação realizada com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;

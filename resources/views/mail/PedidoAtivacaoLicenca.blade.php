@@ -1,3 +1,8 @@
+<?php
+use Illuminate\Support\Str;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +15,18 @@
 
 <body>
     <p>Prezados..</p>
-    <p>Gostaria informá-lo que a empresa <i>{{$nomeEmpresa}}</i> solicitou um pedido de ativação de licença <strong>{{ $licenca }}</strong>. Aguarde a vossa validação</p>
+    <p>Gostaria informá-lo que a empresa <i>{{$nomeEmpresa}}</i> solicitou um pedido de ativação de licença, e aguarde a ativação da mesma</p>
+    <p>Segue abaixo as informações necessárias para a ativação da licença:</p>
+    <ul>
+        <li>Empresa: {{ $nomeEmpresa}}</li>
+        <li>Endereço: {{ $enderecoEmpresa}}</li>
+        <li>E-mail: {{ $emailEmpresa}}</li>
+        <li>Contato: {{ $contatoEmpresa}}</li>
+        <li>Licença: {{mb_strtolower($nomeLicenca, 'UTF-8')}} de {{ number_format($valorLicença,2,',','.') }} AOA</li>
+        <li>Banco: {{ $banco }}</li>
+        <li>Nº operação bancária: {{$numOperacaoBancaria}}</li>
+        <li>Conta movimentada: {{ $contaMovimentada }}</li>
+    </ul>
 </body>
 
 </html>

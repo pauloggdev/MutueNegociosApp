@@ -13,7 +13,7 @@
         ​Saudações {{$empresa}}
     </p>
     <p>
-        Gostariamos informá-lo que seu pedido de renovação de licença feito no dia {{$dataPedidoLicenca}} não foi <strong>aceite</strong> na aplicação Mutue Negócios.
+        Gostariamos informá-lo que seu pedido de renovação de licença feito no dia {{$dataPedidoLicenca}} <strong>não foi aceite</strong> na aplicação Mutue Negócios.
     </p>
     <p>
         Verifica abaixo o motivo do cancelamento do pedido 👇

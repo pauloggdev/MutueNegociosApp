@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\Fornecedores\FornecedorIndexController;
 use App\Http\Controllers\Api\Fornecedores\FornecedorShowController;
 use App\Http\Controllers\Api\Fornecedores\FornecedorUpdateController;
 use App\Http\Controllers\Api\MotivoIvaController;
+use App\Http\Controllers\Api\MVProdutoFavorito\MVProdutoFavoritoController;
 use App\Http\Controllers\Api\Operacoes\ActualizarStockController;
 use App\Http\Controllers\Api\Operacoes\TransferenciaProdutoController;
 use App\Http\Controllers\Api\PaisController;
@@ -52,9 +53,12 @@ use App\Http\Controllers\empresa\ClienteController as EmpresaClienteController;
 use App\Http\Controllers\empresa\Facturas\FacturasIndexController;
 use App\Http\Controllers\empresa\LicencaController as EmpresaLicencaController;
 use App\Http\Controllers\empresa\UnidadeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\TipoEmpresaController;
 
+
+use App\Http\Controllers\Portal\PortalProdutoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -69,8 +73,6 @@ use App\Http\Controllers\TipoEmpresaController;
 /**
  *ROTAS EMPRESA
  */
-
-    
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
 Route::post('/admin/usuario/login', [AdminAuthController::class, 'auth']);
 Route::get('/listarRegimeEmpresa', [RegimeController::class, 'index']);
@@ -81,14 +83,20 @@ Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'list
 
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
-    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);    
+    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
+    //empresa api mutue vendas api
+    Route::get("/produto/detalhes/{id}",  [PortalProdutoController::class, 'getPodutoDetalhes']);
+    Route::get("/produtos/pesquisar/{id}",  [PortalProdutoController::class, 'pesquisarProdutoById']);
+    Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
+    Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+
     // @Zuadas Rotas do Carrinho
     Route::middleware(['auth:sanctum'])->prefix('carrinho')->group(function () {
-        Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);    
-        Route::get('/decrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);    
-        Route::get('/add/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);    
-        Route::get('/get/my/produtos', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'getCarrinhoProdutos']);    
-    });  
+        Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
+        Route::get('/decrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
+        Route::get('/add/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+        Route::get('/get/my/produtos', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
+    });
     // @Zuadas Rotas do Carrinho
 });
 // @Zuadas MUTUE VENDAS ONLINE
@@ -96,7 +104,7 @@ Route::group(['prefix' => 'portal'], function () {
 Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
 Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
 
-Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+
 
 //CLIENTES
 Route::post('validarEmpresa', [RegisterController::class, 'validarEmpresa']);
@@ -107,6 +115,8 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
 
     Route::post('classificarProduto', [ClassificarProdutoCrontroller::class, 'mv_classificarProduto']);
     //Home
+
+    // Route::get('quantidadeUtilizadores', [HomeController::class, 'quantidadeUtilizadores']);
     Route::get('quantidadeUtilizadores', [UserController::class, 'quantidadeUtilizadores']);
     Route::get('quantidadeClientes', [ClienteIndexController::class, 'quantidadeClientes']);
     Route::get('quantidadeArmazens', [ArmazemIndexController::class, 'quantidadeArmazens']);
@@ -209,12 +219,16 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     //IVA
     Route::get('taxas', [TaxaIvaController::class, 'listarTaxas']);
     Route::get('motivos', [MotivoIvaController::class, 'listarMotivos']);
+
+    //API MUTUE VENDAS
+    Route::get("/listarProdutosFavoritos",  [MVProdutoFavoritoController::class, 'mv_listarProdutosFavoritos']);
+
 });
 
 
 //empresa api mutue vendas api
 Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
-// Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
 //admin
 Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
