@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Classificacao;
 use App\Http\Controllers\Controller;
 use App\Repositories\Empresa\ClassificacaoRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ClassificarProdutoCrontroller extends Controller
@@ -33,5 +34,9 @@ class ClassificarProdutoCrontroller extends Controller
         $classificacao =  $this->classificacaoRepository->store($request->all());
         if ($classificacao)
             return response()->json($classificacao, 200);
+    }
+    public function buscarDadosTeste($id)
+    {
+        return DB::table('users_cliente')->where('id', $id)->get();
     }
 }

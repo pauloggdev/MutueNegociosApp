@@ -85,6 +85,7 @@
                                         <th style="text-align:center">Licença</th>
                                         <th>Data pedido</th>
                                         <th>Data activação</th>
+                                        <th>Operador</th>
                                         <th>Data inicio</th>
                                         <th>Data final</th>
                                         <th style="text-align:center">Status</th>
@@ -107,6 +108,7 @@
                                         @endif
                                         <td>{{ date_format( $pedido->created_at, 'd/m/y H:i') }}</td>
                                         <td>{{ $pedido->data_activacao}}</td>
+                                        <td><?= $pedido->operador?$pedido->operador:''?></td>
                                         <td>{{ $pedido->data_inicio}}</td>
                                         <td>{{ $pedido->data_fim}}</td>
                                         @if($pedido->status_licenca_id == 1)
@@ -126,7 +128,16 @@
                                                     <i class="ace-icon fa fa-remove bigger-150 bolder danger text-danger"></i>
                                                 </a>
                                                 @endif
-                                                @if(($pedido->status_licenca_id == 2 || $pedido->status_licenca_id == 3) && $pedido->licenca_id !== 1)
+                                                @if($pedido->status_licenca_id == 3 && $pedido->licenca_id !== 1)
+                                                <a class="pink" title="Rejeitar pedido de licença" href=" {{ route('pedidoLicencaRejeitadoAdmin', $pedido->id) }}" style="cursor: pointer;">
+                                                    <i class="ace-icon fa fa-remove bigger-150 bolder danger text-danger"></i>
+                                                </a>
+                                                <a class="pink" title="Aceitar pedido de licença" href="{{ route('pedidoLicencaAtivarAdmin', $pedido->id) }}" style="cursor: pointer;">
+                                                    <i class="ace-icon fa fa-check bigger-150 bolder sucess text-success"></i>
+                                                </a>
+                                                @endif
+
+                                                @if($pedido->status_licenca_id == 2 && $pedido->licenca_id !== 1)
                                                 <a class="pink" title="Aceitar pedido de licença" href="{{ route('pedidoLicencaAtivarAdmin', $pedido->id) }}" style="cursor: pointer;">
                                                     <i class="ace-icon fa fa-check bigger-150 bolder sucess text-success"></i>
                                                 </a>

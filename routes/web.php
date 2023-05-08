@@ -245,6 +245,9 @@ Route::get('/user_perfil', function () {
 // ROTAS NOVAS V1
 //Empresa
 Route::get('/', [AppController::class, 'home']);
+Route::get('/politica-privacidade', function () {
+    return view("politicaPrivacidade");
+});
 Route::get('/home', [AppController::class, 'home'])->name('home');
 Route::get('/cadastro-empresa', [AdminEmpresaController::class, 'create']);
 
@@ -448,7 +451,7 @@ Route::group(['middleware' => ['auth:web']], function () {
  */
 
 
- Route::get("TesteEmail", function(){
+Route::get("TesteEmail", function () {
 
 
     $dado = [
@@ -456,8 +459,7 @@ Route::group(['middleware' => ['auth:web']], function () {
         'senha' => 'mutue123'
     ];
     JobCreateNewUser::dispatch($dado)->delay(now()->addSecond('5'));
-
- });
+});
 
 
 Route::get("password/reset", [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.reset');

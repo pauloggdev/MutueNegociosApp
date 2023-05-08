@@ -206,7 +206,7 @@ if (Auth::guard('web')->check()) {
                 <li class="">
                     <a href="/empresa/home">
                         <i class="menu-icon glyphicon glyphicon-home"></i>
-                        <span class="menu-text"> Inicio </span>
+                        <span class="menu-text"> INICIO </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
@@ -216,7 +216,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text">Cadastros</span>
+                        <span class="menu-text">CADASTROS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -237,7 +237,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/fornecedores">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Fornecedores
+                                FORNECEDORES
                             </a>
 
                             <b class="arrow"></b>
@@ -246,7 +246,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/fabricantes">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Fabricantes
+                                FABRICANTES
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -254,7 +254,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/armazens">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Armazens
+                                ARMAZÉNS
                             </a>
 
                             <b class="arrow"></b>
@@ -263,7 +263,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="bancos.index">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Bancos
+                                BANCOS
                             </a>
 
                             <b class="arrow"></b>
@@ -272,7 +272,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/marcas">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Marcas
+                                MARCAS
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -280,7 +280,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/categorias">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Categorias
+                                CATEGORIAS
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -288,7 +288,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="{{ route('unidadeMedidas.index')}}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Unidade de Medida
+                                UNIDADE DE MEDIDA
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -304,7 +304,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/formapagamento">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Forma de Pagamento
+                                FORMA DE PAGAMENTO
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -315,7 +315,7 @@ if (Auth::guard('web')->check()) {
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text">
-                            Utilizadores
+                            UTILIZADORES
                         </span>
 
                         <b class="arrow fa fa-angle-down"></b>
@@ -327,7 +327,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/usuarios">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar Utilizadores
+                                LISTAR UTILIZADORES
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -335,7 +335,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="{{ route('roles.index') }}">
                                 <i class="menu-icon fa fa-plus"></i>
-                                Funções
+                                FUNÇÕES
                             </a>
 
                             <b class="arrow"></b>
@@ -343,7 +343,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/permissoes">
                                 <i class="menu-icon fa fa-plus"></i>
-                                Permissões
+                                PERMISSÕES
                             </a>
 
                             <b class="arrow"></b>
@@ -354,7 +354,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-users"></i>
-                        <span class="menu-text"> Clientes </span>
+                        <span class="menu-text"> CLIENTES </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -365,7 +365,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/clientes">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar Clientes
+                                LISTAR CLIENTES
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -383,7 +383,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-opencart"></i>
-                        <span class="menu-text">Produtos </span>
+                        <span class="menu-text">PRODUTOS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -394,21 +394,21 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/produtos">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar Produtos
+                                LISTAR PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/produtos-mais-vendidos">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar produtos mais vendidos
+                                LISTAR PRODUTOS MAIS VENDIDOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/produtos/stock">
                                 <i class="menu-icon fa fa-opencart"></i>
-                                Ánalise de Stock
+                                ÁNALISE DE STOCK
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -425,7 +425,7 @@ if (Auth::guard('web')->check()) {
                 <li class="">
                     <a href="{{route('empresa.vendas')}}">
                     <i class="menu-icon fa fa-opencart"></i>
-                        <span class="menu-text"> Vendas </span>
+                        <span class="menu-text"> VENDAS </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
@@ -437,7 +437,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-wpforms"></i>
-                        <span class="menu-text"> Facturação </span>
+                        <span class="menu-text"> FATURAÇÃO </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -451,7 +451,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/facturacao/criar">
                                 <i class="menu-icon fa fa-wpforms"></i>
-                                Facturação
+                                FATURAÇÃO
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -459,14 +459,14 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/facturas">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar facturas
+                                LISTAR FATURAS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/facturas-proformas">
                                 <i class="menu-icon glyphicon glyphicon-refresh"></i>
-                                Converter Factura Proforma
+                                CONVERTER FATURAS PROFORMA
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -477,7 +477,7 @@ if (Auth::guard('web')->check()) {
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-tasks"></i>
 
-                        <span class="menu-text"> Operações </span>
+                        <span class="menu-text"> OPERAÇÕES </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -489,34 +489,34 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="{{ route('recibo.index')}}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Depósito de valores - recibos </a>
+                                DEPÓSITO DE VALORES - RECIBOS</a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/notacredito">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Nota de Crédito
+                                NOTA DE CRÉDITO
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/notadebito">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Nota de Débito
+                                NOTA DE DÉBITO
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="{{ route('notaCreditoRetificacaoDoc.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Rectificação de documentos
+                                RETIFICAÇÃO DE DOCUMENTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="{{ route('notaCreditoAnulacaoDoc.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Anulação de documentos
+                                ANULAÇÃO DE DOCUMENTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -524,33 +524,30 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/produto/actualizar-stock">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Actualizar estoque </a>
+                                ATUALIZAR ESTOQUE</a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/produtos/transferencia">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Transferência de produtos
+                                TRANSFERÊNCIA DE PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/produtos/entrada">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Entrada de produtos
+                                ENTRADA DE PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/pagamento/fornecedor">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Pagamento de fornecedor
+                                PAGAMENTO DE FORNECEDOR
                             </a>
                             <b class="arrow"></b>
                         </li>
-
-
-
                     </ul>
                 </li>
 
@@ -568,7 +565,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/taxaIva">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Definir Taxas do IVA
+                                DEFINIR TAXAS DO IVA
                             </a>
 
                             <b class="arrow"></b>
@@ -577,7 +574,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/motivoIva">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Definir Motivos de Isenção
+                                MOTIVOS DE ISENÇÃO
                             </a>
 
                             <b class="arrow"></b>
@@ -586,7 +583,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href=" /empresa/gerarSaft">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Gerar o ficheiro SAFT
+                                GERAR O FICHEIRO SAFT
                             </a>
 
                             <b class="arrow"></b>
@@ -598,7 +595,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-shopping-cart"></i>
-                        <span class="menu-text">Vendas</span>
+                        <span class="menu-text">VENDAS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -618,7 +615,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/vendas-diaria">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Venda diária
+                                VENDA DIÁRIA
                             </a>
 
                             <b class="arrow"></b>
@@ -627,7 +624,7 @@ if (Auth::guard('web')->check()) {
 
                             <a href="/empresa/vendas-mensal">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Vendas mensal
+                                VENDAS MENSAL
                             </a>
 
                             <b class="arrow"></b>
@@ -635,7 +632,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/relatorios-vendas">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Relatórios de Vendas gerais
+                                RELATÓRIOS DE VENDAS GERAIS
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -645,7 +642,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="/empresa/inventarios" style="color: #ffffff">
                         <i class="menu-icon glyphicon glyphicon-refresh"></i>
-                        <span class="menu-text">Inventários</span>
+                        <span class="menu-text">INVENTÁRIOS</span>
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
                 </li>
@@ -653,7 +650,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-cog"></i>
-                        <span class="menu-text">Configurações</span>
+                        <span class="menu-text">CONFIGURAÇÕES</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -665,14 +662,14 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/configuracao">
                                 <i class="menu-icon fa fa-pencil" style="color: white;"></i>
-                                Configurar minha conta
+                                CONFIGURAR MINHA CONTA
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="/empresa/modelo-documentos">
                                 <i class="menu-icon fa fa-list" style="color: white;"></i>
-                                Modelo documentos
+                                MODELO DOCUMENTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -681,7 +678,7 @@ if (Auth::guard('web')->check()) {
 
                             <a href="/empresa/definir-parametros">
                                 <i class="menu-icon fa fa-pencil" style="color: white;"></i>
-                                Definir Parametros
+                                DEFINIR PARAMETROS
                             </a>
 
                             <b class="arrow"></b>
@@ -692,7 +689,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text">Listagens</span>
+                        <span class="menu-text">LISTAGENS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -704,7 +701,7 @@ if (Auth::guard('web')->check()) {
 
                             <a href="/empresa/minhas-licencas">
                                 <i class="fa fa-list" aria-hidden="true"></i>
-                                Minhas licenças
+                                MINHAS LICENÇAS
                             </a>
 
                             <b class="arrow"></b>
@@ -741,26 +738,26 @@ if (Auth::guard('web')->check()) {
                 <li class="">
                     <a href="{{route('relatorio.index')}}">
                         <i class="menu-icon fa fa-file-pdf-o"></i>
-                        <span class="menu-text">Relatórios</span>
+                        <span class="menu-text">RELATÓRIOS</span>
                     </a>
                 </li>
                 <li class="">
                     <a href="{{route('fechoCaixa.index')}}">
                         <i class="menu-icon fa fa-file-pdf-o"></i>
-                        <span class="menu-text">Fecho de caixa</span>
+                        <span class="menu-text">FECHO DE CAIXA</span>
                     </a>
                 </li>
                 <li class="">
                     <a href="{{route('centroCusto.index')}}">
                         <i class="menu-icon fa fa-shopping-basket"></i>
-                        <span class="menu-text">Centro de custos</span>
+                        <span class="menu-text">CENTRO DE CUSTOS</span>
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li class="">
                     <a href="{{route('manual.index')}}">
                         <i class="menu-icon fa fa-download"></i>
-                        <span class="menu-text">Manual Utilizador</span>
+                        <span class="menu-text">MANUAL UTILIZADOR</span>
                     </a>
                     <b class="arrow"></b>
                 </li>

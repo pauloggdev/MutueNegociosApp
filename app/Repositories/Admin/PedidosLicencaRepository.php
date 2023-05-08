@@ -59,6 +59,8 @@ class PedidosLicencaRepository
         $ativacaoLicenca = $this->ativacaoLicenca::where('id', $pedidoLicencaId)->where('empresa_id', $empresaId)->first();
         $ativacaoLicenca->status_licenca_id = $this->ativacaoLicenca::REJEITADO;
         $ativacaoLicenca->data_rejeicao = Carbon::now();
+        $ativacaoLicenca->user_id = auth()->user()->id;
+        $ativacaoLicenca->operador = auth()->user()->name;
         $ativacaoLicenca->observacao = $observacao;
         $ativacaoLicenca->data_inicio = null;
         $ativacaoLicenca->data_fim = null;

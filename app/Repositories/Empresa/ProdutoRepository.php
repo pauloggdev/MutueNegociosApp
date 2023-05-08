@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Empresa;
 
+use App\Models\empresa\Classificacao;
 use App\Models\empresa\ExistenciaStock;
 use App\Models\empresa\Produto;
 use App\Repositories\Empresa\contracts\ProdutoRepositoryInterface;
@@ -12,16 +13,16 @@ use Carbon\Carbon;
 use Keygen\Keygen;
 use Illuminate\Support\Facades\Storage;
 
-
-
 class ProdutoRepository implements ProdutoRepositoryInterface
 {
 
     protected $entity;
+    protected $classificacao;
 
-    public function __construct(Produto $produto)
+    public function __construct(Produto $produto, Classificacao $classificacao)
     {
         $this->entity = $produto;
+        $this->classificacao = $classificacao;
     }
     public function listarSeisProdutosMaisVendidos()
     {
@@ -58,22 +59,31 @@ class ProdutoRepository implements ProdutoRepositoryInterface
             $produtos[$key]['classificacao'] = [
                 [
                     'classificacao' => 1,
-                    'users' => $this->countUsers(1, $produto['id'])
+                    'users' => $this->countUsers(1, $produto['id']),
+                    'percentagem' => $this->calcularPercentagem(1, $produto['id'])
                 ], [
                     'classificacao' => 2,
-                    'users' => $this->countUsers(2, $produto['id'])
+                    'users' => $this->countUsers(2, $produto['id']),
+                    'percentagem' => $this->calcularPercentagem(2, $produto['id'])
+
                 ],
                 [
                     'classificacao' => 3,
-                    'users' => $this->countUsers(3, $produto['id'])
+                    'users' => $this->countUsers(3, $produto['id']),
+                    'percentagem' => $this->calcularPercentagem(3, $produto['id'])
+
                 ],
                 [
                     'classificacao' => 4,
-                    'users' => $this->countUsers(4, $produto['id'])
+                    'users' => $this->countUsers(4, $produto['id']),
+                    'percentagem' => $this->calcularPercentagem(4, $produto['id'])
+
                 ],
                 [
                     'classificacao' => 5,
-                    'users' => $this->countUsers(5, $produto['id'])
+                    'users' => $this->countUsers(5, $produto['id']),
+                    'percentagem' => $this->calcularPercentagem(5, $produto['id'])
+
                 ]
             ];
             $produtos[$key]['totalClassificacao'] = 0;
@@ -85,11 +95,26 @@ class ProdutoRepository implements ProdutoRepositoryInterface
             }
             if ($subClassificado == 0 || $users == 0) {
                 $produtos[$key]['totalClassificacao'] = 0;
-            }else{
+            } else {
                 $produtos[$key]['totalClassificacao'] = $subClassificado / $users;
             }
         }
         return $produtos;
+    }
+    public function mv_listarComentarioPorProduto($produtoId){
+        return $this->classificacao::where('produto_id', $produtoId)->get();
+    }
+    public function totalUsers($produtoId)
+    {
+        return DB::connection('mysql2')->table('classificacao')
+            ->where('produto_id', $produtoId)
+            ->count();
+    }
+    public function calcularPercentagem($classificacao, $produtoId)
+    {
+        $totalUsers = $this->totalUsers($produtoId);
+        if ($totalUsers <= 0) return 0;
+        return (($classificacao * $this->countUsers($classificacao, $produtoId)) / $totalUsers) / $classificacao;
     }
     public function countUsers($classificacao, $produtoId)
     {
@@ -290,9 +315,8 @@ class ProdutoRepository implements ProdutoRepositoryInterface
                 $q->where('produtos.quantidade_critica', '!=', 0)
                     ->where('produtos.empresa_id', auth()->user()->empresa_id)
                     ->where('produtos.quantidade_critica', '>=', 'existencias_stocks.quantidade');
-            })
+            })->get();
 
-            ->get();
         return $produtos;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Produtos;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ClassificacaoResource;
 use App\Models\empresa\Produto;
 use App\Repositories\Empresa\ProdutoRepository;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,10 @@ class ProdutoIndexController extends Controller
     }
     public function mv_listarProdutos($search = null){
         return $this->produtoRepository->mv_listarProdutos($search);
+    }
+    public function mv_listarComentarioPorProduto($produtoId){
+        $produto = $this->produtoRepository->mv_listarComentarioPorProduto($produtoId);
+        return ClassificacaoResource::collection($produto);
     }
     public function listarProdutos($search = null)
     {

@@ -12,11 +12,8 @@ class CategoriaRepository
     protected $entity;
     public $categoria = [];
     public $arrayIds = [];
-    public $produto;
 
-
-
-    public function __construct(Categoria $categoria, Produto $produto)
+    public function __construct(Categoria $categoria, Produto $produto = null)
     {
         $this->entity = $categoria;
         $this->produto = $produto;
@@ -31,55 +28,8 @@ class CategoriaRepository
     }
     public function add()
     {
-
-        $categorias = [
-            ["id" => 1, "designacao" => "Electronico", "parent" => null],
-            ["id" => 2, "designacao" => 'Telefone', "parent" => 1],
-            ["id" => 3, "designacao" => 'Iphone', "parent" => 2],
-            ["id" => 4, "designacao" => 'Computador', "parent" => 1],
-            ["id" => 5, "designacao" => 'Informática', "parent" => null],
-            ["id" => 6, "designacao" => 'Vestimenta', "parent" => null],
-            ["id" => 7, "designacao" => 'Comidas', "parent" => null],
-            ["id" => 8, "designacao" => 'Macacão', "parent" => 6],
-            ["id" => 9, "designacao" => 'Frutas', "parent" => 7],
-            ["id" => 10, "designacao" => 'Banana', "parent" => 9],
-            ["id" => 11, "designacao" => 'Maçã', "parent" => 9],
-        ];
-        $teste = $this->categoriasComHierarquia($categorias);
-        dd($teste);
-    }
-    public function categoriasComHierarquia($categorias)
-    {
-        $categoriasComFilhos = [];
-        $categoriasPorId = [];
-
-        // Primeiro, criamos um mapa das categorias por ID para facilitar a pesquisa por parent.
-
-        foreach ($categorias as $key=> $categoria) {
-            $categoria[$key] = [
-                'id' => $categoria['id'],
-                'designacao' => $categoria['designacao'],
-                'children' => [],
-            ];
-            dd($categoria);
-        }
-        // foreach ($categorias as $categoria) {
-        //     if ($categoria['parent']) {
-        //         $pai = $categoriasPorId[$categoria['parent']];
-        //         array_push($pai['children'], $categoriasPorId[$categoria['id']]);
-        //     } else {
-        //         dd($categoria['id']);
-        //         array_push($categoriasComFilhos, $categoriasPorId[$categoria['id']]);
-        //     }
-        // }
-
-        // return $categoriasComFilhos;
-    }
-    public function mv_listarCategoriasSemPaginacao($search = null)
-    {
-        $categoriaIds = $this->produto::where('venda_online', 'Y')->pluck('categoria_id');
-        $categorias = $this->entity::whereIn('id', $categoriaIds)->search(trim($search))->get();
-        return $categorias;
+        $categoriaIds = DB::connection('mysql2')->table('produtos')->where('venda_online', 'Y')->pluck('categoria_id');
+        $this->exibirCategorias($categoriaIds);
     }
     public function exibirCategorias($categoriaIds)
     {
@@ -125,12 +75,110 @@ class CategoriaRepository
             ->where('id', '!=', $categoria['id'])
             ->get();
     }
-    // public function mv_listarCategoriasSemPaginacao($search = null)
-    // {
-    //     $categoriaIds = DB::connection('mysql2')->table('produtos')->where('venda_online', 'Y')->pluck('categoria_id');
-    //     $categorias = $this->entity::whereIn('id', $categoriaIds)->search(trim($search))->get();
-    //     return $categorias;
-    // }
+    public function mv_listarCategoriasSemPaginacao($search = null)
+    {
+        $categoriaIds = DB::connection('mysql2')->table('produtos')->where('venda_online', 'Y')->pluck('categoria_id');
+        $categorias = $this->entity::whereIn('id', $categoriaIds)->search(trim($search))->get();
+        return $categorias;
+    }
+    public function categoriasComHierarquia($categorias = null)
+    {
+
+
+        $categorias = [
+            [
+                "id" => 1,
+                "designacao" => "Electronico",
+                "parent" => null
+            ],
+            [
+                "id" => 2,
+                "designacao" => "Telefone",
+                "parent" => 1
+            ],
+            [
+                "id" => 3,
+                "designacao" => "Iphone",
+                "parent" => 2
+            ],
+            [
+                "id" => 4,
+                "designacao" => "Computador",
+                "parent" => 1
+            ],
+            [
+                "id" => 5,
+                "designacao" => "Informática",
+                "parent" => null
+            ],
+            [
+                "id" => 6,
+                "designacao" => "Vestimenta",
+                "parent" => null
+            ],
+            [
+                "id" => 7,
+                "designacao" => "Comidas",
+                "parent" => null
+            ],
+            [
+                "id" => 8,
+                "designacao" => "Macacão",
+                "parent" => 6
+            ],
+            [
+                "id" => 9,
+                "designacao" => "Frutas",
+                "parent" => 7
+            ],
+            [
+                "id" => 10,
+                "designacao" => "Banana",
+                "parent" => 9
+            ]
+
+        ];
+
+        $categoriasComFilhos = [];
+        $categoriasPorId = [];
+        // Primeiro, criamos um mapa das categorias por ID para facilitar a pesquisa por parent.
+        foreach ($categorias as $categoria) {
+            $categoriasPorId[$categoria['id']] = [
+                'id' => $categoria['id'],
+                'designacao' => $categoria['designacao'],
+                'children' => []
+            ];
+        }
+        foreach ($categorias as $categoria) {
+            $index = $categoria['parent'];
+            if ($index) {
+                $pai = $categoriasPorId[$index];
+                array_push($pai['children'], $categoriasPorId[$categoria['id']]);
+            } else {
+                array_push($categoriasComFilhos, $categoriasPorId[$categoria['id']]);
+            }
+        }
+        dd($categoriasComFilhos);
+        return $categoriasComFilhos;
+        // categorias.forEach(categoria => {
+        //   categoriasPorId[categoria.id] = {id: categoria.id, designacao: categoria.designacao, children: []};
+        // });
+
+        // Em seguida, percorremos as categorias novamente, adicionando cada categoria como um filho da categoria pai apropriada.
+        // categorias.forEach(categoria => {
+        //   const pai = categoriasPorId[categoria.parent];
+        //   if (pai) {
+        //     pai.children.push(categoriasPorId[categoria.id]);
+        //   } else {
+        //     categoriasComFilhos.push(categoriasPorId[categoria.id]);
+        //   }
+        // });
+
+        // return categoriasComFilhos;
+    }
+
+    //   const result = categoriasComHierarquia(categorias);
+    //   console.log(result);
     public function getCategorias()
     {
         $categoria = $this->entity = Categoria::with(['statuGeral', 'empresa', 'produtos', 'categoria'])

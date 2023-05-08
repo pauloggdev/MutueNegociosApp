@@ -12,4 +12,8 @@ class Classificacao extends Model
     protected $guard = 'id';
     protected $fillable = ['produto_id','user_id','num_classificacao'];
 
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

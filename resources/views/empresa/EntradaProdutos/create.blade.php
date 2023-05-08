@@ -145,12 +145,12 @@ use Illuminate\Support\Str;
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label bold label-select2" for="precoVenda">Preço de venda por unidade</label>
+                                    <label class="control-label bold label-select2" for="precoVenda">Preço de venda/unidade</label>
                                     <input type="text" disabled wire:model="precoVenda" placeholder="0,00" value="0" class="form-control" style="height: 35px; font-size: 10pt;" />
 
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label bold label-select2" for="preco_compra">Preço de compra por unidade<b class="red fa fa-question-circle"></b></label>
+                                    <label class="control-label bold label-select2" for="preco_compra">Preço de compra/unidade<b class="red fa fa-question-circle"></b></label>
                                     <input type="number" step="any" wire:model="entrada.preco_compra" value="0" placeholder="0,00" class="form-control" style="height: 35px; font-size: 10pt;<?= $errors->has('entrada.preco_compra') ? 'border-color: #ff9292;' : '' ?>" />
                                     @if ($errors->has('entrada.preco_compra'))
                                     <span class="help-block" style="color:#de4949;position:absolute;top: 67px;">

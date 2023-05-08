@@ -10,7 +10,6 @@
           </small>
         </h1>
       </div>
-      <!-- /.page-header -->
     </div>
 
     <div class="row">
@@ -22,17 +21,11 @@
               <i class="ace-icon fa fa-times white"></i>
             </button>
             <i class="ace-icon fa fa-warning white"></i>
-            <span style="font-size: 12pt"
-              >Caro cliente, é obrigatória a alteração da sua password para
+            <span style="font-size: 12pt">Caro cliente, é obrigatória a alteração da sua password para
               maior segurança, e poderes ter acesso as outras funcionalidades do
-              sistema</span
-            >
-            <a
-              href="#alterarSenha"
-              data-toggle="modal"
-              class="btn btn-success widget-box widget-color-blue center"
-              style="border-radius: 8px; font-size: 12pt; float: right"
-            >
+              sistema</span>
+            <a href="#alterarSenha" data-toggle="modal" class="btn btn-success widget-box widget-color-blue center"
+              style="border-radius: 8px; font-size: 12pt; float: right">
               &nbsp;
               <i class="fa fa-lock"></i>&nbsp;Alterar &nbsp;
             </a>
@@ -173,97 +166,11 @@
                 <span class="infobox-data-number">{{
                   counttotalvendas | currency
                 }}</span>
-                   <div class="infobox-content">
-                        <span class="bigger-110" style="color: black">Total de Vendas</span>
-                  </div>
+                <div class="infobox-content">
+                  <span class="bigger-110" style="color: black">Total de Vendas</span>
+                </div>
               </div>
             </div>
-
-            <!-- <div class="infobox infobox-orange2">
-                            <div class="infobox-chart">
-                                <span class="sparkline" data-values="5,10,11,21,2,25"></span>
-                            </div>
-
-                            <div class="infobox-data">
-                                <span class="infobox-data-number">6,251</span>
-                                <div class="infobox-content">Variação</div>
-                            </div>
-
-                            <div class="badge badge-success">
-                                7.2%
-                                <i class="ace-icon fa fa-arrow-up"></i>
-                            </div>
-                        </div> -->
-
-            <!-- <div class="infobox infobox-blue2">
-                            <div class="infobox-progress">
-                                <div class="easy-pie-chart percentage" data-percent="42" data-size="46">
-                                    <span class="percent">42</span>%
-                                </div>
-                            </div>
-
-                            <div class="infobox-data">
-                                <span class="infobox-data-number">58</span>
-
-                                <div class="infobox-content">
-                                    <span class="bigger-110"></span>
-                                    Visitas
-                                </div>
-                            </div>
-                        </div> -->
-
-            <!-- <div class="infobox infobox-green2">
-                            <div class="infobox-chart">
-                                <span class="sparkline" data-values="1,3,10,21,25"></span>
-                            </div>
-
-                            <div class="infobox-data">
-                                <span class="infobox-data-number">7,22</span>
-                                <div class="infobox-content">Variação</div>
-                            </div>
-
-                            <div class="badge badge-success">
-                                7.2%
-                                <i class="ace-icon fa fa-arrow-up"></i>
-                            </div>
-                        </div> -->
-
-            <!-- <div class="infobox-container">
-                            <div class="infobox infobox-green infobox-small infobox-dark">
-                                <div class="infobox-progress">
-                                    <div class="easy-pie-chart percentage" data-percent="61" data-size="39">
-                                        <span class="percent">61</span>%
-                                    </div>
-                                </div>
-
-                                <div class="infobox-data">
-                                    <div class="infobox-content">Task</div>
-                                    <div class="infobox-content">Completion</div>
-                                </div>
-                            </div>
-
-                            <div class="infobox infobox-blue infobox-small infobox-dark">
-                                <div class="infobox-chart">
-                                    <span class="sparkline" data-values="3,4,2,3,4,4,2,2"></span>
-                                </div>
-
-                                <div class="infobox-data">
-                                    <div class="infobox-content">Earnings</div>
-                                    <div class="infobox-content">$32,000</div>
-                                </div>
-                            </div>
-
-                            <div class="infobox infobox-grey infobox-small infobox-dark">
-                                <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-download"></i>
-                                </div>
-
-                                <div class="infobox-data">
-                                    <div class="infobox-content">Downloads</div>
-                                    <div class="infobox-content">1,205</div>
-                                </div>
-                            </div>
-                        </div> -->
           </div>
 
           <div class="vspace-12-sm"></div>
@@ -275,87 +182,11 @@
                   <i class="ace-icon fa fa-signal"></i>
                   Produtos mais Vendidos
                 </h5>
-
-                <!-- <div class="widget-toolbar no-border">
-                  <div class="inline dropdown-hover">
-                    <button class="btn btn-minier btn-primary">
-                      Esta Semana
-                      <i
-                        class="ace-icon fa fa-angle-down icon-on-right bigger-110"
-                      ></i>
-                    </button>
-
-                    <ul
-                      class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret"
-                    >
-                      <li class="active">
-                        <a href="#" class="blue">
-                          <i class="ace-icon fa fa-caret-right bigger-110"
-                            >&nbsp;</i
-                          >
-                          Esta Semana
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="#">
-                          <i
-                            class="ace-icon fa fa-caret-right bigger-110 invisible"
-                            >&nbsp;</i
-                          >
-                          Semana Passada
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="#">
-                          <i
-                            class="ace-icon fa fa-caret-right bigger-110 invisible"
-                            >&nbsp;</i
-                          >
-                          Este Mês
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="#">
-                          <i
-                            class="ace-icon fa fa-caret-right bigger-110 invisible"
-                            >&nbsp;</i
-                          >
-                          Mês Passado
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div> -->
               </div>
 
               <div class="widget-body">
                 <div class="widget-main">
                   <div id="piechart-placeholder"></div>
-                  <!-- 
-                                <div class="hr hr8 hr-double"></div>
-
-                                <div class="clearfix">
-                                    <div class="grid3">
-                                        <span class="badge badge-primary">P</span>
-                                        Produtos
-                                        <h4 class="bigger pull-right">{{countprodutos |formatQt}}</h4>
-                                    </div>
-
-                                    <div class="grid3">
-                                        <span class="badge badge-purple">V</span>
-                                        Vendas
-                                        <h4 class="bigger pull-right">{{countvendas |formatQt}}</h4>
-                                    </div>
-
-                                    <div class="grid3">
-                                        <span class="badge badge-danger">C</span>
-                                        Clientes
-                                        <h4 class="bigger pull-right">{{countclientes |formatQt}}</h4>
-                                    </div>
-                                </div> -->
                 </div>
               </div>
               <!-- /.widget-body -->
@@ -371,23 +202,11 @@
       <!-- /.col -->
 
       <!-- MODAL EDITAR SENHA DO UTILIZADOR  -->
-      <div
-        class="modal fade"
-        id="alterarSenha"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="alterarSenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content" style="width: 460px">
             <div class="modal-header text-center" id="logomarca-header">
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true" class="white">&times;</span>
               </button>
               <h4 class="smaller">
@@ -396,11 +215,7 @@
               </h4>
             </div>
             <div class="modal-body" style>
-              <form
-                method="POST"
-                class="form-horizontal validation-form"
-                role="form"
-              >
+              <form method="POST" class="form-horizontal validation-form" role="form">
                 <input type="hidden" name="_token" />
 
                 <div class="tabbable">
@@ -412,64 +227,33 @@
                             <div class="form-group has-info">
                               <br />
                               <br />
-                              <label
-                                class="col-sm-3 control-label no-padding-right bold"
-                                for="old_password"
-                              >
+                              <label class="col-sm-3 control-label no-padding-right bold" for="old_password">
                                 Senha Antiga
-                                <span
-                                  class="tooltip-target"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                ></span>
+                                <span class="tooltip-target" data-toggle="tooltip" data-placement="top"></span>
                               </label>
                               <div class="col-md-9">
                                 <div class="input-group">
-                                  <input
-                                    type="password"
-                                    v-model="senhaEdit.old_password"
-                                    placeholder="Informe a Senha Antiga"
-                                    class="col-xs-12"
-                                    id="old_password"
-                                    required
-                                    style="padding: 2px 8px 9px"
-                                  />
+                                  <input type="password" v-model="senhaEdit.old_password"
+                                    placeholder="Informe a Senha Antiga" class="col-xs-12" id="old_password" required
+                                    style="padding: 2px 8px 9px" />
                                   <span class="input-group-addon">
-                                    <i
-                                      class="ace-icon fa fa-key bigger-150 text-info"
-                                    ></i>
+                                    <i class="ace-icon fa fa-key bigger-150 text-info"></i>
                                   </span>
                                 </div>
                               </div>
                             </div>
 
                             <div class="form-group has-info">
-                              <label
-                                class="col-sm-3 control-label no-padding-right bold"
-                                for="password"
-                              >
+                              <label class="col-sm-3 control-label no-padding-right bold" for="password">
                                 Nova Senha
-                                <span
-                                  class="tooltip-target"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                ></span>
+                                <span class="tooltip-target" data-toggle="tooltip" data-placement="top"></span>
                               </label>
                               <div class="col-md-9">
                                 <div class="input-group">
-                                  <input
-                                    type="password"
-                                    v-model="senhaEdit.password"
-                                    placeholder="Informe a nova Senha"
-                                    class="col-xs-12"
-                                    id="password"
-                                    required
-                                    style="padding: 2px 8px 9px"
-                                  />
+                                  <input type="password" v-model="senhaEdit.password" placeholder="Informe a nova Senha"
+                                    class="col-xs-12" id="password" required style="padding: 2px 8px 9px" />
                                   <span class="input-group-addon">
-                                    <i
-                                      class="ace-icon fa fa-key bigger-150 text-info"
-                                    ></i>
+                                    <i class="ace-icon fa fa-key bigger-150 text-info"></i>
                                   </span>
                                 </div>
                               </div>
@@ -483,20 +267,12 @@
 
                 <div class="clearfix form-actions">
                   <div class="col-md-offset-3 col-md-9">
-                    <button
-                      class="btn btn-danger"
-                      type="reset"
-                      data-dismiss="modal"
-                    >
+                    <button class="btn btn-danger" type="reset" data-dismiss="modal">
                       <i class="ace-icon fa fa-close bigger-110"></i>
                       Cancelar
                     </button>
                     &nbsp; &nbsp;&nbsp; &nbsp;
-                    <button
-                      class="btn btn-info"
-                      type="submit"
-                      @click.prevent="AlterarSenha"
-                    >
+                    <button class="btn btn-info" type="submit" @click.prevent="AlterarSenha">
                       <i class="ace-icon fa fa-check bigger-110"></i>
                       Salvar
                     </button>
@@ -590,21 +366,17 @@ export default {
   },
 
   mounted() {
-
-    console.log(window.Laravel);return;
+    console.log(window.Laravel);
+    return;
   },
 
   computed: {
     window() {
-       return window.Laravel;
+      return window.Laravel;
     },
-    // role() {
-    //   return window.Laravel.can;
-    // },
   },
 
   methods: {
-    
     $can(permissionName) {
       console.log(window.Laravel);
       return;
@@ -647,23 +419,6 @@ export default {
     reset() {
       this.senhaEdit = {};
     },
-
-    // dependenciaDashboard() {
-    //     axios.get(`${baseUrl}/empresa/infoDashboard`).then(response => {
-    //         this.users = response.data.Users;
-    //         this.clientes = response.data.Clientes;
-    //         this.lojas = response.data.Lojas;
-    //         this.fornecedores = response.data.Fornecedores;
-    //         this.fabricantes = response.data.Fabricantes;
-    //         this.bancos = response.data.Bancos;
-    //         this.gestores = response.data.Gestores;
-    //         this.produtos = response.data.Produtos;
-    //         this.produto_stock = response.data.Produto_Stock;
-    //         this.vendas = response.data.Vendas;
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
-    // },
   },
 }; //Fim do export default
 </script>

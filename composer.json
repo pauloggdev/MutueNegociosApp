@@ -29,7 +29,7 @@
         "spatie/laravel-permission": "^3.11"
     },
     "require-dev": {
-       
+
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.4",
         "laravel/ui": "^2.0",

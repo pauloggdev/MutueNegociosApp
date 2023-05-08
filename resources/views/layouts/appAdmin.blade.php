@@ -189,7 +189,7 @@ if (Auth::guard('web')->check()) {
                 <li class="">
                     <a href="{{ route('admin.home') }}">
                         <i class="menu-icon glyphicon glyphicon-home"></i>
-                        <span class="menu-text"> Inicio </span>
+                        <span class="menu-text"> INICIO </span>
                     </a>
 
                     <b class="arrow"></b>
@@ -198,35 +198,35 @@ if (Auth::guard('web')->check()) {
                 <li class="">
                     <a href="{{route('admin.users.index')}}">
                         <i class="menu-icon fa fa-user"></i>
-                        <span class="menu-text"> Utilizadores </span>
+                        <span class="menu-text"> UTILIZADORES </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li class="">
                     <a href="{{route('admin.bancos.index')}}">
                         <i class="menu-icon fa fa-user"></i>
-                        <span class="menu-text"> Bancos </span>
+                        <span class="menu-text"> BANCOS </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li class="">
                     <a href="{{route('admin.clientes.index')}}">
                         <i class="menu-icon fa fa-users"></i>
-                        <span class="menu-text"> Clientes </span>
+                        <span class="menu-text"> CLIENTES </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li class="">
                     <a href="{{route('admin.licencas.index')}}">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Licenças </span>
+                        <span class="menu-text"> LICENÇAS </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text">Pedidos</span>
+                        <span class="menu-text">PEDIDOS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -237,14 +237,14 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="{{ route('admin.pedidosLicencas.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Pedidos de licenças
+                                PEDIDO DE LICENÇAS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="{{ route('pedidosActivacaoUtilizador') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Pedidos activação utilizador
+                                PEDIDOS ACTIVAÇÃO UTILIZADOR
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -264,14 +264,14 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="{{ route('taxaIva.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Taxa iva
+                                TAXA IVA
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="{{ route('motivoIsencao.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Motivo isenção
+                                MOTIVO ISENÇÃO
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -280,7 +280,7 @@ if (Auth::guard('web')->check()) {
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text">Configurações</span>
+                        <span class="menu-text">CONFIGURAÇÕES</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -291,14 +291,14 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="{{ route('backupBancoIndex') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Backup Banco
+                                BACKUP BANCO
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
                             <a href="{{ route('configContaEmpresa') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Minha conta
+                                MINHA CONTA
                             </a>
                             <b class="arrow"></b>
                         </li>

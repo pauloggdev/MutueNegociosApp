@@ -31,7 +31,6 @@ class CategoriaUpdateController extends Component
         $categoria = $this->categoriaRepository->getCategoria($categoriaId)->toArray();
         $this->categoria['id'] = $categoria['id'];
         $this->categoria['designacao'] = $categoria['designacao'];
-        $this->categoria['canal_id'] = $categoria['canal_id'];
         $this->categoria['status_id'] = $categoria['status_id'];
         $this->categoria['imagem'] = $categoria['imagem'];
         $this->categoria['newImagem'] = NULL;

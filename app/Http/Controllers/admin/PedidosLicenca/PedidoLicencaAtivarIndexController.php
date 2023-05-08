@@ -63,6 +63,7 @@ class PedidoLicencaAtivarIndexController extends Component
 
         $ativacaoLicenca = $this->pedidosLicencaRepository->getPedidosLicenca($pedidoLicencaId);
 
+
         $data['emails'][] = $ativacaoLicenca['empresa']['email'];
 
         $ultimaDataLicencaAtiva = $this->pedidosLicencaRepository->pegarUltimaDataLicencaDaEmpresa($ativacaoLicenca->empresa_id);
@@ -89,15 +90,16 @@ class PedidoLicencaAtivarIndexController extends Component
 
             DB::beginTransaction();
             $ativacaoLicenca->status_licenca_id = 1;
-            $ativacaoLicenca->user_id = 1;
+            $ativacaoLicenca->user_id = auth()->user()->id;
+            $ativacaoLicenca->operador = auth()->user()->name;
             $ativacaoLicenca->data_inicio = $data_inicio;
             $ativacaoLicenca->data_fim = $data_fim;
             $ativacaoLicenca->data_rejeicao = NULL;
             $ativacaoLicenca->data_activacao = Carbon::now();
             $ativacaoLicenca->observacao = $observacao;
             $ativacaoLicenca->save();
-
             $pagamento = $this->pagamentoRepository->getPagamento($ativacaoLicenca->pagamento_id, $ativacaoLicenca->empresa_id);
+
             $this->pagamentoRepository->alterarStatuPagamentoAtivo($ativacaoLicenca->pagamento_id, $ativacaoLicenca->empresa_id, $data_inicio);
             $this->facturaRepository->alterarStatuFacturaParaPago($pagamento->referenciaFactura, $ativacaoLicenca->empresa_id);
 

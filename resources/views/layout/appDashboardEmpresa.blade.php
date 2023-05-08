@@ -208,7 +208,7 @@
                 <li class="">
                     <a href="{{url('home')}}">
                         <i class="menu-icon glyphicon glyphicon-home"></i>
-                        <span class="menu-text"> Inicio </span>
+                        <span class="menu-text"> INICIO </span>
                     </a>
 
                     <b class="arrow"></b>
@@ -219,7 +219,7 @@
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text">Cadastros</span>
+                        <span class="menu-text">CADASTROS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>

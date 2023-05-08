@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Portal;
 
-// use App\Models\CarrinhoProduto;
+use App\Models\Portal\CarrinhoProduto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+// use Illuminate\Support\Facades\Sanctum;
 
 class CarrinhoProdutoController extends Controller
 {
@@ -22,52 +23,54 @@ class CarrinhoProdutoController extends Controller
 
     public function addProdutoNoCarrinho($id)
     {
-        $produto_id = base64_decode(base64_decode(base64_decode($id)));
-        $produto = CarrinhoProduto::with('produto')->where('produto_id',$produto_id)->first();
+        // return $id;
+        // $produto_id = base64_decode(base64_decode(base64_decode($id)));
+        $produto = CarrinhoProduto::query()->where('produto_id',$id)->first();
+        // $user = Sanctum::user();
         // return $produto;
         if ($produto)
         {
             $produto->quantidade = $produto->quantidade+1;
             $produto->save();
-            return response()->json("Mais uma Unidade adicionado ao carrinho com sucesso"); 
+            return response()->json("Mais uma Unidade adicionado ao carrinho com sucesso");
         }
         else
         {
             $produto = new CarrinhoProduto();
-            $produto->user_id = auth()->user()->id;
-            $produto->produto_id = $produto_id;
+            $produto->cliente_id = 668;
+            $produto->produto_id = $id;
             $produto->quantidade += 1 ;
             $produto->save();
-            return response()->json("Produto adicionado ao carrinho com Sucesso!"); 
+            return response()->json("Produto adicionado ao carrinho com Sucesso!");
         }
     }
 
     public function encreaseCarrinhoQtyProduto($id)
     {
         $produto_id = base64_decode(base64_decode(base64_decode($id)));
-        
+
         $produto = CarrinhoProduto::with('produto')->where('produto_id',$produto_id)->first();
         $produto->quantidade = $produto->quantidade+1;
         $produto->save();
         $produtosNoCarrinho = CarrinhoProduto::with('produto')->get();
-        return response()->json($produtosNoCarrinho); 
+        return response()->json($produtosNoCarrinho);
     }
 
     public function decreaseCarrinhoQtyProduto($id)
     {
         $produto_id = base64_decode(base64_decode(base64_decode($id)));
         $produto = CarrinhoProduto::with('produto')->where('produto_id',$produto_id)->first();
-        
+
         if ($produto->quantidade!=1){
             $produto->quantidade = $produto->quantidade-1;
             $produto->save();
         }
-        else 
+        else
         {
             CarrinhoProduto::where('produto_id',$produto_id)->delete();
         }
         $produtosNoCarrinho = CarrinhoProduto::with('produto')->get();
-        return response()->json($produtosNoCarrinho); 
+        return response()->json($produtosNoCarrinho);
     }
 
     public function store(Request $request)
@@ -75,7 +78,7 @@ class CarrinhoProdutoController extends Controller
         //
     }
 
-    
+
     public function show(CarrinhoProduto $carrinhoProduto)
     {
         //

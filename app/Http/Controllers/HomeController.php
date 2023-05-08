@@ -67,9 +67,6 @@ class HomeController extends Controller
     public function index()
     {
 
-
-        // dd(Auth::user()->can['gerir empresas']);
-
         $TIPO_FUNCIONARIO = 3;
         $TIPO_ADMIN = 2;
         $TIPO_FACTURA = 2;

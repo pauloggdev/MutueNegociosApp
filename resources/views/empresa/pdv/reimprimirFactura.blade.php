@@ -200,12 +200,11 @@ use Illuminate\Support\Str;
                             <td style="text-align:center;"><?php echo number_format($row->taxa, 2, ',', '.'); ?></td>
                             <td style="text-align:right;"><?php echo number_format($row->preco_venda_produto, 2, ',', '.'); ?></td>
                         </tr>
-                        @if ($row->taxa <= 0)
-                            <tr>
-                                <td style="font-size:6px; text-align: left;text-transform: lowercase;" colspan="6">
-                                    <?php echo $row->produto->motivoIsencao->descricao; ?></td>
-                            </tr>
-                        @endif
+                        @if ($row->taxa <= 0) <tr>
+                            <td style="font-size:6px; text-align: left;text-transform: lowercase;" colspan="6">
+                                <?php echo $row->produto->motivoIsencao->descricao; ?></td>
+        </tr>
+        @endif
     <?php }; ?>
     </table>
 
@@ -288,7 +287,7 @@ use Illuminate\Support\Str;
         margin-bottom: 0px;">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr class="descricao" style="text-align: left">
-                        <span style="text-align: left;">MEIO DE PAGAEMENTO:</span> <span style=" text-align:right;"><?php echo $factura->formaPagamento->descricao; ?></span>
+                        <span style="text-align: left;">MEIO DE PAGAEMENTO:</span> <span style=" text-align:right;"><?php echo $factura->formaPagamento ? $factura->formaPagamento->descricao : ''; ?></span>
                     </tr><br>
                     <tr class="descricao" style="text-align: left; text-transform: uppercase">
                         <span style="text-align: left;">SÃO:</span> <span style=" text-align:right;"><?php echo $factura->valor_extenso; ?></span>
@@ -310,7 +309,7 @@ use Illuminate\Support\Str;
                         </tr>
                         <?php foreach ($factura->facturas_items as $row) { ?>
                             <tr class="descricao" style="text-align: left;line-height: 10px;margin-bottom: 0px;padding-right: 12px;">
-                                <td style=""><?php echo $row->taxa > 0 ? "IVA(".number_format($row->taxa, 2, ',', '.')."%)": "ISENTO(".number_format($row->taxa, 2, ',', '.')."%)"?>&nbsp;</td>
+                                <td style=""><?php echo $row->taxa > 0 ? "IVA(" . number_format($row->taxa, 2, ',', '.') . "%)" : "ISENTO(" . number_format($row->taxa, 2, ',', '.') . "%)" ?>&nbsp;</td>
                                 <td style=" text-align: right"><?php echo number_format($row->incidencia_produto, 2, ',', '.'); ?></td>
                                 <td style="text-align:right;"><?php echo number_format($row->iva_produto, 2, ',', '.'); ?></td>
 
