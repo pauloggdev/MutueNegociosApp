@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ClassificacaoResource extends JsonResource
@@ -18,7 +19,7 @@ class ClassificacaoResource extends JsonResource
             'user' => new UserResource($this->user),
             'num_classificacao' => $this->num_classificacao,
             'comentario' => $this->comentario,
-            'tempoClassificacao' => $this->created_at
+            'tempoClassificacao' => date('Y-m-d H:m:s', strtotime($this->created_at))
         ];
     }
     public function tempoClassificacao($dataCriacao)

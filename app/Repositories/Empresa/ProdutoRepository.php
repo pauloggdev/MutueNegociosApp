@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Empresa;
 
-use App\Models\empresa\Classificacao;
 use App\Models\empresa\ExistenciaStock;
 use App\Models\empresa\Produto;
 use App\Repositories\Empresa\contracts\ProdutoRepositoryInterface;
@@ -17,12 +16,10 @@ class ProdutoRepository implements ProdutoRepositoryInterface
 {
 
     protected $entity;
-    protected $classificacao;
 
-    public function __construct(Produto $produto, Classificacao $classificacao)
+    public function __construct(Produto $produto)
     {
         $this->entity = $produto;
-        $this->classificacao = $classificacao;
     }
     public function listarSeisProdutosMaisVendidos()
     {
@@ -51,7 +48,8 @@ class ProdutoRepository implements ProdutoRepositoryInterface
     public function mv_listarProdutos($search)
     {
         $produtos = $this->entity::with(['produtoImagens', 'categoria', 'status', 'empresa'])
-        ->search(trim($search))
+            ->where('venda_online', 'Y')
+            ->search(trim($search))
             ->paginate();
 
         foreach ($produtos as $key => $produto) {
@@ -100,9 +98,6 @@ class ProdutoRepository implements ProdutoRepositoryInterface
         }
         return $produtos;
     }
-    public function mv_listarComentarioPorProduto($produtoId){
-        return $this->classificacao::where('produto_id', $produtoId)->get();
-    }
     public function totalUsers($produtoId)
     {
         return DB::connection('mysql2')->table('classificacao')
@@ -113,7 +108,7 @@ class ProdutoRepository implements ProdutoRepositoryInterface
     {
         $totalUsers = $this->totalUsers($produtoId);
         if ($totalUsers <= 0) return 0;
-        return (($classificacao * $this->countUsers($classificacao, $produtoId)) / $totalUsers) / $classificacao;
+        return (($classificacao * $this->countUsers($classificacao, $produtoId)) / $totalUsers) / 5;
     }
     public function countUsers($classificacao, $produtoId)
     {
