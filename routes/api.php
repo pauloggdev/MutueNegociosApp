@@ -90,6 +90,7 @@ Route::group(['prefix' => 'portal'], function () {
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
 Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
 
+});
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
@@ -119,11 +120,6 @@ Route::group(['prefix' => 'portal'], function () {
 
 Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
 Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
-
-
-
-
-
 
 
 //CLIENTES
@@ -254,7 +250,7 @@ Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProduto
 Route::get("/listarComentarioPorProduto/{produtoId}",  [ProdutoIndexController::class, 'mv_listarComentarioPorProduto']);
 
 Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
-s
+
 //admin
 Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
     Route::get('usuario/me', [AdminAuthController::class, 'me']);

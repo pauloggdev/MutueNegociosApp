@@ -18,7 +18,7 @@ class ClassificacaoResource extends JsonResource
             'user' => new UserResource($this->user),
             'num_classificacao' => $this->num_classificacao,
             'comentario' => $this->comentario,
-            'tempoClassificacao' => $this->tempoClassificacao($this->created_at)
+            'tempoClassificacao' => $this->created_at
         ];
     }
     public function tempoClassificacao($dataCriacao)
