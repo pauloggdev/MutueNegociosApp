@@ -22,10 +22,12 @@ class ClassificarProdutoCrontroller extends Controller
         $messages = [
             'produto_id.required' => 'Informe o produto',
             'num_classificacao.required' => 'Informe o numero de classificação',
+            'comentario.required' => "Informe o comentário"
         ];
         $validator = Validator::make($request->all(), [
             'produto_id' => 'required',
             'num_classificacao' => 'required',
+            'comentario' => 'required',
         ], $messages);
 
         if ($validator->fails()) {

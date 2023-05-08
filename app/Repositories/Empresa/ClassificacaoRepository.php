@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Repositories\Empresa;
+
 use App\Models\empresa\Classificacao;
+
 class ClassificacaoRepository
 {
     protected $entity;
@@ -13,16 +15,18 @@ class ClassificacaoRepository
     public function store($data)
     {
         $classificacao = $this->entity::where('produto_id', $data['produto_id'])
-        ->where('user_id', auth()->user()->id)->first();
-        if($classificacao){
+            ->where('user_id', auth()->user()->id)->first();
+        if ($classificacao) {
             return $classificacao->update([
-                'num_classificacao' => $data['num_classificacao']
+                'num_classificacao' => $data['num_classificacao'],
+                'comentario' => $data['comentario']
             ]);
         }
         return $this->entity::create([
             'produto_id' => $data['produto_id'],
             'user_id' => auth()->user()->id,
             'num_classificacao' => $data['num_classificacao'],
+            'comentario' => $data['comentario']
         ]);
     }
 }

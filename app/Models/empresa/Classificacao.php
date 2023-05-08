@@ -10,7 +10,7 @@ class Classificacao extends Model
     protected $table ='classificacao';
     protected $primarykey = 'id';
     protected $guard = 'id';
-    protected $fillable = ['produto_id','user_id','num_classificacao'];
+    protected $fillable = ['produto_id','user_id','num_classificacao', 'comentario'];
 
 
     public function user(){

@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Empresa;
 
+use App\Models\empresa\Classificacao;
 use App\Models\empresa\ExistenciaStock;
 use App\Models\empresa\Produto;
 use App\Repositories\Empresa\contracts\ProdutoRepositoryInterface;
@@ -16,10 +17,12 @@ class ProdutoRepository implements ProdutoRepositoryInterface
 {
 
     protected $entity;
+    protected $classificacao;
 
-    public function __construct(Produto $produto)
+    public function __construct(Produto $produto, Classificacao $classificacao)
     {
         $this->entity = $produto;
+        $this->classificacao = $classificacao;
     }
     public function listarSeisProdutosMaisVendidos()
     {
@@ -44,6 +47,9 @@ class ProdutoRepository implements ProdutoRepositoryInterface
         return $this->entity::with(['existenciaEstock', 'existenciaEstock.armazens', 'tipoTaxa'])
             ->where('venda_online', 'Y')
             ->search(trim($search))->paginate();
+    }
+    public function mv_listarComentarioPorProduto($produtoId){
+        return $this->classificacao::where('produto_id', $produtoId)->get();
     }
     public function mv_listarProdutos($search)
     {
