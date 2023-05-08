@@ -22,7 +22,11 @@ class CarrinhoProdutoController extends Controller
     }
 
     public function addProdutoNoCarrinho($id)
+<<<<<<< HEAD
     {
+=======
+    { 
+>>>>>>> refs/remotes/origin/main
         // return $id;
         // $produto_id = base64_decode(base64_decode(base64_decode($id)));
         $produto = CarrinhoProduto::query()->where('produto_id',$id)->first();

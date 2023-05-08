@@ -3,8 +3,6 @@
 namespace App\Models\Portal;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-use App\Models\empresa\Produto;
 use Illuminate\Database\Eloquent\Model;
 
 class CarrinhoProduto extends Model

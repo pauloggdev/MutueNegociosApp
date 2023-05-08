@@ -13,6 +13,7 @@ class CategoriaRepository
     public $categoria = [];
     public $arrayIds = [];
 
+
     public function __construct(Categoria $categoria, Produto $produto = null)
     {
         $this->entity = $categoria;
