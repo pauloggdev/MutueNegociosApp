@@ -33,6 +33,9 @@ class MailAtivacaoLicenca extends Mailable
 
         $this->subject('Pedido de Activação de licença aceite');
         $this->to($this->data['emails']);
-        return $this->view('mail.activacaoPedidoLicenca', $this->data);
+        return $this->view('mail.activacaoPedidoLicenca', $this->data)
+            ->attach($this->data['comprovativoReciboPagamento'], [
+                'as' => 'Recibo de pagamento'
+            ]);
     }
 }

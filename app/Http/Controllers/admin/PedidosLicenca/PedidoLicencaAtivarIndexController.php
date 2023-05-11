@@ -15,6 +15,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Http\Controllers\admin\ReportShowAdminController;
+
 
 
 class PedidoLicencaAtivarIndexController extends Component
@@ -57,13 +59,13 @@ class PedidoLicencaAtivarIndexController extends Component
 
     public function activarLicenca($pedidoLicencaId)
     {
-        $data['emails'] = DB::connection('mysql')->table('users_admin')
-        ->where('notificarAtivacaoLicenca', 'Y')
-        ->pluck('email')->toArray();
 
         $ativacaoLicenca = $this->pedidosLicencaRepository->getPedidosLicenca($pedidoLicencaId);
+        $referenciaEmpresaCliente = $ativacaoLicenca->empresa->referencia;
 
-
+        $data['emails'] = DB::connection('mysql')->table('users_admin')
+            ->where('notificarAtivacaoLicenca', 'Y')
+            ->pluck('email')->toArray();
         $data['emails'][] = $ativacaoLicenca['empresa']['email'];
 
         $ultimaDataLicencaAtiva = $this->pedidosLicencaRepository->pegarUltimaDataLicencaDaEmpresa($ativacaoLicenca->empresa_id);
@@ -103,13 +105,14 @@ class PedidoLicencaAtivarIndexController extends Component
             $this->pagamentoRepository->alterarStatuPagamentoAtivo($ativacaoLicenca->pagamento_id, $ativacaoLicenca->empresa_id, $data_inicio);
             $this->facturaRepository->alterarStatuFacturaParaPago($pagamento->referenciaFactura, $ativacaoLicenca->empresa_id);
 
-            //preparar aqui os dados para envio de email
-            $data['nomeEmpresa'] = $ativacaoLicenca['empresa']['nome'];
-            $data['linkLogin'] = env('APP_URL');
-            $data['data_final'] = $data_fim->format('d/m/Y');
-            $data['data_inicio'] = $data_inicio->format('d/m/Y');
-            $data['tipoLicenca'] = $ativacaoLicenca['licenca']['designacao'];
+            $pathFactura = $this->imprimirReciboPagamento($ativacaoLicenca->pagamento_id, $referenciaEmpresaCliente);
 
+            $data['nomeEmpresa'] = $ativacaoLicenca['empresa']['nome'];
+            $data['comprovativoReciboPagamento'] = $pathFactura['filename'];
+            $data['linkLogin'] = env('APP_URL');
+            $data['data_final'] =  '2023-06-11';
+            $data['data_inicio'] = '2023-05-11';
+            $data['tipoLicenca'] = $ativacaoLicenca['licenca']['designacao'];
             JobMailAtivacaoLicenca::dispatch($data)->delay(now()->addSecond('5'));
 
             DB::commit();
@@ -118,5 +121,39 @@ class PedidoLicencaAtivarIndexController extends Component
             DB::rollBack();
             throw $th;
         }
+    }
+
+    public function imprimirReciboPagamento($pagamentoId, $referenciaEmpresaCliente)
+    {
+
+
+        $filename = 'reciboPagamentoPedente';
+        $empresa = DB::connection('mysql')->table('empresas')->where('id', 1)->first();
+        $empresaCliente = DB::connection('mysql')->table('empresas')->where('referencia', $referenciaEmpresaCliente)->first();
+        $logotipo = public_path() . '/upload//' . $empresa->logotipo;
+
+        $reportController = new ReportShowAdminController();
+        $report = $reportController->show(
+            [
+                'report_file' => $filename,
+                'report_jrxml' => $filename . '.jrxml',
+                'report_parameters' => [
+                    'viaImpressao' => 1,
+                    'pagamentoId' => $pagamentoId,
+                    'logotipo' => $logotipo,
+                    'empresa_id' => $empresaCliente->id,
+                    'EmpresaNome' => $empresa->nome,
+                    'EmpresaEndereco' => $empresa->endereco,
+                    'EmpresaNif' => $empresa->nif,
+                    'EmpresaTelefone' => $empresa->pessoal_Contacto,
+                    'EmpresaEmail' => $empresa->email,
+                    'EmpresaWebsite' => $empresa->website,
+                    'operador' => auth()->user()->name
+                ]
+
+            ]
+        );
+
+        return $report;
     }
 }

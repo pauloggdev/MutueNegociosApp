@@ -26,8 +26,7 @@ class PagamentoRepository
     }
 
     public function getPagamentos()
-    {
-    }
+    { }
     public function verificarFacturaPaga($faturaReference)
     {
 
@@ -44,6 +43,7 @@ class PagamentoRepository
         $pagamento = Pagamento::where('id', $pagamentoId)->where('empresa_id', $empresaId)->first();
         $pagamento->data_validacao = $dataValicacao;
         $pagamento->status_id = Pagamento::ATIVO;
+        $pagamento->status = "VÁLIDO";
         return $pagamento->save();
     }
     public function getEmpresa()

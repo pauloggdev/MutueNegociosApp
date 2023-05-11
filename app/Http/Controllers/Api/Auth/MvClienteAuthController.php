@@ -34,7 +34,6 @@ class MvClienteAuthController extends Controller
             ->orwhere('telefone', $request->email)->where('tipo_user_id', 4)->first();
         if ($user)
             $user->tokens()->delete();
-
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Credenciais invalidos'], 401);
         }
@@ -42,6 +41,7 @@ class MvClienteAuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => [
+                'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'telefone' => $user->telefone,

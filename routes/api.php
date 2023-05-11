@@ -54,6 +54,8 @@ use App\Http\Controllers\empresa\ClienteController as EmpresaClienteController;
 use App\Http\Controllers\empresa\Facturas\FacturasIndexController;
 use App\Http\Controllers\empresa\LicencaController as EmpresaLicencaController;
 use App\Http\Controllers\empresa\UnidadeController;
+use App\Http\Controllers\Portal\CarrinhoProdutoController;
+use App\Http\Controllers\Portal\CarrinhoProdutoCrontroller;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\TipoEmpresaController;
 
@@ -82,13 +84,12 @@ Route::get('/listarPaises', [PaisController::class, 'index']);
 Route::get('/listarStatusGeral', [StatuGeralController::class, 'index']);
 Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'listarTipoClienteApi']);
 
-Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
 
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
-Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+    // Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
 
 });
 // @Zuadas MUTUE VENDAS ONLINE
@@ -108,11 +109,13 @@ Route::group(['prefix' => 'portal'], function () {
     Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     // @Zuadas Rotas do Carrinho
 
-    Route::middleware(['auth:sanctum'])->prefix('carrinho')->group(function () {
-        Route::get('/encrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
-        Route::get('/decrease/qty/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
-        Route::get('/add/produto/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
-        Route::get('/get/my/produtos', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
+    Route::middleware(['auth:sanctum'])->group(function () {
+        // Route::get('/encrease/qty/produto/{id}', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
+        Route::post('/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
+        Route::post('/add/produto', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+        Route::get('/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
+        Route::delete('/remover/produto/carrinho/{id}', [CarrinhoProdutoController::class, 'removerCarrinho']);
+        Route::get('/listar/carrinho/produto/{uuid}', [CarrinhoProdutoController::class, 'getCarrinhoProduto']);
     });
     // @Zuadas Rotas do Carrinho
 });
@@ -128,26 +131,23 @@ Route::post('register', [RegisterController::class, 'register']);
 
 //empresa api mutue negocios api
 Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
-
-
     Route::get('buscarDadosTeste/{id}', [ClassificarProdutoCrontroller::class, 'buscarDadosTeste']);
-
-
+    // Route::get('add/produto/{id}', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
     Route::post('classificarProduto', [ClassificarProdutoCrontroller::class, 'mv_classificarProduto']);
     //Home
-
     Route::get('countDashboard', [HomeController::class, 'countDashboard']);
-    Route::get('quantidadeUtilizadores', [UserController::class, 'quantidadeUtilizadores']);
-    Route::get('quantidadeClientes', [ClienteIndexController::class, 'quantidadeClientes']);
-    Route::get('quantidadeArmazens', [ArmazemIndexController::class, 'quantidadeArmazens']);
-    Route::get('quantidadeFornecedores', [FornecedorIndexController::class, 'quantidadeFornecedores']);
-    Route::get('quantidadeFabricantes', [FabricanteIndexController::class, 'quantidadeFabricantes']);
-    Route::get('quantidadeBancos', [BancoIndexController::class, 'quantidadeBancos']);
-    Route::get('quantidadeProdutos', [ProdutoIndexController::class, 'quantidadeProdutos']);
-    Route::get('quantidadesVendas', [FacturaIndexController::class, 'quantidadesVendas']);
-    Route::get('totalVendas', [FacturaIndexController::class, 'totalVendas']);
-    Route::get('listarGraficoVendasMensal', [FacturaIndexController::class, 'listarGraficoVendasMensal']);
-    Route::get('listarSeisProdutosMaisVendidos', [ProdutoIndexController::class, 'listarSeisProdutosMaisVendidos']);
+    // Route::get('quantidadeUtilizadores', [UserController::class, 'quantidadeUtilizadores']);
+    // Route::get('quantidadeClientes', [ClienteIndexController::class, 'quantidadeClientes']);
+    // Route::get('quantidadeArmazens', [ArmazemIndexController::class, 'quantidadeArmazens']);
+    // Route::get('quantidadeFornecedores', [FornecedorIndexController::class, 'quantidadeFornecedores']);
+    // Route::get('quantidadeFabricantes', [FabricanteIndexController::class, 'quantidadeFabricantes']);
+    // Route::get('quantidadeBancos', [BancoIndexController::class, 'quantidadeBancos']);
+    // Route::get('quantidadeProdutos', [ProdutoIndexController::class, 'quantidadeProdutos']);
+    // Route::get('quantidadesVendas', [FacturaIndexController::class, 'quantidadesVendas']);
+    // Route::get('totalVendas', [FacturaIndexController::class, 'totalVendas']);
+    // Route::get('listarGraficoVendasMensal', [FacturaIndexController::class, 'listarGraficoVendasMensal']);
+    // Route::get('listarSeisProdutosMaisVendidos', [ProdutoIndexController::class, 'listarSeisProdutosMaisVendidos']);
+
     //Fim home
     Route::post('produtos/actualizarStock', [ActualizarStockController::class, 'actualizarStock']);
     Route::get('listarAtualizacaoStock', [ActualizarStockController::class, 'listarAtualizacaoStock']);

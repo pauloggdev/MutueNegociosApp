@@ -16,12 +16,15 @@ class ClassificacaoRepository
     {
         $classificacao = $this->entity::where('produto_id', $data['produto_id'])
             ->where('user_id', auth()->user()->id)->first();
+
         if ($classificacao) {
-            return $classificacao->update([
+            $classificacao->update([
                 'num_classificacao' => $data['num_classificacao'],
                 'comentario' => $data['comentario']
             ]);
+            return $classificacao;
         }
+
         return $this->entity::create([
             'produto_id' => $data['produto_id'],
             'user_id' => auth()->user()->id,

@@ -15,7 +15,6 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use NumberFormatter;
-use Symfony\Component\HttpFoundation\Response;
 
 class AssinaturaIndexController extends Component
 {
@@ -88,7 +87,7 @@ class AssinaturaIndexController extends Component
         $this->licencaData['tipo_documento'] = 2;
         $this->licencaData['valor_extenso'] = $f->format($licenca['valor'] ?? 0);
     }
-    public function printFactura($facturaId)
+    public function printFactura($facturaId, $showPath = false)
     {
 
         $filename = 'facturaA4Admin';
@@ -120,6 +119,10 @@ class AssinaturaIndexController extends Component
 
             ]
         );
+
+        if ($showPath) {
+            return $report;
+        }
 
         $this->dispatchBrowserEvent('printPdf', ['data' => base64_encode($report['response']->getContent())]);
         unlink($report['filename']);
@@ -201,6 +204,7 @@ class AssinaturaIndexController extends Component
 
     public function pagamentoFactura()
     {
+
         if (!$this->facturaData) {
             $this->alert('warning', 'Selecione a factura');
             return;
@@ -229,7 +233,6 @@ class AssinaturaIndexController extends Component
             return;
         }
 
-
         $filename = 'reciboPagamentoPedente';
         $empresa = DB::connection('mysql')->table('empresas')->where('id', 1)->first();
         $empresaCliente = DB::connection('mysql')->table('empresas')->where('referencia', auth()->user()->empresa->referencia)->first();
@@ -240,6 +243,8 @@ class AssinaturaIndexController extends Component
         $data['emails'] = DB::connection('mysql')->table('users_admin')
             ->where('notificarAtivacaoLicenca', 'Y')
             ->pluck('email')->toArray();
+
+        $pathFactura = $this->printFactura($this->facturaData['id'], true);
 
         $banco = Bancos::with(['coordernadaBancaria'])->where('id', $this->facturaData['conta_movimentada_id'])->first();
         $data['licenca'] = $this->facturaData['descricao'];
@@ -252,8 +257,12 @@ class AssinaturaIndexController extends Component
         $data['valorLicença'] = $this->facturaData['valor_a_pagar'];
         $data['numOperacaoBancaria'] = $this->facturaData['numero_operacao_bancaria'];
         $data['contaMovimentada'] = $banco['coordernadaBancaria']['iban'];
-        $data['banco'] = $banco['designacao'];
 
+        $data['comprovativos'] = [
+            $this->facturaData['comprovativo_bancario']->getRealPath() => 'Comprovativo bancário',
+            $pathFactura['filename'] => 'Fatura liquidada',
+        ];
+        $data['banco'] = $banco['designacao'];
         JobNotificacaoAtivacaoLicenca::dispatch($data)->delay(now()->addSecond('5'));
 
         $this->confirm('Pedido enviado, Aguarde a validação', [

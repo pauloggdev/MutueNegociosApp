@@ -2,104 +2,112 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Http\Controllers\Controller;
+use App\Models\empresa\Produto;
 use App\Models\Portal\CarrinhoProduto;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-// use Illuminate\Support\Facades\Sanctum;
 
 class CarrinhoProdutoController extends Controller
 {
-    public function index()
-    {
-        return "PRODUTOS DE UM CLIENTE NO CARRINHO";
-    }
 
     public function getCarrinhoProdutos()
     {
-        // return "PRODUTOS DE UM CLIENTE NO CARRINHO";
-        $clienteId = auth()->user()->id;
-        return CarrinhoProduto::with('produto')->where('cliente_id',$clienteId)->get();
+        return CarrinhoProduto::with('produto')->where('cliente_id', auth()->user()->id)->get();
     }
-
-    public function addProdutoNoCarrinho($id)
-<<<<<<< HEAD
+    public function getProduto($uuid)
     {
-=======
-    { 
->>>>>>> refs/remotes/origin/main
-        // return $id;
-        // $produto_id = base64_decode(base64_decode(base64_decode($id)));
-        $produto = CarrinhoProduto::query()->where('produto_id',$id)->first();
-        // $user = Sanctum::user();
-        // return $produto;
-        if ($produto)
-        {
-            $produto->quantidade = $produto->quantidade+1;
-            $produto->save();
-            return response()->json("Mais uma Unidade adicionado ao carrinho com sucesso");
+        return Produto::where('uuid', $uuid)->first();
+    }
+    public function addProdutoNoCarrinho(Request $request)
+    {
+        $produto = $this->getProduto($request->uuid);
+
+        if (!$produto) {
+            return response()->json([
+                'error' => "Produto não encontrado"
+            ]);
         }
-        else
-        {
-            $produto = new CarrinhoProduto();
-            $produto->cliente_id = 668;
-            $produto->produto_id = $id;
-            $produto->quantidade += 1 ;
-            $produto->save();
-            return response()->json("Produto adicionado ao carrinho com Sucesso!");
+
+        $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
+            ->where('cliente_id', auth()->user()->id)
+            ->first();
+
+        if ($carrinho) {
+            $carrinho->quantidade = $carrinho->quantidade + 1;
+            $carrinho->save();
+            return response()->json([
+                'data' => $carrinho,
+                'message' => "Mais uma Unidade adicionado ao carrinho com sucesso"
+            ]);
+        } else {
+            $carrinho = new CarrinhoProduto();
+            $carrinho->cliente_id = auth()->user()->id;
+            $carrinho->produto_id = $produto->id;
+            $carrinho->quantidade += 1;
+            $carrinho->save();
+            return response()->json([
+                'data' => $carrinho,
+                'message' => "Produto adicionado ao carrinho com sucesso!"
+            ]);
         }
     }
-
-    public function encreaseCarrinhoQtyProduto($id)
+    public function getCarrinhoProduto(Request $request)
     {
-        $produto_id = base64_decode(base64_decode(base64_decode($id)));
 
-        $produto = CarrinhoProduto::with('produto')->where('produto_id',$produto_id)->first();
-        $produto->quantidade = $produto->quantidade+1;
-        $produto->save();
+        $produto = $this->getProduto($request->uuid);
+        if (!$produto) {
+            return response()->json([
+                'error' => "Produto não encontrado"
+            ]);
+        }
+        $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
+            ->where('cliente_id', auth()->user()->id)
+            ->first();
+        if (!$carrinho) {
+            return response()->json([
+                'data' => null,
+                'message' => "Produto não encontrado no carrinho"
+            ]);
+        }
+        return response()->json([
+            'data' => $carrinho,
+            'message' => 'Produto encontrado no carrinho'
+        ]);
+    }
+    public function removerCarrinho($id)
+    {
+        CarrinhoProduto::where('id', $id)->delete();
         $produtosNoCarrinho = CarrinhoProduto::with('produto')->get();
-        return response()->json($produtosNoCarrinho);
+        return response()->json([
+            'data' => $produtosNoCarrinho,
+            'message' => "Produto removido com sucesso!"
+        ]);
     }
-
-    public function decreaseCarrinhoQtyProduto($id)
+    public function decreaseCarrinhoQtyProduto(Request $request)
     {
-        $produto_id = base64_decode(base64_decode(base64_decode($id)));
-        $produto = CarrinhoProduto::with('produto')->where('produto_id',$produto_id)->first();
-
-        if ($produto->quantidade!=1){
-            $produto->quantidade = $produto->quantidade-1;
-            $produto->save();
+        $message = "";
+        $produto = $this->getProduto($request->uuid);
+        if (!$produto) {
+            return response()->json([
+                'error' => "Produto não encontrado"
+            ]);
         }
-        else
-        {
-            CarrinhoProduto::where('produto_id',$produto_id)->delete();
+        $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
+            ->where('cliente_id', auth()->user()->id)
+            ->first();
+
+        if ($carrinho && ($carrinho->quantidade - 1 > 0)) {
+            $carrinho->quantidade = $carrinho->quantidade - 1;
+            $carrinho->save();
+            $message = "Mais uma unidade reduzida com sucesso!";
+        } else {
+            CarrinhoProduto::where('id', $carrinho->id)->delete();
+            $message = "Produto removido com sucesso!";
         }
         $produtosNoCarrinho = CarrinhoProduto::with('produto')->get();
-        return response()->json($produtosNoCarrinho);
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    public function show(CarrinhoProduto $carrinhoProduto)
-    {
-        //
-    }
-
-    public function edit(CarrinhoProduto $carrinhoProduto)
-    {
-        //
-    }
-
-    public function update(Request $request, CarrinhoProduto $carrinhoProduto)
-    {
-        //
-    }
-
-    public function destroy(CarrinhoProduto $carrinhoProduto)
-    {
-        //
+        return response()->json([
+            'data' => $produtosNoCarrinho,
+            'message' => $message
+        ]);
     }
 }

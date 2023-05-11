@@ -30,8 +30,15 @@ class AtivacaoLicencaEmpresa extends Mailable
      */
     public function build()
     {
+
         $this->to($this->data['emails']);
         $this->subject($this->data['assunto']);
-        return $this->view("mail.PedidoAtivacaoLicenca", $this->data);
+        $views = $this->view("mail.PedidoAtivacaoLicenca", $this->data);
+        foreach ($this->data['comprovativos'] as $comprovativo => $descricao) {
+            $views->attach($comprovativo, [
+                'as' => $descricao
+            ]);
+        }
+        return $views;
     }
 }

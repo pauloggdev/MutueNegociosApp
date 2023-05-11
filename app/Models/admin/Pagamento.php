@@ -30,5 +30,5 @@ class Pagamento extends Model
     {
         return $this->belongsTo(Bancos::class, 'conta_movimentada_id');
     }
-    
+
 }
