@@ -67,17 +67,18 @@ class UserRepository
 
     public function updateUser($user, $roles)
     {
-        // if (isset($data['foto_atual']) && !empty($data['foto_atual'])) {
-        //     if (($data['foto'] != 'utilizadores/cliente/avatarEmpresa.png') && $data['foto']) {
-        //         $path = public_path() . "\\upload\\" . $data['foto'];
-        //         if (file_exists($path)) {
-        //             unlink(public_path() . "\\upload\\" . $data['foto']);
-        //         }
-        //     }
-        //     $data['foto'] = $data['foto_atual']->store('/utilizadores/cliente/');
-        // }
 
 
+        if (isset($user['newFoto']) && !empty($user['newFoto'])) {
+
+            if (($user['foto'] != 'utilizadores/cliente/avatarEmpresa.png') && $user['foto']) {
+                $path = public_path() . "\\upload\\" . $user['foto'];
+                if (file_exists($path)) {
+                    unlink(public_path() . "\\upload\\" . $user['foto']);
+                }
+            }
+            $user['newFoto'] = $user['newFoto']->store('/utilizadores/cliente/');
+        }
 
         DB::table('user_perfil')->where('user_id', $user->id)->delete();
         foreach ($roles as $role_id) {
@@ -86,6 +87,8 @@ class UserRepository
                 'perfil_id' => $role_id
             ]);
         }
+
+
         return $this->entity::where('id', $user->id)
             ->where('empresa_id', auth()->user()->empresa_id)->update([
                 'name' => $user['name'],
@@ -93,6 +96,7 @@ class UserRepository
                 'email' => $user['email'],
                 'telefone' => $user['telefone'],
                 'status_id' => $user['status_id'],
+                'foto' => $user['newFoto'] ? $user['newFoto']: $user['foto'],
                 'empresa_id' => auth()->user()->empresa_id
             ]);
     }

@@ -60,6 +60,7 @@ class UsuarioCreateController extends Component
     public function salvarUtilizador()
     {
 
+
         // $this->gerarFacturaPagamentoAdicionalLicencaCadastradoUtilizador($user = 649);
         // return;
 
@@ -129,7 +130,6 @@ class UsuarioCreateController extends Component
 
         $facturaId =  $this->facturaUserAdicionarRepository->salvarFacturaUtilizadorAdicionado($data);
         return $this->imprimirFacturaAdicionarUtilizador($facturaId);
-
     }
     public function imprimirFacturaAdicionarUtilizador($facturaId)
     {
@@ -178,5 +178,6 @@ class UsuarioCreateController extends Component
         $this->user['status_id'] = 1;
         $this->user['role_id'] = 2;
         $this->user['roles'] = [];
+        $this->user['foto'] = null;
     }
 }

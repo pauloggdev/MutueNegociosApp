@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Request;
 
-class ProdutoResource extends JsonResource
+class ProdutoFavoritoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,13 +12,14 @@ class ProdutoResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request): array
+    public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'designacao' => $this->designacao,
-            'preco_venda' => $this->preco_venda,
-            'imagem_produto' => $this->imagem_produto
+            'user' => new UserResource($this->user),
+            'produtos' => ProdutoResource::collection($this->produtos),
         ];
     }
+
+    
 }

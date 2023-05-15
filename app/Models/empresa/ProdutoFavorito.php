@@ -8,6 +8,8 @@ class ProdutoFavorito extends Model
 {
     protected $connection = 'mysql2';
     protected $table = 'produtos_favoritos';
+    public $timestamps = false;
+
     protected $fillable = [
         'produto_id',
         'user_id',
@@ -16,9 +18,8 @@ class ProdutoFavorito extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
     public function produtos()
     {
-        return $this->hasMany(Produto::class, 'id', 'produto_id');
+        return $this->belongsToMany(Produto::class, ProdutoFavorito::class, 'user_id', 'produto_id');
     }
 }

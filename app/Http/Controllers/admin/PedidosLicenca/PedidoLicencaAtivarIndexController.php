@@ -110,8 +110,8 @@ class PedidoLicencaAtivarIndexController extends Component
             $data['nomeEmpresa'] = $ativacaoLicenca['empresa']['nome'];
             $data['comprovativoReciboPagamento'] = $pathFactura['filename'];
             $data['linkLogin'] = env('APP_URL');
-            $data['data_final'] =  '2023-06-11';
-            $data['data_inicio'] = '2023-05-11';
+            $data['data_final'] = $data_fim->format('d/m/Y');
+            $data['data_inicio'] = $data_inicio->format('d/m/Y');
             $data['tipoLicenca'] = $ativacaoLicenca['licenca']['designacao'];
             JobMailAtivacaoLicenca::dispatch($data)->delay(now()->addSecond('5'));
 

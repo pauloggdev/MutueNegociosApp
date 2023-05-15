@@ -7,15 +7,19 @@ use App\Repositories\Empresa\RoleRepository;
 use App\Repositories\Empresa\UserRepository;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class UsuarioUpdateController extends Component
 {
 
     use LivewireAlert;
     use UpdateUserRequest;
+    use WithFileUploads;
+
 
     public $user;
     public $userId;
+    public $newFoto;
     public $selectedPerfils = [];
     private $userRepository;
     private $roleRepository;
@@ -45,7 +49,7 @@ class UsuarioUpdateController extends Component
     }
     public function atualizarUsuario()
     {
-
+        $this->user['newFoto'] = $this->newFoto;
         if (count($this->selectedPerfils) <= 0) {
             $this->confirm('Informe pelo menos uma função', [
                 'showConfirmButton' => false,
@@ -57,6 +61,7 @@ class UsuarioUpdateController extends Component
 
         $this->validate($this->rules(), $this->messages());
         $this->userRepository->updateUser($this->user, $this->selectedPerfils);
+        $this->mount($this->user->uuid);
 
         $this->confirm('Operação realizada com sucesso', [
             'showConfirmButton' => false,

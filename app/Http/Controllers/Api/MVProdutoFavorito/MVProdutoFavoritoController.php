@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\MVProdutoFavorito;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProdutoResource;
 use App\Repositories\Empresa\ProdutoFavoritoRepository;
+use Illuminate\Http\Request;
 
 class MVProdutoFavoritoController extends Controller
 {
@@ -16,7 +16,21 @@ class MVProdutoFavoritoController extends Controller
     }
     public function mv_listarProdutosFavoritos($search = null)
     {
-        $produtos = $this->produtoFavoritoRepository->mv_listarProdutosFavoritos($search);
-        return ProdutoResource::collection($produtos);
+        return $this->produtoFavoritoRepository->mv_listarProdutosFavoritos($search);
+    }
+
+    // public function idsProdutoPorUser()
+    // {
+    //     return ProdutoFavorito::where('user_id', auth()->user()->id)
+    //         ->select('produto_id')
+    //         ->get();
+    // }
+    public function checkFavorito(Request $request)
+    {
+        return $this->produtoFavoritoRepository->checkFavorito($request->produto_id);
+    }
+    public function isProdutoFavorito($produtoId)
+    {
+        return $this->produtoFavoritoRepository->isProdutoFavorito($produtoId);
     }
 }

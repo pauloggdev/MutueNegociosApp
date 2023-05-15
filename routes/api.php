@@ -76,6 +76,8 @@ use App\Http\Controllers\Portal\PortalProdutoController;
  *ROTAS EMPRESA
  */
 
+
+
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
 Route::post('/admin/usuario/login', [AdminAuthController::class, 'auth']);
 Route::get('/listarRegimeEmpresa', [RegimeController::class, 'index']);
@@ -242,6 +244,8 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
 
     //API MUTUE VENDAS
     Route::get("/listarProdutosFavoritos",  [MVProdutoFavoritoController::class, 'mv_listarProdutosFavoritos']);
+    Route::post("/checkFavorito",  [MVProdutoFavoritoController::class, 'checkFavorito']);
+    Route::get("/isProdutoFavorito/{produtoId}",  [MVProdutoFavoritoController::class, 'isProdutoFavorito']);
 });
 
 

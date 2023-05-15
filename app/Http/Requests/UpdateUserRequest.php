@@ -27,6 +27,7 @@ trait UpdateUserRequest
             'user.telefone' => "required",
             'user.status_id' => "required",
             'user.username' => "",
+            'user.newFoto' => ""
 
         ];
     }

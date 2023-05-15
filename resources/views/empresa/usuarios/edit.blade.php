@@ -102,22 +102,31 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="control-label bold label-select2" for="newFoto">Foto</label>
+                                    <div class="input-group">
+                                        <input type="file" wire:model="newFoto" class="form-control" id="newFoto" style="height: 35px; font-size: 10pt;" />
+                                    </div>
+                                </div>
 
                                 <?php
-                                if (file_exists(url("/upload/" . $user->foto))) {
-                                    ?>
+                                if (isset($user->foto)) {
+                                ?>
                                     <div class="col-md-6">
                                         <img src="{{ url('/upload/'.$user->foto) }}" width="150px" alt="">
                                     </div>
                                 <?php
                                 } else {
-                                    ?>
-                                <div class="col-md-6">
-                                    <img src="{{ url('/upload/utilizadores/cliente/avatarEmpresa.png') }}" width="150px" alt="">
-                                </div>
+                                ?>
+                                    <div class="col-md-6">
+                                        <img src="{{ url('/upload/utilizadores/cliente/avatarEmpresa.png') }}" width="150px" alt="">
+                                    </div>
                                 <?php
                                 }
                                 ?>
+
+                            </div>
+                            <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
                                     <table style="margin-top: 5px">
                                         <tbody>

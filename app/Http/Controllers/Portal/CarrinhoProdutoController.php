@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CarrinhoResource;
 use App\Models\empresa\Produto;
 use App\Models\Portal\CarrinhoProduto;
 use Illuminate\Http\Request;
@@ -12,7 +13,11 @@ class CarrinhoProdutoController extends Controller
 
     public function getCarrinhoProdutos()
     {
-        return CarrinhoProduto::with('produto')->where('cliente_id', auth()->user()->id)->get();
+        $carrinhos = CarrinhoProduto::with('produto')->where('cliente_id', auth()->user()->id)->get();
+        $carrinhos = CarrinhoResource::collection($carrinhos);
+
+        $total = $carrinhos->sum('subtotal');
+        return  $carrinhos;
     }
     public function getProduto($uuid)
     {
