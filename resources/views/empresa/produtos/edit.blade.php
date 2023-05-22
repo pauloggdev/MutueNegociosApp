@@ -217,26 +217,57 @@
                                 </div>
                             </div>
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                <div class="col-md-12">
+                                    <label class="control-label bold label-select2" for="venda_online">Deseja que o produto seja vendido na loja?</label>
+                                    <div style="margin-bottom: 15px;">
+                                        <input type="checkbox" wire:model="produto.venda_online" class="form-control" id="venda_online" data-target="form_supply_price" style="position: absolute;left: 5px; width:40px;cursor: pointer;" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
-
-                                <label class="control-label bold label-select2" for="newImagemProduto">Imagem</label>
+                                    <label class="control-label bold label-select2" for="imagem_produto">Imagem principal<b class="red fa fa-question-circle"></b></label>
                                     <div class="input-group">
-                                        <input type="file" accept="application/image/*" wire:model="produto.newImagemProduto" class="form-control" id="newImagemProduto" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.newImagemProduto') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <input type="file" accept="application/image/*" wire:model="produto.imagem_produto" class="form-control" id="imagem_produto" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.imagem_produto') ? 'border-color: #ff9292;' : '' ?>" />
                                         <span class="input-group-addon" id="basic-addon1">
                                             <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
                                         </span>
                                     </div>
+                                    @if ($errors->has('produto.imagem_produto'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.imagem_produto') }}</strong>
+                                    </span>
+                                    @endif
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-3" style="border: 1px solid #e0dcdc;border-radius: 5px;">
+                                            <img style="height: 127px;" src="<?= $produto['imagem_produto'] ?>" alt="">
+                                        </div>
+
+                                    </div>
+
                                 </div>
-                            </div>
-                            @if($produto['imagem_produto'])
-                            <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
-
-                                <img src="/upload/<?php echo $produto['imagem_produto']?>" style="width: 120px; height: 120px"  alt="">
-
+                                    <label class="control-label bold label-select2" for="newImagens">Imagem adicionais</label>
+                                    <div class="input-group">
+                                        <input type="file" multiple accept="application/image/*" wire:model="produto.newImagens" class="form-control" id="newImagens" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.imagens') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        @if(count($produto['produto_imagens'])> 0)
+                                        @foreach($produto['produto_imagens'] as $imagem)
+                                        <div class="col-md-3" style="border: 1px solid #e0dcdc;border-radius: 5px; margin-right: 5px">
+                                            <img style="height: 127px;" src="<?= $imagem['url'] ?>" alt="">
+                                            <div wire:click="modalDelImagem({{json_encode($imagem)}})" style="background-color: #D15B47;width: 25px;height: 25px; border-radius: 12px; display: flex;justify-content: center;align-items: center;position: absolute;top: -3px;cursor: pointer;left: 159px;">X</div>
+                                        </div>
+                                        @endforeach
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                            @endif
                         </div>
                     </div>
                     <div class="clearfix form-actions">

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\EmpresaAuthController;
 use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Auth\ClienteAuthController;
 use App\Http\Controllers\Api\Auth\MvClienteAuthController;
+use App\Http\Controllers\Api\Auth\MvClienteAuthPortalController;
 use App\Http\Controllers\Api\Bancos\BancoCreateController;
 use App\Http\Controllers\Api\Bancos\BancoIndexController;
 use App\Http\Controllers\Api\Bancos\BancoShowController;
@@ -61,6 +62,9 @@ use App\Http\Controllers\TipoEmpresaController;
 
 
 use App\Http\Controllers\Portal\PortalProdutoController;
+use Illuminate\Http\Request;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -77,6 +81,8 @@ use App\Http\Controllers\Portal\PortalProdutoController;
  */
 
 
+Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
+
 
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
 Route::post('/admin/usuario/login', [AdminAuthController::class, 'auth']);
@@ -87,13 +93,8 @@ Route::get('/listarStatusGeral', [StatuGeralController::class, 'index']);
 Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'listarTipoClienteApi']);
 
 
-// @Zuadas MUTUE VENDAS ONLINE
-Route::group(['prefix' => 'portal'], function () {
-    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
-    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
-    // Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
 
-});
+
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
@@ -108,7 +109,7 @@ Route::group(['prefix' => 'portal'], function () {
     // @Zuadas Rotas do Carrinho
 
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
-    Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
+    // Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     // @Zuadas Rotas do Carrinho
 
     Route::middleware(['auth:sanctum'])->group(function () {
@@ -124,6 +125,7 @@ Route::group(['prefix' => 'portal'], function () {
 // @Zuadas MUTUE VENDAS ONLINE
 
 Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
+Route::post('/user/logout', [MvClienteAuthController::class, 'logout']);
 Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
 
 

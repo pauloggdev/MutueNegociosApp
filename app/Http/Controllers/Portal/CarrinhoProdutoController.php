@@ -26,13 +26,11 @@ class CarrinhoProdutoController extends Controller
     public function addProdutoNoCarrinho(Request $request)
     {
         $produto = $this->getProduto($request->uuid);
-
         if (!$produto) {
             return response()->json([
                 'error' => "Produto não encontrado"
             ]);
         }
-
         $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
             ->where('cliente_id', auth()->user()->id)
             ->first();
@@ -50,6 +48,11 @@ class CarrinhoProdutoController extends Controller
             $carrinho->produto_id = $produto->id;
             $carrinho->quantidade += 1;
             $carrinho->save();
+
+            $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
+            ->where('cliente_id', auth()->user()->id)
+            ->first();
+
             return response()->json([
                 'data' => $carrinho,
                 'message' => "Produto adicionado ao carrinho com sucesso!"
@@ -101,6 +104,14 @@ class CarrinhoProdutoController extends Controller
             ->where('cliente_id', auth()->user()->id)
             ->first();
 
+        if (!$carrinho) {
+            return response()->json([
+                'data' => null,
+                'message' => "Produto não encontrado no carrinho"
+            ]);
+        }
+
+
         if ($carrinho && ($carrinho->quantidade - 1 > 0)) {
             $carrinho->quantidade = $carrinho->quantidade - 1;
             $carrinho->save();
@@ -109,7 +120,10 @@ class CarrinhoProdutoController extends Controller
             CarrinhoProduto::where('id', $carrinho->id)->delete();
             $message = "Produto removido com sucesso!";
         }
-        $produtosNoCarrinho = CarrinhoProduto::with('produto')->get();
+        $produtosNoCarrinho = CarrinhoProduto::with('produto')
+        ->where('cliente_id', auth()->user()->id)
+        ->where('produto_id', $produto->id)
+        ->first();
         return response()->json([
             'data' => $produtosNoCarrinho,
             'message' => $message

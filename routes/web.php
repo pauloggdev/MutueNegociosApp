@@ -193,6 +193,7 @@ use App\Http\Controllers\empresa\Vendas\VendasDiariaIndexController;
 use App\Http\Controllers\empresa\Vendas\VendasMensalIndexController;
 use App\Jobs\JobCreateNewUser;
 use App\Models\empresa\Armazen;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // PedidoLicencaRejeitadoIndexController
 use Illuminate\Support\Str;
@@ -213,19 +214,19 @@ use Illuminate\Support\Str;
 Auth::routes();
 
 
-Route::get('/uuid', function () {
+// Route::get('/uuid', function () {
 
-    return view("alert.msg_criacao_empresa_mobile");
+//     return view("alert.msg_criacao_empresa_mobile");
 
-    $clientes = DB::table('clientes')->get();
+//     $clientes = DB::table('clientes')->get();
 
-    foreach ($clientes as $key => $cliente) {
+//     foreach ($clientes as $key => $cliente) {
 
-        DB::table('clientes')->where('id', $cliente->id)->update([
-            'uuid' => Str::uuid()
-        ]);
-    }
-});
+//         DB::table('clientes')->where('id', $cliente->id)->update([
+//             'uuid' => Str::uuid()
+//         ]);
+//     }
+// });
 
 Route::get('/user_perfil', function () {
 
@@ -241,6 +242,11 @@ Route::get('/user_perfil', function () {
     }
 });
 
+
+
+// Route::get('/csrf-cookie', function (Request $request) {
+//     return response()->json(['csrf_token' => csrf_token()]);
+// });
 
 // ROTAS NOVAS V1
 //Empresa
