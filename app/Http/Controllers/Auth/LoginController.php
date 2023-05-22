@@ -143,6 +143,7 @@ class LoginController extends Controller
         ]);
 
 
+
         if (is_numeric($request->email)) {
             $credentials = ['telefone' => $request->email, 'password' => $request->password];
         } else if ($this->isMail($request->get('email'))) {

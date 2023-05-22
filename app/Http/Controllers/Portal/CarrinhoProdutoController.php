@@ -26,13 +26,11 @@ class CarrinhoProdutoController extends Controller
     public function addProdutoNoCarrinho(Request $request)
     {
         $produto = $this->getProduto($request->uuid);
-
         if (!$produto) {
             return response()->json([
                 'error' => "Produto não encontrado"
             ]);
         }
-
         $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
             ->where('cliente_id', auth()->user()->id)
             ->first();
