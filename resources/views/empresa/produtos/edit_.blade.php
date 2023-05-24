@@ -1,3 +1,4 @@
+@section('title','Editar produto')
 <div class="row">
     <div class="space-6"></div>
     <div class="page-header" style="left: 0.5%; position: relative">
@@ -25,178 +26,235 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-            <form method="POST" action="{{ route('produto.update', $produto->uuid) }}" enctype="multipart/form-data" class="filter-form form-horizontal validation-form" id="validation-form">
-                @csrf
+            <form class="filter-form form-horizontal validation-form" id="validation-form">
                 <div class="second-row">
                     <div class="tabbable">
                         <div class="tab-content profile-edit-tab-content">
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="designacao">Nome do Produto<b class="red fa fa-question-circle"></b></label>
+                                    <label class="control-label bold label-select2" for="nomeCliente">Nome<b class="red fa fa-question-circle"></b></label>
                                     <div class="input-group">
-                                        <input type="text" id="designacao" value="{{ $produto->designacao ?? old('designacao')}}" name="designacao" autofocus class="col-md-12 col-xs-12 col-sm-4" style="<?= $errors->has('designacao') ? 'border-color: #ff9292 !important' : '' ?>" />
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-info-circle bigger-110 text-info"></i>
+                                        <input type="text" wire:model="produto.designacao" class="form-control" id="nomeProduto" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.designacao') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
                                         </span>
                                     </div>
-                                    @if ($errors->has('designacao'))
-                                    <span class="help-block" style="color: red; font-weight: bold">
-                                        <strong>{{ $errors->first('designacao') }}</strong>
+                                    @if ($errors->has('produto.designacao'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.designacao') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="categoria_id">Categoria<b class="red"></b></label>
-                                    <select name="categoria_id" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
+                                    <label class="control-label bold label-select2" for="categoria_id">Categoria</label>
+                                    <select wire:model="produto.categoria_id" class="col-md-12 select2" id="categoria_id" style="height:35px;<?= $errors->has('produto.categoria_id') ? 'border-color: #ff9292;' : '' ?>">
                                         @foreach($categorias as $categoria)
-                                        <option <?= $produto->categoria_id == $categoria->id ? 'selected' : '' ?> value="{{$categoria->id}}">{{$categoria->designacao}}</option>
+                                        <option value="{{$categoria->id}}">{{ $categoria->designacao }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('categoria_id'))
-                                    <span class="help-block" style="color: red;">
-                                        <strong>{{ $errors->first('categoria_id') }}</strong>
+                                    @if ($errors->has('produto.categoria_id'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.categoria_id') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
-                            <h4 class="header bolder smaller" style="color: #3d5476">
-                                Vendas
-                            </h4>
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
-                                <div class="col-md-4">
-                                    <label class="control-label bold label-select2" for="preco_compra">Preço de Compra<b class="red fa fa-question-"></b></label>
+                                <div class="col-md-3">
+                                    <label class="control-label bold label-select2" for="precoCompra">Preço de Compra</label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Kz</div>
-                                        <input type="number" value="{{ $produto->preco_compra ?? old('preco_compra')}}" name="preco_compra" class="form-control" id="preco_compra" data-target="form_supply_price" style="height: 35px; font-size: 13pt" />
+                                        <input type="text" wire:model="produto.preco_compra" class="form-control" id="precoCompra" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.preco_compra') ? 'border-color: #ff9292;' : '' ?>" />
                                         <span class="input-group-addon" id="basic-addon1">
-                                            <i class="fa fa-calculator price-popup-icon" data-target="form_supply_price_smartprice"></i>
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
+                                    </div>
+                                    @if ($errors->has('produto.preco_compra'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.preco_compra') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label bold label-select2" for="margemLucro">Margem de lucro(%)</label>
+                                    <div class="input-group">
+                                        <input type="number" wire:model="margemLucro" class="form-control" id="margemLucro" autofocus style="height: 35px; font-size: 10pt;" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
                                         </span>
                                     </div>
                                 </div>
-
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label class="control-label bold label-select2" for="preco_venda">Preço de Venda<b class="red fa fa-question-circle"></b></label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Kz</div>
-                                        <input id="preco_venda" value="{{ $produto->preco_venda ?? old('preco_venda')}}" name="preco_venda" type="number" class="price_with_tax form-control" style="height: 35px; font-size: 13pt; <?= $errors->has('preco_venda') ? 'border-color: #ff9292 !important;' : '' ?>" />
+                                        <input type="text" wire:model="produto.preco_venda" class="form-control" id="preco_venda" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.preco_venda') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
                                     </div>
-                                    @if ($errors->has('preco_venda'))
-                                    <span class="help-block" style="color: red; font-weight: bold">
-                                        <strong>{{ $errors->first('preco_venda') }}</strong>
+                                    @if ($errors->has('produto.preco_venda'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.preco_venda') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label bold label-select2" for="status_id">Status</label>
+                                    <select wire:model="produto.status_id" class="col-md-12 select2" id="status_id" style="height:35px;<?= $errors->has('produto.status_id') ? 'border-color: #ff9292;' : '' ?>">
+                                        <option value="1">Activo</option>
+                                        <option value="2">Desactivo</option>
+                                    </select>
+                                    @if ($errors->has('produto.status_id'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.status_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                <div class="col-md-3">
+                                    <label class="control-label bold label-select2" for="quantidade_minima">Qtd. Mínima</label>
+                                    <div class="input-group">
+                                        <input type="number" wire:model="produto.quantidade_minima" class="form-control" id="quantidade_minima" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.quantidade_minima') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
+                                    </div>
+                                    @if ($errors->has('produto.quantidade_minima'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.quantidade_minima') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label bold label-select2" for="quantidade_critica">Qtd. Crítica</label>
+                                    <div class="input-group">
+                                        <input type="number" wire:model="produto.quantidade_critica" class="form-control" id="produto.quantidade_critica" style="height: 35px; font-size: 10pt;" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label bold label-select2" for="stocavel">Controlar Stock</label>
+                                    <select wire:model="produto.stocavel" class="col-md-12 select2" id="stocavel" style="height:35px;<?= $errors->has('produto.stocavel') ? 'border-color: #ff9292;' : '' ?>">
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                    </select>
+                                    @if ($errors->has('produto.stocavel'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.stocavel') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+
+                            </div>
+                            <div class="form-group has-info bold" style="left: 0%; position: relative">
+                                <div class="col-md-3">
+                                    <label class="control-label bold label-select2" for="armazem_id">Armazém</label>
+                                    <select wire:model="produto.armazem_id" class="col-md-12 select2" id="armazem_id" style="height:35px;<?= $errors->has('produto.armazem_id') ? 'border-color: #ff9292;' : '' ?>">
+                                        @foreach($armazens as $armazem)
+                                        <option value="{{$armazem->id}}">{{$armazem->designacao}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('produto.armazem_id'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.armazem_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label bold label-select2" for="unidade_medida_id">Unidade</label>
+                                    <select wire:model="produto.unidade_medida_id" class="col-md-12 select2" id="unidade_medida_id" style="height:35px;<?= $errors->has('produto.unidade_medida_id') ? 'border-color: #ff9292;' : '' ?>">
+                                        @foreach($unidades as $unidade)
+                                        <option value="{{$unidade->id}}">{{$unidade->designacao}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('produto.unidade_medida_id'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.unidade_medida_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label bold label-select2" for="fabricante_id">Fabricante</label>
+                                    <select wire:model="produto.fabricante_id" class="col-md-12 select2" id="fabricante_id" style="height:35px;<?= $errors->has('produto.fabricante_id') ? 'border-color: #ff9292;' : '' ?>">
+                                        @foreach($fabricantes as $fabricante)
+                                        <option value="{{$fabricante->id}}">{{$fabricante->designacao}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('produto.fabricante_id'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.fabricante_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label bold label-select2" for="codigo_taxa">Imposto/Taxas</label>
+                                    <select wire:model="produto.codigo_taxa" class="col-md-12 select2" id="codigo_taxa" style="height:35px;<?= $errors->has('produto.codigo_taxa') ? 'border-color: #ff9292;' : '' ?>">
+                                        @foreach($taxas as $taxa)
+                                        <option value="{{$taxa->codigo}}">{{$taxa->descricao}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('produto.codigo_taxa'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.codigo_taxa') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="control-label bold label-select2" for="categoria_id">Status<b class="red"></b></label>
-                                    <select name="status_id" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        @foreach($status as $statu)
-                                        <option value="{{$statu->id}}" <?= $produto->status_id == $statu->id ? 'selected' : '' ?>>{{$statu->designacao}}</option>
+                                    <label class="control-label bold label-select2" for="motivo_isencao_id">Motivo de Isenção</label>
+                                    <select wire:model="produto.motivo_isencao_id" class="col-md-12 select2" id="motivo_isencao_id" style="height:35px;<?= $errors->has('produto.motivo_isencao_id') ? 'border-color: #ff9292;' : '' ?>">
+                                        @foreach($motivos as $motivo)
+                                        <option value="{{$motivo->codigo}}">{{$motivo->descricao}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('produto.codigo_taxa'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('produto.codigo_taxa') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-
                             </div>
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
-                                <div class="col-md-3">
-                                    <label class="control-label bold label-select2" for="preco_compra">Qtd. Mínima<b class="red fa fa-question-"></b></label>
+                                <div class="col-md-6">
+
+                                <label class="control-label bold label-select2" for="newImagemProduto">Imagem</label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">0.0</div>
-                                        <input type="number" value="{{ $produto->quantidade_minima ?? old('quantidade_minima')}}" name="quantidade_minima" class="form-control" id="preco_compra" data-target="form_supply_price" style="height: 35px; font-size: 13pt" />
+                                        <input type="file" accept="application/image/*" wire:model="produto.newImagemProduto" class="form-control" id="newImagemProduto" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.newImagemProduto') ? 'border-color: #ff9292;' : '' ?>" />
                                         <span class="input-group-addon" id="basic-addon1">
-                                            <i class="fa fa-calculator price-popup-icon" data-target="form_supply_price_smartprice"></i>
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="control-label bold label-select2" for="margem_lucro">Qtd. Crítica<b class="red fa fa-question-"></b></label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">0.0</div>
-                                        <input type="number" value="{{ $produto->quantidade_critica ?? old('quantidade_critica')}}" name="quantidade_critica" class="markup form-control" id="margem_lucro" title="Margem de lucro que pretende ter na venda do produto." style="height: 35px; font-size: 13pt" />
-                                        <input type="hidden" name="canal_id" value="2" class="markup form-control" style="height: 35px; font-size: 13pt" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="preco_venda">Controlar Stock <b class="red fa fa-question-circle"></b></label>
-                                    <select name="stocavel" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        <option value="Sim" <?= $produto->stocavel == 'Sim' ? 'selected' : '' ?>>Sim</option>
-                                        <option value="Não" <?= $produto->stocavel == 'Não' ? 'selected' : '' ?>>Não</option>
-                                    </select>
-                                </div>
                             </div>
+                            @if($produto['imagem_produto'])
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="preco_compra">Imposto/Taxas<b class="red fa fa-question-"></b></label>
-                                    <select name="codigo_taxa" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        @foreach($taxas as $taxa)
-                                        <option value="{{$taxa->codigo}}" <?= $produto->codigo_taxa == $taxa->codigo ? 'selected' : '' ?>>{{$taxa->descricao}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="margem_lucro">Motivo de Isenção<b class="red fa fa-question-"></b></label>
-                                    <select name="motivo_isencao_id" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        @foreach($motivos as $motivo)
-                                        <option value="{{$motivo->codigo}}" <?= $produto->motivo_isencao_id == $motivo->codigo ? 'selected' : '' ?>>{{$motivo->descricao}}</option>
-                                        @endforeach
-                                    </select>
+
+                                <img src="/upload/<?php echo $produto['imagem_produto']?>" style="width: 120px; height: 120px"  alt="">
+
                                 </div>
                             </div>
-
-                            <div class="form-group has-info bold" style="left: 0%; position: relative">
-                                <div class="col-md-6">
-                                    <label for="id-input-file-2" class="text-info">Imagem</label>
-                                    <div class="file-upload-wrapper">
-                                        <input type="file" name="imagem_produto" accept="application/image/*">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="preco_compra">Armazém<b class="red fa fa-question-"></b></label>
-                                    <select name="armazem_id" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        @foreach($armazens as $armazem)
-                                        <option value="{{$armazem->id}}" <?= $produto->armazem_id == $armazem->id ? 'selected' : '' ?>>{{$armazem->designacao}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <h4 class="header bolder smaller" style="color: #3d5476;cursor:pointer">
-                                Características
-                                <i class="ace-icon fa fa-angle-down icon-on-right big-150" style="cursor:pointer"></i>
-                            </h4>
-                            <div class="form-group has-info bold" style="left: 0%; position: relative">
-                                <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="preco_compra">Unidade<b class="red fa fa-question-"></b></label>
-                                    <select name="unidade_medida_id" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        @foreach($unidades as $unidade)
-                                        <option value="{{$unidade->id}}" <?= $produto->unidade_medida_id == $unidade->id ? 'selected' : '' ?>>{{$unidade->designacao}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="preco_compra">Fabricantes<b class="red fa fa-question-"></b></label>
-                                    <select name="fabricante_id" class="col-md-12 select2" data-placeholder="Selecione o status" id="statu_id" style="height:35px ;">
-                                        @foreach($fabricantes as $fabricante)
-                                        <option value="{{$fabricante->id}}" <?= $produto->fabricante_id == $fabricante->id ? 'selected' : '' ?>>{{$fabricante->designacao}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-
+                            @endif
                         </div>
                     </div>
-
                     <div class="clearfix form-actions">
                         <div class="col-md-offset-3 col-md-9">
-                            <button class="search-btn" type="submit" style="border-radius: 10px">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                Salvar
+                            <button class="search-btn" type="submit" style="border-radius: 10px" wire:click.prevent="update">
+                                <span wire:loading.remove wire:target="update">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Salvar
+                                </span>
+                                <span wire:loading wire:target="update">
+                                    <span class="loading"></span>
+                                    Aguarde...</span>
                             </button>
-
                             &nbsp; &nbsp;
-                            <button class="btn btn-danger" type="reset" style="border-radius: 10px">
+                            <a href="{{ route('clientes.index') }}" class="btn btn-danger" type="reset" style="border-radius: 10px">
                                 <i class="ace-icon fa fa-undo bigger-110"></i>
                                 Cancelar
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -204,5 +262,3 @@
         </div>
     </div>
 </div>
-
-

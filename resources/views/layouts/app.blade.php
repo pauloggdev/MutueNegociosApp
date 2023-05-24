@@ -1939,4 +1939,5 @@ if (Auth::guard('web')->check()) {
             transform: rotate(360deg);
         }
     }
+
 </style>

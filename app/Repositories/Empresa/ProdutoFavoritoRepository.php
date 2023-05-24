@@ -95,14 +95,23 @@ class ProdutoFavoritoRepository
     }
     public function checkFavorito($produtoId)
     {
-        if ($this->isProdutoFavorito($produtoId)) {
+        $produtoFavorito = ProdutoFavorito::where('user_id', auth()->user()->id)
+            ->where('produto_id', $produtoId)
+            ->first();
+        if ($produtoFavorito) {
             ProdutoFavorito::where('user_id', auth()->user()->id)
                 ->where('produto_id', $produtoId)
                 ->delete();
-            return false;
+            return response()->json([
+                'data' => false,
+                'message' => "Produto removido no favorito"
+            ]);
         }
         ProdutoFavorito::create(['produto_id' => $produtoId, 'user_id' => auth()->user()->id]);
-        return true;
+        return response()->json([
+            'data' => true,
+            'message' => "Produto adicionado no favorito"
+        ]);
     }
     public function isProdutoFavorito($produtoId)
     {
@@ -110,6 +119,16 @@ class ProdutoFavoritoRepository
         $produtoFavorito = ProdutoFavorito::where('user_id', auth()->user()->id)
             ->where('produto_id', $produtoId)
             ->first();
-        return isset($produtoFavorito) && $produtoFavorito ? true : false;
+
+        if ($produtoFavorito) {
+            return response()->json([
+                'data' => true,
+                'message' => "Produto está no favoritos"
+            ]);
+        }
+        return response()->json([
+            'data' => false,
+            'message' => "Produto não está no favoritos"
+        ]);
     }
 }

@@ -112,19 +112,17 @@ Route::group(['prefix' => 'portal'], function () {
     Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
 
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
-
     // Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     // @Zuadas Rotas do Carrinho
-
-    Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+    // Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
     // Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     
     // @Zuadas Rotas do Carrinho
     Route::middleware(['auth:sanctum'])->group(function () {
         // Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
-        // Route::get('/encrease/qty/produto/{id}', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
-        Route::post('/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
-        Route::post('/add/produto', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+        Route::post('/carrinho/encrease/qty/produto', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
+        Route::post('/carrinho/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
+        Route::post('/carrinho/add/produto', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
         Route::get('/carrinho/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
         Route::delete('/remover/produto/carrinho/{id}', [CarrinhoProdutoController::class, 'removerCarrinho']);
         Route::get('/listar/carrinho/produto/{uuid}', [CarrinhoProdutoController::class, 'getCarrinhoProduto']);

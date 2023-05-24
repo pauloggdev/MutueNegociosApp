@@ -24,8 +24,6 @@ class FacturaCreateController extends Controller
     public function store(Request $factura)
     {
 
-
-
         $messages = [
             'total_preco_factura.required' => 'Informe o total da factura',
             'valor_a_pagar.required' => 'Informe o valor a pagar',
@@ -41,7 +39,6 @@ class FacturaCreateController extends Controller
                 }
             }]
         ], $messages);
-
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->messages(), 400);
@@ -201,16 +198,16 @@ class FacturaCreateController extends Controller
                 'created_at' => Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')),
                 'updated_at' => Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'))
             ]);
-    
-    
-    
+
+
+
             foreach ($factura['facturas_items'] as $item) {
                 $produto = DB::table('produtos')->where('id', $item['produto_id'])->first();
                 if ($produto->stocavel == 'Sim') {
                     if ($factura['tipo_documento'] != TypeInvoice::FACTURA_PROFORMA) {
                         DB::connection('mysql2')->table('existencias_stocks')
-                            ->where('empresa_id', auth()->user()->empresa_id)->where('produto_id', $item['produto_id'])
-                            ->where('armazem_id', $factura['armazen_id'])->decrement('quantidade', $item['quantidade_produto']);
+                            ->where('empresa_id', auth()->user()->empresa_id)
+                            ->where('id', $item['existenciaStockId'])->decrement('quantidade', $item['quantidade_produto']);
                     }
                 }
                 DB::connection('mysql2')->table('factura_items')->insert([
@@ -235,7 +232,7 @@ class FacturaCreateController extends Controller
         }
 
 
-        
+
     }
     public function diasVencimentoFactura()
     {

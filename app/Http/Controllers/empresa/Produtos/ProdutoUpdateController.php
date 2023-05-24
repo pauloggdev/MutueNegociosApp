@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\empresa\Produtos;
 
+use App\Models\empresa\MotivoIsencao;
 use App\Models\empresa\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\empresa\TipoMotivoIva;
 use App\Models\empresa\TipoTaxa;
+use App\Repositories\Empresa\MotivoIsencaoRepository;
+use App\Repositories\Empresa\TaxaRepository;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -14,6 +17,7 @@ use Keygen\Keygen;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Support\Facades\Redirect;
 
 class ProdutoUpdateController extends Component
 {
@@ -22,9 +26,16 @@ class ProdutoUpdateController extends Component
     use LivewireAlert;
 
     public $produto;
+    public $imagem;
     public $desabledStock = false;
     public $margemLucro;
     public $uuid;
+    protected $motivoIsencaoRepository;
+    protected $taxaRepository;
+
+    protected $listeners = ['eliminarImage', 'refreshComponent' => '$refresh'];
+
+
 
 
     public function boot()
@@ -56,12 +67,18 @@ class ProdutoUpdateController extends Component
     public function mount($uuid)
     {
         $this->uuid = $uuid;
-        $produto = Produto::where('uuid', $uuid)
+        $produto = Produto::with(['produtoImagens'])->where('uuid', $uuid)
             ->where('empresa_id', auth()->user()->empresa_id)->first();
 
         if (!$produto) {
             return redirect()->back();
         }
+
+
+        $this->motivoIsencaoRepository = new MotivoIsencaoRepository(new MotivoIsencao());
+        $this->taxaRepository = new TaxaRepository(new TipoTaxa());
+        $this->motivos =  $this->motivoIsencaoRepository->listarMotivosPelaTaxa($produto['codigo_taxa']);
+        $this->taxas = $this->taxaRepository->listarTaxas();
 
         $this->produto['designacao'] = $produto['designacao'];
         $this->produto['categoria_id'] = $produto['categoria_id'];
@@ -76,60 +93,18 @@ class ProdutoUpdateController extends Component
         $this->produto['unidade_medida_id'] = $produto['unidade_medida_id'];
         $this->produto['fabricante_id'] = $produto['fabricante_id'];
         $this->produto['codigo_taxa'] = $produto['codigo_taxa'];
+        $this->produto['venda_online'] = $produto['venda_online'] == 'Y' ? true : false;
         $this->produto['motivo_isencao_id'] = $produto['motivo_isencao_id'];
         $this->produto['imagem_produto'] = $produto['imagem_produto'];
-
+        $this->produto['produto_imagens'] = $produto['produtoImagens'];
+        $this->produto['newImagens'] = [];
     }
 
     public function render()
     {
-
-        $REGIME_SIMPLIFICADO = 2;
-        $REGIME_EXCLUSAO = 3;
-        $REGIME_GERAL = 1;
-
-        if (auth()->user()->empresa->tipo_regime_id ==  $REGIME_SIMPLIFICADO) {
-
-            $data['taxas'] = TipoTaxa::where('empresa_id', null)
-                ->where('codigo', 1)
-                ->get();
-
-            $data['motivos'] = TipoMotivoIva::where('empresa_id', null)
-                ->where('codigo', 9)
-                ->orwhere('codigo', 8)
-                ->get();
-        }
-
-        if (auth()->user()->empresa->tipo_regime_id == $REGIME_EXCLUSAO) {
-            $data['taxas'] = TipoTaxa::where('empresa_id', null)
-                ->where('codigo', 1)->get();
-
-            $data['motivos'] = TipoMotivoIva::where('codigo', 7)
-                ->where('empresa_id', null)
-                ->orwhere('codigo', 8)
-                ->get();
-        }
-
-        if (auth()->user()->empresa->tipo_regime_id ==  $REGIME_GERAL) {
-            $data['taxas'] = TipoTaxa::where('empresa_id', null)
-                ->get();
-
-            $data['motivos'] = TipoMotivoIva::where('empresa_id', null)
-                ->where('codigo', '!=', 7)
-                ->where('codigo', '!=', 9)
-                ->get();
-        }
-
-        if ($this->produto['codigo_taxa'] > 1) {
-            $this->produto['motivo_isencao_id'] = NULL;
-            $data['motivos'] = [];
-        }
-
         if ($this->produto['stocavel'] == 'Não') {
             $this->quantidade = 0;
         }
-
-
         $data['categorias'] = DB::table('categorias')->where('empresa_id', auth()->user()->empresa_id)
             ->orwhere('empresa_id', NULL)->orderBy('id', 'asc')
             ->get();
@@ -144,6 +119,33 @@ class ProdutoUpdateController extends Component
             ->get();
 
         return view('empresa.produtos.edit', $data);
+    }
+    public function modalDelImagem($imagem)
+    {
+        $this->imagem = $imagem;
+        $this->confirm('Deseja apagar a imagem?', [
+            'onConfirmed' => 'eliminarImage',
+            'cancelButtonText' => 'Não',
+            'confirmButtonText' => 'Sim',
+        ]);
+    }
+    public function eliminarImage($data)
+    {
+        if ($data['value']) {
+            DB::connection('mysql2')->table('produto_imagens')
+                ->where('id', $this->imagem['id'])->delete();
+
+            if (Storage::exists($this->imagem['url'])) {
+                Storage::delete($this->imagem['url']);
+            }
+
+            return  redirect()->to(url()->previous())->with('success', 'produto actualizado com sucesso');
+        }
+    }
+    public function updatedProdutoCodigoTaxa($taxaId)
+    {
+        $motivoIsencaoRepository = new MotivoIsencaoRepository(new MotivoIsencao());
+        $this->motivos =  $motivoIsencaoRepository->listarMotivosPelaTaxa($taxaId);
     }
     public function updatedProdutoStocavel($valor)
     {
@@ -174,6 +176,10 @@ class ProdutoUpdateController extends Component
         if ($preco_compra > 0 && $margemLucro > 0) {
             $this->produto['preco_venda'] = $preco_compra + (($preco_compra * $margemLucro) / 100);
         }
+    }
+    public function updatedprodutoVendaOnline($check)
+    {
+        $this->produto['venda_online'] = $check ? true : false;
     }
 
     public function update()
@@ -214,7 +220,18 @@ class ProdutoUpdateController extends Component
             if (Storage::exists($produto->imagem_produto)) {
                 Storage::delete($produto->imagem_produto);
             }
-            $imagem = $this->produto['newImagemProduto']->store("/produtos");
+            $imagem =  env('APP_URL') . "upload/" . $this->produto['newImagemProduto']->store("/produtos");
+        }
+
+        if (count($this->produto['newImagens']) > 0) {
+            foreach ($this->produto['newImagens'] as $img) {
+                $img = env('APP_URL') . "upload/" . $img->store("/produtos");
+                DB::connection('mysql2')->table('produto_imagens')
+                    ->insert([
+                        'url' => $img,
+                        'produto_id' => $produto['id']
+                    ]);
+            }
         }
 
         try {
@@ -248,6 +265,8 @@ class ProdutoUpdateController extends Component
                 'showCancelButton' => false,
                 'icon' => 'success'
             ]);
+            return  redirect()->to(url()->previous())->with('success', 'produto actualizado com sucesso');
+
         } catch (\Exception $th) {
             DB::rollBack();
             $this->confirm('Erro', [
