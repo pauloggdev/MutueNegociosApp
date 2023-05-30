@@ -62,6 +62,7 @@ class TransferenciaRepository
 
         foreach ($transferir['items'] as $item) {
             $nomeProduto = DB::connection("mysql2")->table('produtos')->where('id', $item['produto_id'])->where('empresa_id', auth()->user()->empresa_id)->first()->designacao;
+
             $armazemOrigem = DB::connection("mysql2")->table('armazens')->where('id', $item['armazem_origem_id'])->where('empresa_id', auth()->user()->empresa_id)->first()->designacao;
             $armazemDestino = DB::connection("mysql2")->table('armazens')->where('id', $item['armazem_destino_id'])->where('empresa_id', auth()->user()->empresa_id)->first()->designacao;
 

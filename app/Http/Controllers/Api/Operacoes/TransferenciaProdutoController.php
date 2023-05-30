@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Empresa\ExistenciaStockRepository;
 use App\Repositories\Empresa\TransferenciaRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +30,17 @@ class TransferenciaProdutoController extends Controller
         ];
         $validator = Validator::make($request->all(), [
             'canal_id' => ['required'],
-            'items.*.produto_id' => ['required'],
+            'items.*.produto_id' => ['required', function ($attr, $produto_id, $fail) use ($request) {
+                foreach ($request->items as $item) {
+                    $produto = DB::connection()->table('produtos')->where('id', $item['produto_id'])
+                    ->where('empresa_id', auth()->user()->empresa_id)
+                    ->first();
+                    if (!$produto) {
+                        $fail('produto não existe');
+                        return;
+                    }
+                }
+            }],
             'items.*.armazem_origem_id' => ['required'],
             'items.*.armazem_destino_id' => ['required'],
             'items.*.quantidade_transferida' => ['required', function ($attr, $quantidadeTransferir, $fail) use ($request) {

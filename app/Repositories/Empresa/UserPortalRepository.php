@@ -69,8 +69,6 @@ class UserPortalRepository
                 'operador' => $user->name,
                 'tipo_cliente_id' => 6,
                 'user_id' => $user->id,
-                'created_by' => $user->id,
-                'pais_id' => 1,
                 'pais_id' => 1,
                 'cidade' => null,
             ]);
@@ -95,40 +93,42 @@ class UserPortalRepository
 
 
 
-    public function updateUser($user, $roles)
+    public function updateUser(Request $request, $uuid)
     {
 
-
-        if (isset($user['newFoto']) && !empty($user['newFoto'])) {
-
-            if (($user['foto'] != 'utilizadores/cliente/avatarEmpresa.png') && $user['foto']) {
-                $path = public_path() . "\\upload\\" . $user['foto'];
-                if (file_exists($path)) {
-                    unlink(public_path() . "\\upload\\" . $user['foto']);
-                }
+        if (isset($request['foto']) && !empty($request['foto']) && $request['foto'] != 'utilizadores/cliente/avatarEmpresa.png') {
+            $path = public_path() . "\\upload\\" . $request['foto'];
+            if (file_exists($path)) {
+                unlink(public_path() . "\\upload\\" . $request['foto']);
             }
-            $user['newFoto'] = $user['newFoto']->store('/utilizadores/cliente/');
+            $foto = $request->foto->store('/utilizadores/cliente/');
+        } else {
+            $foto = 'utilizadores/cliente/avatarEmpresa.png';
         }
 
-        DB::table('user_perfil')->where('user_id', $user->id)->delete();
-        foreach ($roles as $role_id) {
-            DB::table('user_perfil')->insert([
-                'user_id' => $user->id,
-                'perfil_id' => $role_id
-            ]);
-        }
+        $user = $this->user->where('uuid', $uuid)->update([
+            'name' => $request['name'],
+            'username' => $request['name'],
+            'email' => $request['email'],
+            'telefone' => $request['telefone'],
+            'foto' => $foto
+        ]);
 
 
-        return $this->user::where('id', $user->id)
-            ->where('empresa_id', auth()->user()->empresa_id)->update([
-                'name' => $user['name'],
-                'username' => $user['username'] ?: $user['name'],
-                'email' => $user['email'],
-                'telefone' => $user['telefone'],
-                'status_id' => $user['status_id'],
-                'foto' => $user['newFoto'] ? $user['newFoto'] : $user['foto'],
-                'empresa_id' => auth()->user()->empresa_id
-            ]);
+        $user = $this->user::where('uuid', $uuid)->first();
+
+        $cliente = $this->cliente->where('user_id', $user->id)->update([
+            'nome' => $request['name'],
+            'pessoa_contacto' => $request['name'],
+            'email' => $request['email'],
+            'telefone_cliente' => $request['telefone'],
+            'endereco' => $request['endereco'],
+            'nif' => $request['cidade'],
+            'operador' => $user->name,
+            'cidade' => $request['cidade'],
+        ]);
+        // DB::commit();
+        return $user;
     }
 
     public function getUsers($search = null)
@@ -162,10 +162,8 @@ class UserPortalRepository
 
     public function alterarSenha(Request $request, $userId)
     {
-
         if (auth()->user()->id == $userId) {
             $user = $this->user::findOrfail($userId);
-
             if (Hash::check($request->old_password, $user->password)) {
                 $user->password = Hash::make($request->password);
                 $user->updated_at = Carbon::now();

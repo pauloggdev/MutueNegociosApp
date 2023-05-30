@@ -157,6 +157,10 @@ Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/user/logout', [MvClienteAuthController::class, 'logout']);
     Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
+
+    //utilizadores
+    Route::post('/user/editar/{uuid}', [MvUserController::class, 'updateUser']);
+
 });
 
 

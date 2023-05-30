@@ -39,6 +39,8 @@ class EmpresaAuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => [
+                'id'=> $user->id,
+                'uuid'=> $user->uuid,
                 'name' => $user->name,
                 'email' => $user->email,
                 'telefone' => $user->telefone,

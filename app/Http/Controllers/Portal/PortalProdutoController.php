@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Portal;
-use App\Models\Empresa\Produto;
+use App\Models\empresa\Produto;
 // use App\Repositories\Empresa\contracts\ProdutoRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
