@@ -64,7 +64,7 @@ class MvClienteAuthController extends Controller
     public function logout()
     {
 
-        dd(auth()->user());
+        // dd(auth()->user());
         auth()->user()->tokens()->delete();
         return response()->json([
             'message' => 'logout feito com sucesso'

@@ -85,7 +85,7 @@ use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
  */
 
 
-Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
+
 
 
 Route::post('/empresa/usuario/login', [EmpresaAuthController::class, 'auth']);
@@ -101,6 +101,14 @@ Route::get('empresa/listarTipoClientes', [EmpresaClienteController::class, 'list
 
 // @Zuadas MUTUE VENDAS ONLINE
 Route::group(['prefix' => 'portal'], function () {
+    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
+    // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
+    // Route::get('/portal/cart/add/product/{id}', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+
+});
+// @Zuadas MUTUE VENDAS ONLINE
+Route::group(['prefix' => 'portal'], function () {
+    Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
     // Route::get('/teste', [App\Http\Controllers\Portal\CarrinhoProdutoController::class, 'index']);
     //empresa api mutue vendas api
     Route::get("/produto/detalhes/{id}",  [PortalProdutoController::class, 'getPodutoDetalhes']);
@@ -119,7 +127,10 @@ Route::group(['prefix' => 'portal'], function () {
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
     // Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
     // @Zuadas Rotas do Carrinho
+    // Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
+    // Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
 
+    // @Zuadas Rotas do Carrinho
     Route::middleware(['auth:sanctum'])->group(function () {
         // Route::get('/encrease/qty/produto/{id}', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
         Route::post('/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
@@ -127,15 +138,26 @@ Route::group(['prefix' => 'portal'], function () {
         Route::post('/add/coupon/desconto', [CarrinhoProdutoController::class, 'addCouponDesconto']);
         Route::get('/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
         Route::delete('/remover/produto/carrinho', [CarrinhoProdutoController::class, 'removerCarrinho']);
+        // Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
+        Route::post('/carrinho/encrease/qty/produto', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
+        Route::post('/carrinho/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
+        Route::post('/carrinho/add/produto', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+        Route::get('/carrinho/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
+        Route::delete('/remover/produto/carrinho/{id}', [CarrinhoProdutoController::class, 'removerCarrinho']);
         Route::get('/listar/carrinho/produto/{uuid}', [CarrinhoProdutoController::class, 'getCarrinhoProduto']);
     });
     // @Zuadas Rotas do Carrinho
 });
 // @Zuadas MUTUE VENDAS ONLINE
 
+Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
+
 Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
-Route::post('/user/logout', [MvClienteAuthController::class, 'logout']);
-Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/user/logout', [MvClienteAuthController::class, 'logout']);
+    Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
+});
 
 
 //CLIENTES
