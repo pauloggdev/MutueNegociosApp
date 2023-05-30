@@ -21,7 +21,7 @@ class RelatorioVendasController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->messages(), 400);
         }
-        
+
         if ((isset($_GET['filterDate']) && !empty($_GET['filterDate']))) {
             $filterDate = $_GET['filterDate'];
         }
@@ -30,7 +30,6 @@ class RelatorioVendasController extends Controller
             ->where('tipo_documento', 1) //factura recibo
             ->where('created_at', 'like', $filterDate . '%')
             ->get();
-        // dd(count($isDocumentCurrentDate));
 
         if (count($isDocumentCurrentDate) <= 0) {
             return response()->json(['isValid' => false, 'errors' => 'Nenhuma factura recibo efectuada no dia selecionado'], 422);
@@ -68,7 +67,6 @@ class RelatorioVendasController extends Controller
             $ano = $filterMonthYear[0];
             $mes = $filterMonthYear[1];
         }
-
 
         $isDocumentCurrentDate = DB::table('facturas')
             ->where('empresa_id', auth()->user()->empresa_id)

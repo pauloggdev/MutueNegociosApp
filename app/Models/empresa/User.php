@@ -75,6 +75,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Empresa_Cliente::class, 'empresa_id');
     }
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'user_id');
+    }
 
     public function user()
     {

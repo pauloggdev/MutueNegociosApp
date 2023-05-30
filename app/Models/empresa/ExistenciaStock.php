@@ -20,12 +20,19 @@ class ExistenciaStock extends Model
         'empresa_id',
         'observacao',
     ];
+    public function produto(){
+        return $this->belongsTo(Produto::class, 'produto_id');
+    }
 
     public function produtos()
     {
         return $this->belongsTo(Produto::class, 'produto_id');
     }
     public function armazens()
+    {
+        return $this->belongsTo(Armazen::class, 'armazem_id');
+    }
+    public function armazem()
     {
         return $this->belongsTo(Armazen::class, 'armazem_id');
     }

@@ -78,7 +78,6 @@ class FacturaRepository
         $facturas = Factura::with(['facturas_items'])
             ->where('id', $facturaId)
             ->where('empresa_id', auth()->user()->empresa_id)->first();
-
         return $facturas;
     }
     public function listarfacturas($search = NULL)

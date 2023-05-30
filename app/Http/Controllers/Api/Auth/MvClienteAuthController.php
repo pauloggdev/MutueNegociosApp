@@ -43,6 +43,7 @@ class MvClienteAuthController extends Controller
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,
+                'username' =>$user->username,
                 'email' => $user->email,
                 'telefone' => $user->telefone,
                 'status_senha_id' => $user->status_senha_id,

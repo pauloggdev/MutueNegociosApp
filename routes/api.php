@@ -36,6 +36,7 @@ use App\Http\Controllers\Api\Fornecedores\FornecedorIndexController;
 use App\Http\Controllers\Api\Fornecedores\FornecedorShowController;
 use App\Http\Controllers\Api\Fornecedores\FornecedorUpdateController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\Inventarios\InventarioIndexController;
 use App\Http\Controllers\Api\MotivoIvaController;
 use App\Http\Controllers\Api\MVProdutoFavorito\MVProdutoFavoritoController;
 use App\Http\Controllers\Api\Operacoes\ActualizarStockController;
@@ -49,14 +50,17 @@ use App\Http\Controllers\Api\StatuGeralController;
 use App\Http\Controllers\Api\TaxaIvaController;
 use App\Http\Controllers\Api\Utilizadores\UserController;
 use App\Http\Controllers\Api\Utilizadores\UserUpdatePasswordController;
+use App\Http\Controllers\Api\UtilizadorPortal\MvUserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\empresa\CategoriaController;
 use App\Http\Controllers\empresa\ClienteController as EmpresaClienteController;
 use App\Http\Controllers\empresa\Facturas\FacturasIndexController;
 use App\Http\Controllers\empresa\LicencaController as EmpresaLicencaController;
+use App\Http\Controllers\empresa\StockController;
 use App\Http\Controllers\empresa\UnidadeController;
 use App\Http\Controllers\Portal\CarrinhoProdutoController;
 use App\Http\Controllers\Portal\CarrinhoProdutoCrontroller;
+use App\Http\Controllers\Portal\CouponDescontoProdutoController;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\TipoEmpresaController;
 
@@ -106,7 +110,11 @@ Route::group(['prefix' => 'portal'], function () {
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
     Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
+    //UTILIZADORES PORTAL
+    Route::post('/user/novo', [MvUserController::class, 'createNewUser']);
     // @Zuadas Rotas do Carrinho
+
+
 
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
     // Route::post('/user/login', [MvClienteAuthController::class, 'auth']);
@@ -116,8 +124,9 @@ Route::group(['prefix' => 'portal'], function () {
         // Route::get('/encrease/qty/produto/{id}', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
         Route::post('/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
         Route::post('/add/produto', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
+        Route::post('/add/coupon/desconto', [CarrinhoProdutoController::class, 'addCouponDesconto']);
         Route::get('/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
-        Route::delete('/remover/produto/carrinho/{id}', [CarrinhoProdutoController::class, 'removerCarrinho']);
+        Route::delete('/remover/produto/carrinho', [CarrinhoProdutoController::class, 'removerCarrinho']);
         Route::get('/listar/carrinho/produto/{uuid}', [CarrinhoProdutoController::class, 'getCarrinhoProduto']);
     });
     // @Zuadas Rotas do Carrinho
@@ -166,6 +175,7 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::get('planos-assinaturas', [EmpresaLicencaController::class, 'index']);
     Route::get('facturas', [FacturaController::class, 'listarFacturas']);
     Route::post('factura/nova', [FacturaCreateController::class, 'store']);
+    Route::get('imprimir/factura/{id}', [FacturaCreateController::class, 'imprimirFactura']);
     Route::get('facturas/imprimirFactura/{id}/{tipoFolha}', [FacturaController::class, 'imprimirFactura']);
 
     //PRODUTO
@@ -176,6 +186,12 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::put('actualizarproduto/{id}', [ProdutoUpdateController::class, 'update']);
     Route::post('transferenciaProdutos', [TransferenciaProdutoController::class, 'store']);
     Route::get('listarTransferencias', [TransferenciaProdutoController::class, 'listarTransferencias']);
+
+
+    //Existencias
+    Route::get('listarExistenciaPeloProduto', [StockController::class, 'listarExistenciaPeloProduto']);
+
+
 
     //CATEGORIA DE PRODUTOS
     Route::get('categorias', [CategoriaController::class, 'listarCategorias']);
@@ -220,10 +236,17 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::post('cadastrarCliente', [ClienteCreateController::class, 'store']);
     Route::put('actualizarCliente/{id}', [ClienteUpdateController::class, 'update']);
 
+    //INVENTARIOS
+    Route::get('listarProdutosPorArmazem/{armazemId}', [InventarioIndexController::class, 'listarProdutosPorArmazem']);
+    Route::post('emitirInventario', [InventarioIndexController::class, 'emitirInventario']);
+    Route::get('inventario/imprimir/{inventarioId}', [InventarioIndexController::class, 'imprimirInventario']);
+
+
     //UTILIZADORES
     Route::post('alterarSenha', [UserUpdatePasswordController::class, 'updatePassword']);
     //FECHO DE CAIXA
     Route::get('imprimirFechoCaixa', [FechoCaixaController::class, 'imprimirFechoCaixa']);
+    Route::get('imprimirFechoCaixaPorOperador', [FechoCaixaController::class, 'imprimirFechoCaixaPorOperador']);
 
     //Clientes
     // Route::get('clientes', [ClienteController::class, 'getClientes']);

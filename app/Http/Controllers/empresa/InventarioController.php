@@ -95,7 +95,6 @@ class InventarioController extends Controller
 
         $inventarios = DB::connection('mysql2')->table('inventarios')->where('empresa_id', $empresa['empresa']['id'])->orderBy('id', 'DESC')->limit(1)->first();
 
-        //  dd($inventarios);
 
         /**
          * hashAnterior inicia vazio
@@ -184,7 +183,6 @@ class InventarioController extends Controller
         ]);
 
         foreach ($request->inventarioData as $key => $value) {
-
 
             DB::connection('mysql2')->table('inventario_itens')->insertGetId([
                 'inventario_id' => $inventarioId,

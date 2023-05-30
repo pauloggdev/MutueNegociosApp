@@ -52,6 +52,28 @@ class StockController extends Controller
 
         return view('empresa.operacao.transferenciaProdutoIndex', $data);
     }
+    public function listarExistenciaPeloProduto(Request $request){
+
+        $existenciaStock = ExistenciaStock::where('produto_id', $request->produto_id)
+        ->where('armazem_id', $request->armazem_id)
+        ->where('empresa_id', auth()->user()->empresa_id)
+        ->first();
+
+        if($existenciaStock){
+            return response()->json([
+                'data'=>[
+                    'quantidade' =>$existenciaStock->quantidade,
+                ],
+                'message' => 'retornando a quantide existente'
+            ]);
+        }
+        return response()->json([
+            'data'=>[
+                'quantidade' => 0,
+            ],
+            'message' => 'retornando a quantide existente'
+        ]);
+    }
     public function transferenciaNovo(Request $request)
     {
 
@@ -530,7 +552,7 @@ class StockController extends Controller
             $empresa = Empresa_Cliente::where('id', $empresa_id)->first();
         }
 
-        
+
         $formaPagamentoId = $request->forma_pagamento_id;
 
         // $this->verificarFacturaCredito($formaPagamentoId);

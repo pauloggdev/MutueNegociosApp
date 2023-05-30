@@ -120,11 +120,11 @@ class FacturasIndexController extends Component
         } else {
 
 
+
             $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
             $DIR_SUBREPORT = "/upload/documentos/empresa/modelosFacturas/a4/";
 
             $DIR = public_path() . "/upload/documentos/empresa/modelosFacturas/a4/";
-
 
             $reportController = new ReportShowController('pdf', $DIR_SUBREPORT);
 

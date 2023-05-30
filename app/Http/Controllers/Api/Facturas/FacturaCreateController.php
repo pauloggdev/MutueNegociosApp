@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\Facturas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\empresa\ReportShowApiController;
+use App\Http\Controllers\empresa\ReportShowController;
 use App\Http\Controllers\empresa\VerificadorDocumento;
 use App\Http\Controllers\TypeInvoice;
+use App\Repositories\Empresa\FacturaRepository;
 use App\Repositories\Empresa\TraitChavesEmpresa;
 use App\Repositories\Empresa\TraitSerieDocumento;
 use Carbon\Carbon;
@@ -14,25 +17,34 @@ use Keygen\Keygen;
 use phpseclib\Crypt\RSA;
 use NumberFormatter;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 
 class FacturaCreateController extends Controller
 {
     use TraitSerieDocumento;
     use TraitChavesEmpresa;
+    private $facturaRepository;
+
+
+    public function __construct(FacturaRepository $facturaRepository)
+    {
+
+        $this->facturaRepository = $facturaRepository;
+    }
 
     public function store(Request $factura)
     {
 
         $messages = [
-            'total_preco_factura.required' => 'Informe o total da factura',
+            'total_preco_factura.required' => 'Informe o total da fatura',
             'valor_a_pagar.required' => 'Informe o valor a pagar',
             'cliente_id.required' => 'Informe o cliente',
+            'facturas_items.*.id.required' => 'Informe um item da fatura',
         ];
         $validator = Validator::make($factura->all(), [
             'total_preco_factura' => "required",
             'valor_a_pagar' => "required",
             'cliente_id' => "required",
+            'facturas_items' => "required",
             'valor_entregue' => [function ($attr, $valorEntregue, $fail) use ($factura) {
                 if ($factura->formas_pagamento_id != 2 && $valorEntregue <= 0) {
                     $fail('Informe o valor entregue');
@@ -94,7 +106,6 @@ class FacturaCreateController extends Controller
             $numSequenciaFactura = 1;
         }
 
-
         /*Cria uma sÃ©rie de numerÃ§Ã£o para cada factura, variando de acordo o tipo de factura, a o ano actual e numero sequencial da factura */
         if ($factura['tipo_documento'] == TypeInvoice::FACTURA) {
             $diasVencimentoFactura = $this->diasVencimentoFactura();
@@ -139,11 +150,18 @@ class FacturaCreateController extends Controller
 
         $f = new NumberFormatter("pt", NumberFormatter::SPELLOUT);
 
-        $cliente = DB::table('clientes')->where('diversos', 'Sim')
+        $cliente = DB::table('clientes')
             ->where('empresa_id', auth()->user()->empresa_id)
             ->where('id', $factura['cliente_id'])
             ->first();
 
+        if (!$cliente) {
+            $cliente = DB::table('clientes')
+                ->where('diversos', 'Sim')
+                ->where('empresa_id', auth()->user()->empresa_id)
+                ->where('id', $factura['cliente_id'])
+                ->first();
+        }
 
         try {
 
@@ -207,32 +225,37 @@ class FacturaCreateController extends Controller
                     if ($factura['tipo_documento'] != TypeInvoice::FACTURA_PROFORMA) {
                         DB::connection('mysql2')->table('existencias_stocks')
                             ->where('empresa_id', auth()->user()->empresa_id)
-                            ->where('id', $item['existenciaStockId'])->decrement('quantidade', $item['quantidade_produto']);
+                            ->where('id', $item['existencia_stock_id'])->decrement('quantidade', $item['quantidade_produto']);
                     }
                 }
                 DB::connection('mysql2')->table('factura_items')->insert([
                     'descricao_produto' => $item['descricao_produto'],
-                    'factura_id' => $facturaId,
-                    'produto_id' => $item['produto_id'],
-                    'preco_venda_produto' => $item['preco_venda_produto'],
                     'preco_compra_produto' => $item['preco_compra_produto'],
-                    'desconto_produto' => $item['desconto_produto'],
+                    'preco_venda_produto' => $item['preco_venda_produto'],
                     'quantidade_produto' => $item['quantidade_produto'],
-                    'total_preco_produto' => $item['total_preco_produto'],
-                    'retencao_produto' => $item['retencao_produto'],
+                    'quantidade_anterior' => $item['quantidade_anterior'],
+                    'desconto_produto' => $item['desconto_produto'],
                     'incidencia_produto' => $item['incidencia_produto'],
-                    'iva_produto' => $item['iva_produto']
+                    'retencao_produto' => $item['retencao_produto'],
+                    'iva_produto' => $item['iva_produto'],
+                    'total_preco_produto' => $item['total_preco_produto'],
+                    'produto_id' => $item['produto_id'],
+                    'factura_id' => $facturaId,
                 ]);
             }
             DB::commit();
-            return $facturaId;
+
+            return response()->json([
+                'data' => [
+                    'numeracaoFactura' => $numeracaoFactura,
+                    'url' => env('APP_URL') . 'api/empresa/imprimir/factura/' . $facturaId,
+                ],
+                'message' => "Fatura salva $numeracaoFactura"
+            ]);
         } catch (\Throwable $th) {
             DB::rollBack();
             //throw $th;
         }
-
-
-
     }
     public function diasVencimentoFactura()
     {
@@ -259,5 +282,98 @@ class FacturaCreateController extends Controller
             ->where('tipo_documento', $tipoDocumento)
             ->where('numeracaoFactura', 'like', '%' . $this->mostrarSerieDocumento() . '%')
             ->orderBy('id', 'DESC')->limit(1)->first();
+    }
+    public function imprimirFactura($facturaId)
+    {
+
+        $factura = $this->facturaRepository->listarFactura($facturaId);
+
+        $filename = "Winmarket";
+
+        if ($factura['anulado'] == 2) {
+
+
+            $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
+            $DIR_SUBREPORT = "/upload/documentos/empresa/modelosFacturas/a4/";
+            $DIR = public_path() . "/upload/documentos/empresa/modelosFacturas/a4/";
+
+
+
+            $reportController = new ReportShowApiController('pdf', $DIR_SUBREPORT);
+            return $reportController->show(
+                [
+                    'report_file' => 'WinmarketAnulado',
+                    'report_jrxml' => 'WinmarketAnulado.jrxml',
+                    'report_parameters' => [
+                        "empresa_id" => auth()->user()->empresa_id,
+                        "logotipo" => $logotipo,
+                        "facturaId" => $facturaId,
+                        "viaImpressao" => 2,
+                        "dirSubreportBanco" => $DIR,
+                        "dirSubreportTaxa" => $DIR,
+                        "CaminhomarcaAgua" => $DIR,
+                        "tipo_regime" => auth()->user()->empresa->tipo_regime_id
+                    ]
+
+                ]
+            );
+        } else if ($factura['retificado'] == 'Sim') {
+
+            $filename = "WinmarketFacturaRetificada";
+
+            $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
+            $DIR_SUBREPORT = "/upload/documentos/empresa/modelosFacturas/a4/";
+            $DIR = public_path() . "/upload/documentos/empresa/modelosFacturas/a4/";
+
+
+
+            $reportController = new ReportShowApiController('pdf', $DIR_SUBREPORT);
+            return $reportController->show(
+                [
+                    'report_file' => $filename,
+                    'report_jrxml' => $filename . '.jrxml',
+                    'report_parameters' => [
+                        "empresa_id" => auth()->user()->empresa_id,
+                        "logotipo" => $logotipo,
+                        "facturaId" => $facturaId,
+                        "viaImpressao" => 2,
+                        "dirSubreportBanco" => $DIR,
+                        "dirSubreportTaxa" => $DIR,
+                        "tipo_regime" => auth()->user()->empresa->tipo_regime_id
+                    ]
+
+                ]
+            );
+        } else {
+
+
+            $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
+            $DIR_SUBREPORT = "/upload/documentos/empresa/modelosFacturas/a4/";
+
+            $DIR = public_path() . "/upload/documentos/empresa/modelosFacturas/a4/";
+
+
+            $reportController = new ReportShowApiController('pdf', $DIR_SUBREPORT);
+
+
+            return $reportController->show(
+                [
+                    'report_file' => $filename,
+                    'report_jrxml' => $filename . '.jrxml',
+                    'report_parameters' => [
+                        "empresa_id" => auth()->user()->empresa_id,
+                        "logotipo" => $logotipo,
+                        "facturaId" => $facturaId,
+                        "viaImpressao" => 2,
+                        "dirSubreportBanco" => $DIR,
+                        "dirSubreportTaxa" => $DIR,
+                        "tipo_regime" => auth()->user()->empresa->tipo_regime_id
+                    ]
+
+                ],
+                "pdf",
+                $DIR_SUBREPORT
+            );
+        }
     }
 }

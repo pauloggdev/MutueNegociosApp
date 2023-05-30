@@ -20,4 +20,13 @@ class ExistenciaStockRepository
             ->where('produto_id', $produtoId)->first();
         return $existenciaStock;
     }
+    public function listarProdutosPorArmazem($armazemId)
+    {
+        $existenciaStock = $this->entity::with(['produto', 'armazem'])
+        ->whereHas('produtos', function($query){
+            $query->where('stocavel','Sim');
+        })->where('armazem_id', $armazemId)
+            ->where('empresa_id', auth()->user()->empresa_id)->get();
+        return $existenciaStock;
+    }
 }
