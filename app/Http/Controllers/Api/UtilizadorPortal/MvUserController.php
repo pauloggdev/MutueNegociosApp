@@ -115,6 +115,5 @@ class MvUserController extends Controller
         }
 
         $user = $this->userRepository->updateUser($request, $uuid);
-
     }
 }
