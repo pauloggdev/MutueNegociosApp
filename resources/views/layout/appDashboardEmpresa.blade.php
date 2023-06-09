@@ -1,3 +1,21 @@
+<?php
+
+use App\Models\admin\Empresa;
+use App\Models\empresa\Empresa_Cliente;
+use Illuminate\Support\Facades\Auth;
+
+if (Auth::guard('web')->check()) {
+    $referencia = Empresa::where('user_id', Auth::user()->id)->first()->referencia;
+    $empresa = Empresa_Cliente::where('referencia', $referencia)->first();
+} else {
+    $empresa_id = Auth::user()->empresa_id;
+    $empresa = Empresa_Cliente::where('id', $empresa_id)->first();
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
@@ -5,9 +23,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
     <title>@yield('title')</title>
-
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- Estilos VUE.JS-->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+
 
     {{-- FAVICON  --}}
     <link rel="shortcut icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
@@ -29,135 +51,106 @@
     <meta name="theme-color" content="#ffffff">
     {{-- FIM FAVICON  --}}
 
+    <link rel="stylesheet" href="{{ asset('css/app.css')}}">
 
-    <!-- Estilos VUE.JS-->
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    @yield('css_dashboard')
 
-    <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/font-awesome/4.5.0/css/font-awesome.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/icofont/icofont.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/icofont/icofont.min.css')}}" />
+    <!-- bootstrap & fontawesome sem uso-->
+    @yield('css_fontawesome')
+    <!--  FIM -->
+
     <!-- ========================================================================================= -->
-    <!-- text fonts -->
-    <link rel="stylesheet" href="{{asset('assets/css/fonts.googleapis.com.css')}}" />
+    <!-- text fonts sem uso-->
+    @yield('css_fonts')
+    <!-- --- fim -- -->
     <!-- ========================================================================================= -->
 
-    <!-- Estilos Gerais das páginas -->
+    <!-- Estilos Gerais das pÃ¡ginas -->
     <link rel="stylesheet" href="{{asset('assets/css/ace.min.css')}}" class="ace-main-stylesheet" id="main-ace-style" />
     <link rel="stylesheet" href="{{asset('assets/css/ace-skins.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/ace-rtl.min.css')}}" />
     <!-- ========================================================================================= -->
 
-    <!-- Css para combobox com caixa de pesquisa, data e hora range, input do tipo number dinâmico e etc... -->
-    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.custom.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/chosen.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker3.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-timepicker.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css')}}" />
-    <!-- ========================================================================================= -->
+    <!-- Css para combobox com caixa de pesquisa, data e hora range, input do tipo number dinÃ¢mico e etc... sem uso-->
+    @yield('css_combobox_pesquisa_data_hora')
+    <!-- --- fim -- -->
+
+    <!-- Css para collapse-->
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.min.css')}}" />
 
     <!-- Css para Galerias de Imagem de Fundo de qualquer registo -->
-    <link rel="stylesheet" href="{{ asset('assets/css/colorbox.min.css')}}" />
+    @yield('css_colorbox')
+
     <!-- ========================================================================================= -->
 
     <!-- ESTILOS CSS DE OUTROS TEMPLATES-->
-    <!-- CSS do template Anzenta, para os contornos de alguns formulários-->
+    <!-- CSS do template Anzenta, para os contornos de alguns formulÃ¡rios-->
     <link rel="stylesheet" href="{{ asset('assets/plugin/css/font-awesome.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/plugin/css/style.css')}}" type="text/css">
     <!-- ========================================================================================= -->
+    @livewireStyles
 </head>
+
 <!-- #0D47A1 !important, #174284 !important  #242424 -->
 
 <body class="skin-1" id="body">
+    <iframe id="iframe_impressao" src="" style="display:none"></iframe>
+
     <div id="navbar" class="navbar navbar-default ace-save-state">
-        @if(Auth::guard('web')->check())
+
         @if(!empty($alertaAtivacaoLicenca))
         @if($alertaAtivacaoLicenca['diasRestantes'] > 0)
-
-        @component('empresa/components/AssineAgora', ['diasRestantes' => $alertaAtivacaoLicenca['diasRestantes']]))
+        @component('empresa/components/AssineAgora', ['diasRestantes'=> $alertaAtivacaoLicenca['diasRestantes'], 'licencaGratis'=> $alertaAtivacaoLicenca['licencaGratis']]))
         @endcomponent
-
-        @else
+        @endif
+        @if($alertaAtivacaoLicenca['diasRestantes'] === 0)
         @component('empresa/components/licencaExpirada')
         @endcomponent
-
         @endif
         @endif
-        @endif
-
         <div class="navbar-container ace-save-state" id="navbar-container">
             <div class="navbar-header pull-left">
-                <a href="{{url('home')}}" class="navbar-brand">
-                    <small>MUTUE-NEGÓCIO22</small>
+                <a href="/empresa/home" class="navbar-brand">
+                    <small>MUTUE-NEGÓCIOS</small>
                 </a>
             </div>
 
+
             <div class="navbar-buttons navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
-
-                    <li class="purple dropdown-modal">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-                            <span class="badge badge-important">8</span>
-                        </a>
-
-                        <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-                            <li class="dropdown-header">
-                                <i class="ace-icon fa fa-exclamation-triangle"></i>
-                                8 Notifications
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="green dropdown-modal">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-                            <span class="badge badge-success">5</span>
-                        </a>
-
-                        <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                            <li class="dropdown-header">
-                                <i class="ace-icon fa fa-envelope-o"></i>
-                                5 Messages
-                            </li>
-                        </ul>
-                    </li>
-
-
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="{{  url('/upload/'.Auth::user()->foto)}}" height="90%" />
+                            <img class="nav-user-photo" src="{{ url('/upload/'.Auth::user()->foto) }}" height="90%" />
                             <span class="user-info">
                                 <small>Bem - Vindo,</small>
                                 {{Auth::user()['name']}}
                             </span>
+
                             <i class="ace-icon fa fa-caret-down"></i>
                         </a>
 
                         <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                             <li>
-                                <a href="#">
+                                <a href="/empresa/configuracao">
                                     <i class="ace-icon fa fa-cog"></i>
                                     Definições
                                 </a>
                             </li>
-
+                            <!-- <li>
+                                <a href="/empresa/perfil">
+                                    <i class="ace-icon fa fa-user"></i>
+                                    Perfil
+                                </a>
+                            </li> -->
                             <li>
-                                <a href="{{url('empresa/perfil')}}">
+                                <a href="/empresa/usuario/perfil">
                                     <i class="ace-icon fa fa-user"></i>
                                     Perfil
                                 </a>
                             </li>
-
                             <li class="divider"></li>
-
                             <li>
-                                <a href="{{ url('/logout') }}" class="" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
+                                <a href="{{ url('/logout') }}" class="" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Sair
                                 </a>
@@ -169,12 +162,17 @@
                     </li>
                     <li>
                         <a href="{{url('logout')}}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
+                                    document.getElementById('logout-form').submit();">
                             <i class="ace-icon fa fa-power-off"></i>
                             Sair
                         </a>
                     </li>
                 </ul>
+            </div>
+
+            <div id="app_notification">
+                <notificacao-component router="">
+                    <notificacao-component />
             </div>
         </div><!-- /.navbar-container -->
     </div>
@@ -194,23 +192,24 @@
                     ace.settings.loadState('sidebar')
                 } catch (e) {}
             </script>
-            <!-- EMPRESA -->
+
+
+
 
             <ul class="nav nav-list">
                 <li class="">
                     <span class="">
                         <a href="" data-target=".actualizar_logomarca{{Auth::user()->id}}" data-toggle="modal">
-                            <img class="nav-user-photo" src="{{  url('/upload/'.Auth::user()->foto)}}" style="max-width: 100%; border-radius: 100px; height: 72px; width: 75px; left: 14px; position: sticky" />
+                            <img class="nav-user-photo" src="{{ url('/upload/'.$empresa->logotipo)}}" style="max-width: 100%; border-radius: 100px; height: 72px; width: 75px; left: 14px; position: sticky" />
                         </a>
                     </span>
                 </li>
 
                 <li class="">
-                    <a href="{{url('home')}}">
+                    <a href="/empresa/home">
                         <i class="menu-icon glyphicon glyphicon-home"></i>
                         <span class="menu-text"> INICIO </span>
                     </a>
-
                     <b class="arrow"></b>
                 </li>
 
@@ -227,36 +226,37 @@
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="hover">
-                            <a href="{{url('/empresa/gestores')}}">
+
+                        <!-- <li class="hover">
+                            <a href="/empresa/gestores">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Gestor
                             </a>
 
                             <b class="arrow"></b>
-                        </li>
+                        </li> -->
 
                         <li class="hover">
-                            <a href="{{url('empresa/fornecedores')}}">
+                            <a href="/empresa/fornecedores">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Fornecedores
+                                FORNECEDORES
                             </a>
 
                             <b class="arrow"></b>
                         </li>
 
                         <li class="hover">
-                            <a href="{{url('empresa/fabricantes')}}">
+                            <a href="/empresa/fabricantes">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Fabricantes
+                                FABRICANTES
                             </a>
                             <b class="arrow"></b>
                         </li>
 
                         <li class="hover">
-                            <a href="{{url('empresa/armazens')}}">
+                            <a href="/empresa/armazens">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Armazens
+                                ARMAZÉNS
                             </a>
 
                             <b class="arrow"></b>
@@ -265,48 +265,48 @@
                         <li class="hover">
                             <a href="{{ route('bancos.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Bancos
+                                BANCOS
                             </a>
 
                             <b class="arrow"></b>
                         </li>
 
                         <li class="hover">
-                            <a href="{{url('empresa/formapagamento')}}">
-                                <i class="menu-icon fa fa-list"></i>
-                                Forma de Pagamento
+                            <a href="/empresa/marcas">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                MARCAS
                             </a>
                             <b class="arrow"></b>
                         </li>
 
                         <li class="hover">
-                            <a href="{{url('empresa/marcas')}}">
-                                <i class="menu-icon fa fa-list"></i>
-                                Marcas
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href="{{url('empresa/categorias')}}">
-                                <i class="menu-icon fa fa-list"></i>
-                                Categorias
+                            <a href="/empresa/categorias">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                CATEGORIAS
                             </a>
                             <b class="arrow"></b>
                         </li>
 
                         <li class="hover">
                             <a href="{{route('unidadeMedidas.index')}}">
-                                <i class="menu-icon fa fa-list"></i>
-                                Unidade de Medida
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                UNIDADE DE MEDIDA
                             </a>
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
-                            <a href="{{url('empresa/classes')}}">
-                                <i class="menu-icon fa fa-list"></i>
+                        <!-- <li class="hover">
+                            <a href="/empresa/classes">
+                                <i class="menu-icon fa fa-caret-right"></i>
                                 Classe de bem
+                            </a>
+                            <b class="arrow"></b>
+                        </li> -->
+
+                        <li class="hover">
+                            <a href="/empresa/formapagamento">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                FORMA DE PAGAMENTO
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -317,7 +317,7 @@
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text">
-                            Utilizadores
+                            UTILIZADORES
                         </span>
 
                         <b class="arrow fa fa-angle-down"></b>
@@ -327,17 +327,25 @@
 
                     <ul class="submenu">
                         <li class="hover">
-                            <a href="{{url('empresa/usuarios')}}">
-                                <i class="menu-icon fa fa-table"></i>
-                                Listar Utilizadores
+                            <a href="/empresa/usuarios">
+                                <i class="menu-icon fa fa-list"></i>
+                                LISTAR UTILIZADORES
                             </a>
                             <b class="arrow"></b>
                         </li>
 
                         <li class="hover">
-                            <a href="{{url('empresa/funcoes-permissoes')}}">
+                            <a href="{{ route('roles.index') }}">
                                 <i class="menu-icon fa fa-plus"></i>
-                                Funções & Permissões
+                                FUNÇÕES
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/permissoes">
+                                <i class="menu-icon fa fa-plus"></i>
+                                PERMISSÕES
                             </a>
 
                             <b class="arrow"></b>
@@ -347,8 +355,8 @@
 
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon icofont-group bigger-150" style="font-size: 15pt"></i>
-                        <span class="menu-text"> Clentes </span>
+                        <i class="menu-icon fa fa-users"></i>
+                        <span class="menu-text"> CLIENTES </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -357,27 +365,27 @@
 
                     <ul class="submenu">
                         <li class="hover">
-                            <a href="{{url('empresa/clientes')}}">
+                            <a href="/empresa/clientes">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar Clientes
+                                LISTAR CLIENTES
                             </a>
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <!-- <li class="hover">
                             <a href="">
                                 <i class="menu-icon fa fa-list"></i>
                                 Conta corrente
                             </a>
                             <b class="arrow"></b>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
 
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon fa fa-product-hunt"></i>
-                        <span class="menu-text">Produtos</span>
+                        <i class="menu-icon fa fa-opencart"></i>
+                        <span class="menu-text">PRODUTOS </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -386,53 +394,81 @@
 
                     <ul class="submenu">
                         <li class="hover">
-                            <a href="{{url('empresa/produtos')}}">
+                            <a href="/empresa/produtos">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar Produtos
+                                LISTAR PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
-
                         <li class="hover">
-                            <a href="{{url('empresa/produtos/stock')}}">
+                            <a href="/empresa/produtos-mais-vendidos">
                                 <i class="menu-icon fa fa-list"></i>
-                                Ánalise de Stock
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-
-                    </ul>
-                </li>
-
-                <li class="hover">
-                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon glyphicon glyphicon-barcode"></i>
-                        <span class="menu-text"> Facturação </span>
-
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-
-                    <b class="arrow"></b>
-
-                    <ul class="submenu">
-                        <li class="hover">
-                            <a href="{{url('empresa/facturacao/criar')}}">
-                                <i class="menu-icon glyphicon glyphicon-barcode"></i>
-                                Facturação
+                                LISTAR PRODUTOS MAIS VENDIDOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/facturas')}}">
+                            <a href="/empresa/produtos/stock">
+                                <i class="menu-icon fa fa-opencart"></i>
+                                ÁNALISE DE STOCK
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/produtos/quantidade/critica">
                                 <i class="menu-icon fa fa-list"></i>
-                                Listar facturas
+                                LISTAR PRODUTOS/QUANTIDADE CRÍTICA
                             </a>
                             <b class="arrow"></b>
                         </li>
+                    </ul>
+                </li>
+                @if(Auth::user()->empresa_id == 156)
+                <li class="">
+                    <a href="{{route('empresa.vendas')}}">
+                        <i class="menu-icon fa fa-opencart"></i>
+                        <span class="menu-text"> VENDAS </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                @endif()
+
+
+
+
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-wpforms"></i>
+                        <span class="menu-text"> FATURAÇÃO </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        @if(Auth::user()->empresa_id != 156)
                         <li class="hover">
-                            <a href="{{url('empresa/listarFacturaProformas')}}">
+                            <a href="/empresa/facturacao/criar">
+                                <i class="menu-icon fa fa-wpforms"></i>
+                                FATURAÇÃO
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        @endif()
+                        <li class="hover">
+                            <a href="/empresa/facturas">
                                 <i class="menu-icon fa fa-list"></i>
-                                Converter Factura Proforma
+                                LISTAR FATURAS
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/facturas-proformas">
+                                <i class="menu-icon glyphicon glyphicon-refresh"></i>
+                                CONVERTER FACTURA/PROFORMA
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -441,8 +477,9 @@
 
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon glyphicon glyphicon-barcode"></i>
-                        <span class="menu-text"> Operações </span>
+                        <i class="menu-icon fa fa-tasks"></i>
+
+                        <span class="menu-text"> OPERAÇÕES </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -452,66 +489,80 @@
                     <ul class="submenu">
 
                         <li class="hover">
-                            <a href="{{url('empresa/facturas/operacao-deposito-recibo')}}">
+                            <a href="{{ route('recibo.index')}}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Déposito de valores - recibos </a>
+                                DEPÓSITO DE VALOR - RECIBOS</a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/notacredito')}}">
+                            <a href="/empresa/notacredito">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Nota de Crédito
+                                NOTA DE CRÉDITO
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/notadebito')}}">
+                            <a href="/empresa/notadebito">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Nota de Débito
+                                NOTA DE DÉBITO
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/facturas/rectificacao')}}">
+                            <a href="{{ route('notaCreditoRetificacaoDoc.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Rectificação de documentos
+                                RETIFICAÇÃO DE DOCUMENTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{route('notaCreditoAnulacaoDoc.index')}}">
+                            <a href="{{ route('notaCreditoAnulacaoDoc.index') }}">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Anulação de documentos
+                                ANULAÇÃO DE DOCUMENTOS
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href="/empresa/produto/actualizar-stock">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                ATUALIZAR ESTOQUE </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/produtos/transferencia">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                TRANSFERÊNCIA DE PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/produto/actualizar-stock')}}">
+                            <a href="/empresa/produtos/entrada">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Actualizar estoque </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="hover">
-                            <a href="{{url('empresa/produtos/entrada')}}">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Entrada de produtos
+                                ENTRADA DE PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/produtos/transferencia')}}">
+                            <a href="/empresa/pagamento/fornecedor">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Transferência de produtos
+                                PAGAMENTO DE FORNECEDOR
                             </a>
                             <b class="arrow"></b>
                         </li>
+
+
+
                     </ul>
                 </li>
 
+
+                @if(Auth::user()->hasRole('Super-Admin'))
+
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon fa icofont-bank"></i>
-                        <span class="menu-text">IVA</span>
+                        <i class="menu-icon fa fa-shopping-cart"></i>
+                        <span class="menu-text">VENDAS</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -519,75 +570,81 @@
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="hover">
-                            <a href="{{url('empresa/taxaIva')}}">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Definir Taxas do IVA
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href="{{url('empresa/motivoIva')}}">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Definir Motivos de Isenção
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href="{{url('empresa/gerarSaft')}}">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Gerar o ficheiro SAFT
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
-                <li class="hover">
-                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon fa icofont-bank"></i>
-                        <span class="menu-text">Vendas</span>
-
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-
-                    <b class="arrow"></b>
-
-                    <ul class="submenu">
-                        <li class="hover">
-                            <a href="{{url('empresa/vendas-produtos')}}">
+                        <!-- <li class="hover">
+                            <a href="/empresa/vendas-produtos">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Lista de vendas por produtos
                             </a>
 
                             <b class="arrow"></b>
-                        </li>
+                        </li> -->
+
                         <li class="hover">
-                            <a href="{{url('empresa/vendas-diaria')}}">
+                            <a href="/empresa/vendas-diaria">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Venda diária
+                                VENDAS DIÁRIA
                             </a>
 
                             <b class="arrow"></b>
                         </li>
                         <li class="hover">
-                            <a href="{{url('empresa/vendas-mensal')}}">
+
+                            <a href="/empresa/vendas-mensal">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                Vendas mensal
+                                VENDAS MENSAL
                             </a>
 
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/relatorios-vendas">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                RELATÓRIOS DE VENDAS GERAIS
+                            </a>
                             <b class="arrow"></b>
                         </li>
                     </ul>
                 </li>
+                @if(auth()->user()->empresa->venda_online == 'Y')
                 <li class="hover">
                     <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon fa icofont-settings-alt"></i>
-                        <span class="menu-text">Configurações</span>
+                        <i class="menu-icon fa fa-shopping-cart"></i>
+                        <span class="menu-text">VENDAS ONLINE</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="hover">
+                            <a href="/empresa/cupons-desconto">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                GERAR CUPON DESCONTO
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/produtos/destaques">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                PRODUTOS DESTAQUES
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                @endif;
+                <li class="hover">
+                    <a href="/empresa/inventarios" style="color: #ffffff">
+                        <i class="menu-icon glyphicon glyphicon-refresh"></i>
+                        <span class="menu-text">INVENTÁRIOS</span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                </li>
+
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-cog"></i>
+                        <span class="menu-text">CONFIGURAÇÕES</span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -596,14 +653,140 @@
 
                     <ul class="submenu">
                         <li class="hover">
-                            <a href="{{url('empresa/configuracao')}}">
+                            <a href="/empresa/configuracao">
                                 <i class="menu-icon fa fa-pencil" style="color: white;"></i>
-                                Configurar minha conta
+                                CONFIGURAR MINHA CONTA
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/modelo-documentos">
+                                <i class="menu-icon fa fa-list" style="color: white;"></i>
+                                MODELO DOCUMENTOS
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+
+                            <a href="/empresa/definir-parametros">
+                                <i class="menu-icon fa fa-pencil" style="color: white;"></i>
+                                DEFINIR PARAMETROS
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-list-alt"></i>
+                        <span class="menu-text">LISTAGENS</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="hover">
+
+                            <a href="/empresa/minhas-licencas">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                MINHAS LICENÇAS
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <!-- <li class="hover">
+
+                            <a href="/empresa/facturas-licencas">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                Facturas de Licenças
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+
+                            <a href="/empresa/recibos-facturas-licenca">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                Recibos Pagamento de Licenças
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li> -->
+                        <li class="hover">
+
+                            <!-- <a href="/empresa/movimento/diario">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                                Movimento diário
+                            </a> -->
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="{{route('relatorio.index')}}">
+                        <i class="menu-icon fa fa-file-pdf-o"></i>
+                        <span class="menu-text">RELATÓRIOS</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{{route('fechoCaixa.index')}}">
+                        <i class="menu-icon fa fa-file-pdf-o"></i>
+                        <span class="menu-text">FECHO DE CAIXA</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{{route('centroCusto.index')}}">
+                        <i class="menu-icon fa fa-shopping-basket"></i>
+                        <span class="menu-text">CENTRO DE CUSTOS</span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-file-text"></i>
+                        <span class="menu-text">IVA</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="hover">
+                            <a href="/empresa/taxaIva">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                TAXAS DO IVA
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href="/empresa/motivoIva">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                MOTIVOS DE ISENÇÃO
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href="/empresa/gerarSaft">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                GERAR FICHEIRO SAFT
                             </a>
 
                             <b class="arrow"></b>
                         </li>
                     </ul>
+                </li>
+                <li class="">
+                    <a href="{{route('manual.index')}}">
+                        <i class="menu-icon fa fa-download"></i>
+                        <span class="menu-text">MANUAL UTILIZADOR</span>
+                    </a>
+                    <b class="arrow"></b>
                 </li>
                 <!-- <li class="hover">
                     <a href="{{url('empresa/fechoCaixa')}}">
@@ -614,15 +797,13 @@
                 </li> -->
             </ul><!-- /.nav-list -->
 
-
-
             <!--  MODAL MUDAR O LOGOMARCA  -->
             <div id="bs-modal-lg" class="modal fade actualizar_logomarca{{Auth::user()->id}}">
-                <div class="modal-dialog modal-lg" style="width: 400px;">
+                <div class="modal-dialog modal-lg" style="width: 400px">
                     <div class="modal-content">
-                        <div class="modal-header text-center" id="logomarca-header">
-                            <button type="button" class="close white bolder " data-dismiss="modal">×</button>
-                            <h4 class="smaller"><i class="ace-icon fa fa-pencil bigger-150 white"></i> Alterar Logomarca</h4>
+                        <div class="modal-header text-center red" id="logomarca-header">
+                            <button type="button" class="close white bolder" data-dismiss="modal"></button>
+                            <h4 class="smaller white"><i class="ace-icon fa fa-pencil bigger-150 white"></i> Alterar Logomarca</h4>
                         </div>
                         <div class="modal-body" style="padding: 0px; position: relative;">
                             <div class="row">
@@ -630,7 +811,7 @@
                                 <div class="">
                                     <div id="" class="row">
                                         <div class="col-sm-offset-1 col-sm-10">
-                                            <form method='post' action='{{url('/update_logomarca')}}/{{Auth::user()->id}}' enctype="multipart/form-data" class="form-horizontal">
+                                            <form method='post' action='{{url('/empresa/update_logomarca')}}/{{$empresa->id}}' enctype="multipart/form-data" class="form-horizontal">
                                                 {{ csrf_field() }}
                                                 <div id="user-profile-" class="user-profile row">
                                                     <div class="tabbable">
@@ -651,7 +832,8 @@
 
                                                     <div class="clearfix form-actions">
                                                         <div class="col-md-offset-1 col-md-10">
-                                                            <button class="btn btn-success bigger-150" type="submit" id="logomarca-butom" style="border-radius: 14px;">
+                                                            &nbsp; &nbsp;
+                                                            <button class="btn btn-success bigger-150" id="logomarca-butom" type="submit" style="border-radius: 14px;">
                                                                 <i class="ace-icon fa fa-check bigger-120"></i>
                                                                 Salvar
                                                             </button>
@@ -680,20 +862,7 @@
 
         <div class="main-content">
             <div class="main-content-inner">
-                <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-                    <div class="nav-search col-lg-4" id="nav-search">
-                        <form class="form-search" action='{!!url("pesquisar")!!}' method="get">
-                            {!! csrf_field() !!}
-                            <span class="input-icon">
-                                <input type="text" placeholder="Buscar..." class="nav-search-input" name="texto" value="" id="validation-form" autocomplete="off" style="width: 150%;" required="" />
-                                <i class="ace-icon fa fa-search nav-search-icon"></i>
-                            </span>
-                        </form>
-                    </div><!-- /.nav-search -->
-                </div>
-
                 <div class="page-content">
-
                     <div class="content-wrapper">
                         <div id="app">
                             @yield('content')
@@ -720,323 +889,114 @@
         </a>
     </div><!-- /.main-container -->
 
+    <script type="text/javascript">
+        window.Laravel = {!!json_encode(['user'=>Auth::user()?Auth::user():null,'roles'=>Auth::user()->roles, 'isSuperAdmin' => (Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('Admin')),'isFuncionario'=>Auth::user()->hasRole('Funcionario')])!!};
+    </script>
+
 
     <!-- Script VUE.JS-->
     <script src="{{asset('js/app.js')}}"></script>
 
-    <!-- Script do qual dependem todas as funcionalidades do template, como toda a funcionalidade dos menus e o estilo de vários inputs -->
-    <script src="{{asset('assets/js/jquery-1.11.3.min.js')}}"></script><!-- script principal-->
+
+    <!-- Script do qual dependem todas as funcionalidades do template, como toda a funcionalidade dos menus e o estilo de vÃ¡rios inputs -->
+    <!-- script principal-->
+    <script src="{{asset('assets/js/jquery-1.11.3.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/ace-elements.min.js')}}"></script>
     <script src="{{asset('assets/js/ace.min.js')}}"></script>
+
+
+    <!-- COLLAPSE BOOTSTRAP -->
+    <script src="{{ asset('assets/js/jquery-ui.min.js')}}"></script>
+
     <!-- ==================================================================================== -->
 
-    <!-- SCRIPT PARA FORMULÁRIOS DE REGISTO, COM TODOS ELEMENTOS NECESSÁRIOS-->
-    <!-- Scripts diferentes tipos de inputs adicionais para o formulário -->
-    <script src="{{ asset('assets/js/jquery-ui.custom.min.js')}}"></script>
-    <script src="{{ asset('assets/js/select2.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.maskedinput.min.js')}}"></script>
+    <!-- SCRIPT PARA FORMULÃRIOS DE REGISTO, COM TODOS ELEMENTOS NECESSÃRIOS-->
+    <!-- Scripts diferentes tipos de inputs adicionais para o formulÃ¡rio-->
+    @yield('js_input_formulario')
+    <!-- --- FIM -- -->
 
+
+    <!-- script de alterar foto template-->
+    <script src="{{ asset('assets/js/jquery.maskedinput.min.js')}}"></script>
     <script src="{{ asset('assets/js/chosen.jquery.min.js')}}"></script>
+    <script src="{{ asset('assets/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ asset('assets/js/moment.min.js')}}"></script>
+    <script src="{{ asset('assets/js/daterangepicker.min.js')}}"></script>
+    <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('assets/js/bootstrap-colorpicker.min.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery.knob.min.js')}}"></script>
     <script src="{{ asset('assets/js/autosize.min.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.inputlimiter.min.js')}}"></script>
+    <!-- ---- FIM --- -->
 
-    <!--Scripts para validação em tempo real do formulário -->
+    <!--Scripts para validaÃ§Ã£o em tempo real do formulÃ¡rio -->
     <script src="{{ asset('assets/js/jquery.validate.min.js')}}"></script>
     <!-- ========================================================================================= -->
 
-    <!-- Scripts para gráficos estatisticos do dashboard -->
-    <script src="{{ asset('assets/js/jquery.easypiechart.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.sparkline.index.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.flot.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.flot.pie.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.flot.resize.min.js')}}"></script>
 
-    <!--INICIO DO SCRIPT PARA MANDAR INFORMAÇÕES NO COMPONENT VUE-->
-    <!-- <script type="text/javascript">
+    <!-- Script para tabelas Simples & DinÃ¢mica(Para listagem dos dados) -->
+    @yield('js_tabela_simples_dinamico')
+    <script src="{{ asset('assets/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery.dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/js/dataTables.buttons.min.js')}}"></script>
+
+    @yield('js_email_notificacao')
+
+    <!-- Css para Galerias de Imagem de Fundo de qualquer registo -->
+    <script src="{{ asset('assets/js/jquery.colorbox.min.js')}}"></script>
+
+    <!-- Script para modelos de licenÃ§a -->
+    <script src="{{ asset('assets/js/holder.min.js')}}"></script>
+    <!--INICIO DO SCRIPT PARA MANDAR INFORMAÃ‡Ã•ES NO COMPONENT VUE-->
+    <script type="text/javascript">
         window.baseUrl = "{{config('app.url', 'http://localhost:8000')}}";
         window.Laravel = {
-            !!json_encode([
-                'csrfToken' => csrf_token(),
-
-                //'user' => Auth::user(),
-                'roles' => Auth::user() - > roles,
+            json_encode(['csrfToken' => csrf_token(),
+                'roles' => Auth::user()->roles,
                 'user' => [
-                    'authenticated' => auth() - > check(),
-                    'id' => auth() - > check() ? auth() - > user() - > id : null,
-                    'nome' => auth() - > check() ? auth() - > user() - > name : null,
-                    'email' => auth() - > check() ? auth() - > user() - > email : null,
+                    'authenticated' => auth()->check(),
+                    'id' => auth()->check() ? auth()-> user()-> id : null,
+                    'nome' => auth()->check() ? auth()->user()->name : null,
+                    'email' => auth()->check() ? auth()->user()->email : null,
                 ],
                 'user' => Auth::user(),
-            ]) !!
+            ]);
         };
-    </script> -->
-    <!--FIM DO SCRIPT PARA MANDAR INFORMAÇÕES NO COMPONENT VUE-->
-
-    <!-- Scripts para gráficos estatisticos do dashboard -->
-    <script type="text/javascript">
-        jQuery(function($) {
-            $('.easy-pie-chart.percentage').each(function() {
-                var $box = $(this).closest('.infobox');
-                var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-                var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-                var size = parseInt($(this).data('size')) || 50;
-                $(this).easyPieChart({
-                    barColor: barColor,
-                    trackColor: trackColor,
-                    scaleColor: false,
-                    lineCap: 'butt',
-                    lineWidth: parseInt(size / 10),
-                    animate: ace.vars['old_ie'] ? false : 1000,
-                    size: size
-                });
-            })
-
-            $('.sparkline').each(function() {
-                var $box = $(this).closest('.infobox');
-                var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-                $(this).sparkline('html', {
-                    tagValuesAttribute: 'data-values',
-                    type: 'bar',
-                    barColor: barColor,
-                    chartRangeMin: $(this).data('min') || 0
-                });
-            });
-
-
-            //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-            //but sometimes it brings up errors with normal resize event handlers
-            $.resize.throttleWindow = false;
-
-            var placeholder = $('#piechart-placeholder').css({
-                'width': '90%',
-                'min-height': '150px'
-            });
-            var data = [{
-                    label: "Produtos mais vendidos",
-                    data: 38.7,
-                    color: "#68BC31"
-                },
-                {
-                    label: "search engines",
-                    data: 24.5,
-                    color: "#2091CF"
-                },
-                {
-                    label: "ad campaigns",
-                    data: 8.2,
-                    color: "#AF4E96"
-                },
-                {
-                    label: "Produtos menos vendido",
-                    data: 18.6,
-                    color: "#DA5430"
-                },
-                {
-                    label: "other",
-                    data: 10,
-                    color: "#FEE074"
-                }
-            ]
-
-            function drawPieChart(placeholder, data, position) {
-                $.plot(placeholder, data, {
-                    series: {
-                        pie: {
-                            show: true,
-                            tilt: 0.8,
-                            highlight: {
-                                opacity: 0.25
-                            },
-                            stroke: {
-                                color: '#fff',
-                                width: 2
-                            },
-                            startAngle: 2
-                        }
-                    },
-                    legend: {
-                        show: true,
-                        position: position || "ne",
-                        labelBoxBorderColor: null,
-                        margin: [-30, 15]
-                    },
-                    grid: {
-                        hoverable: true,
-                        clickable: true
-                    }
-                })
-            }
-            drawPieChart(placeholder, data);
-
-            /**
-            we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-            so that's not needed actually.
-            */
-            placeholder.data('chart', data);
-            placeholder.data('draw', drawPieChart);
-
-
-            //pie chart tooltip example
-            var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
-            var previousPoint = null;
-
-            placeholder.on('plothover', function(event, pos, item) {
-                if (item) {
-                    if (previousPoint != item.seriesIndex) {
-                        previousPoint = item.seriesIndex;
-                        var tip = item.series['label'] + " : " + item.series['percent'] + '%';
-                        $tooltip.show().children(0).text(tip);
-                    }
-                    $tooltip.css({
-                        top: pos.pageY + 10,
-                        left: pos.pageX + 10
-                    });
-                } else {
-                    $tooltip.hide();
-                    previousPoint = null;
-                }
-
-            });
-
-            /////////////////////////////////////
-            $(document).one('ajaxloadstart.page', function(e) {
-                $tooltip.remove();
-            });
-
-
-
-
-            var d1 = [];
-            for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                d1.push([i, Math.sin(i)]);
-            }
-
-            var d2 = [];
-            for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                d2.push([i, Math.cos(i)]);
-            }
-
-            var d3 = [];
-            for (var i = 0; i < Math.PI * 2; i += 0.2) {
-                d3.push([i, Math.tan(i)]);
-            }
-
-
-            var sales_charts = $('#sales-charts').css({
-                'width': '100%',
-                'height': '220px'
-            });
-            $.plot("#sales-charts", [{
-                    label: "Domains",
-                    data: d1
-                },
-                {
-                    label: "Hosting",
-                    data: d2
-                },
-                {
-                    label: "Services",
-                    data: d3
-                }
-            ], {
-                hoverable: true,
-                shadowSize: 0,
-                series: {
-                    lines: {
-                        show: true
-                    },
-                    points: {
-                        show: true
-                    }
-                },
-                xaxis: {
-                    tickLength: 0
-                },
-                yaxis: {
-                    ticks: 10,
-                    min: -2,
-                    max: 2,
-                    tickDecimals: 3
-                },
-                grid: {
-                    backgroundColor: {
-                        colors: ["#fff", "#fff"]
-                    },
-                    borderWidth: 1,
-                    borderColor: '#555'
-                }
-            });
-
-
-            $('#recent-box [data-rel="tooltip"]').tooltip({
-                placement: tooltip_placement
-            });
-
-            function tooltip_placement(context, source) {
-                var $source = $(source);
-                var $parent = $source.closest('.tab-content')
-                var off1 = $parent.offset();
-                var w1 = $parent.width();
-
-                var off2 = $source.offset();
-                //var w2 = $source.width();
-
-                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-                return 'left';
-            }
-
-
-            $('.dialogs,.comments').ace_scroll({
-                size: 300
-            });
-
-
-            //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
-            //so disable dragging when clicking on label
-            var agent = navigator.userAgent.toLowerCase();
-            if (ace.vars['touch'] && ace.vars['android']) {
-                $('#tasks').on('touchstart', function(e) {
-                    var li = $(e.target).closest('#tasks li');
-                    if (li.length == 0) return;
-                    var label = li.find('label.inline').get(0);
-                    if (label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation();
-                });
-            }
-
-            $('#tasks').sortable({
-                opacity: 0.8,
-                revert: true,
-                forceHelperSize: true,
-                placeholder: 'draggable-placeholder',
-                forcePlaceholderSize: true,
-                tolerance: 'pointer',
-                stop: function(event, ui) {
-                    //just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
-                    $(ui.item).css('z-index', 'auto');
-                }
-            });
-            $('#tasks').disableSelection();
-            $('#tasks input:checkbox').removeAttr('checked').on('click', function() {
-                if (this.checked) $(this).closest('li').addClass('selected');
-                else $(this).closest('li').removeClass('selected');
-            });
-
-
-            //show the dropdowns on top or bottom depending on window height and menu position
-            $('#task-tab .dropdown-hover').on('mouseenter', function(e) {
-                var offset = $(this).offset();
-
-                var $w = $(window)
-                if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
-                    $(this).addClass('dropup');
-                else $(this).removeClass('dropup');
-            });
-
-        })
     </script>
+    <!--FIM DO SCRIPT PARA MANDAR INFORMAÃ‡Ã•ES NO COMPONENT VUE-->
 
-    <!-- SCRIPT PARA UPLOAD DE IMAGEM DROP E OUTROS INPUTS DE FORMULÁRIOS-->
+    <!-- Scripts para grÃ¡ficos estatisticos do dashboard -->
+    @yield('js_dashboard')
+
+
+
+    <!-- Script para abrir pÃ¡ginas laterais para facturaÃ§Ã£o -->
+    @yield('js_modal_facturacao')
+    <!--Fim do Script para abrir pÃ¡ginas laterais para facturaÃ§Ã£o -->
+
+    <!-- Script para solicitaÃ§Ã£o de factura e compra de licenÃ§a -->
+    @yield('js_solicitacao_factura_licenca')
+
+    <!--Fim do Script para solicitaÃ§Ã£o de factura e compra de licenÃ§a -->
+
+    <!--INICIO DO SCRIPT PARA GALERIA DE IMAGENS-->
+    @yield('js_galeria_imagem')
+    <!-- ---fim-- -->
+
+
+
+    <!-- WIZARD & VALIDAÃ‡Ã•ES sem uso -->
+    @yield('js_validacao')
+    <!-- / fim WIZARD & VALIDAÃ‡Ã•ES -->
+
+    <!--ESCONDER E TORNAR VÃSIVEL sem uso -->
+    @yield('js_esconder_tornar_visivel')
+    <!--ESCONDER E TORNAR VÃSIVEL) -->
+
+
+    <!-- SCRIPT PARA UPLOAD DE IMAGEM DROP E OUTROS INPUTS DE FORMULÃRIOS-->
+
     <script type="text/javascript">
         jQuery(function($) {
             $('#id-disable-check').on('click', function() {
@@ -1198,7 +1158,54 @@
                 thumbnail: false //| true | large
             });
 
-            //======================================= id-input-file-4 ===================================================================
+
+            $('#id-input-file-3').ace_file_input({
+                style: 'well',
+                btn_choose: 'Carregue seu arquivo aqui ou Clique para escolher',
+                btn_change: null,
+                no_icon: 'ace-icon fa fa-cloud-upload',
+                droppable: true,
+                thumbnail: 'large' //small | large | fit
+                    ,
+                preview_error: function(filename, error_code) {}
+
+            }).on('change', function() {});
+
+            //dynamically change allowed formats by changing allowExt && allowMime function
+            $('#id-file-format').removeAttr('checked').on('change', function() {
+                var whitelist_ext, whitelist_mime;
+                var btn_choose
+                var no_icon
+                if (this.checked) {
+                    btn_choose = "Carregue sua imagem aqui ou Clique para escolher";
+                    no_icon = "ace-icon fa fa-picture-o";
+
+                    whitelist_ext = ["jpeg", "jpg", "png", "gif", "bmp"];
+                    whitelist_mime = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"];
+                } else {
+                    btn_choose = "Carregue seu arquivo aqui ou Clique para escolher";
+                    no_icon = "ace-icon fa fa-cloud-upload";
+
+                    whitelist_ext = null; //all extensions are acceptable
+                    whitelist_mime = null; //all mimes are acceptable
+                }
+                var file_input = $('#id-input-file-3');
+                file_input
+                    .ace_file_input('update_settings', {
+                        'btn_choose': btn_choose,
+                        'no_icon': no_icon,
+                        'allowExt': whitelist_ext,
+                        'allowMime': whitelist_mime
+                    })
+                file_input.ace_file_input('reset_input');
+
+                file_input
+                    .off('file.error.ace')
+                    .on('file.error.ace', function(e, info) {});
+            });
+
+
+            //======================================= id-input-file-3 ===================================================================
             $('#id-input-file-4').ace_file_input({
                 style: 'well',
                 btn_choose: 'Carregue seu arquivo aqui ou Clique para escolher',
@@ -1246,10 +1253,10 @@
             //======================================= id-input-file-4 ===================================================================
 
             $('#spinner1').ace_spinner({
-                    value: 0,
-                    min: 0,
-                    max: 200,
-                    step: 10,
+                    value: 1,
+                    min: 1,
+                    max: 9999999999999999999999999999999999999999999999999999,
+                    step: 1,
                     btn_up_class: 'btn-info',
                     btn_down_class: 'btn-info'
                 })
@@ -1258,17 +1265,17 @@
                     //console.log($('#spinner1').val())
                 });
             $('#spinner2').ace_spinner({
-                value: 0,
-                min: 0,
-                max: 10000,
-                step: 100,
+                value: 1,
+                min: 1,
+                max: 9999999999999999999999999999999999999999999999999999,
+                step: 1,
                 touch_spinner: true,
-                icon_up: 'ace-icon fa fa-caret-up bigger-110',
-                icon_down: 'ace-icon fa fa-caret-down bigger-110'
+                icon_up: 'ace-icon fa fa-caret-up bigger-120',
+                icon_down: 'ace-icon fa fa-caret-down bigger-120'
             });
             $('#spinner3').ace_spinner({
-                value: 0,
-                min: 0,
+                value: 1,
+                min: 1,
                 max: 9999999999999999999999999999999999999999999999999999,
                 step: 1,
                 on_sides: true,
@@ -1278,10 +1285,10 @@
                 btn_down_class: 'btn-danger'
             });
             $('#spinner4').ace_spinner({
-                value: 0,
-                min: -100,
-                max: 100,
-                step: 10,
+                value: 1,
+                min: 1,
+                max: 9999999999999999999999999999999999999999999999999999,
+                step: 1,
                 on_sides: true,
                 icon_up: 'ace-icon fa fa-plus',
                 icon_down: 'ace-icon fa fa-minus',
@@ -1414,7 +1421,231 @@
                 $('.daterangepicker.dropdown-menu,.colorpicker.dropdown-menu,.bootstrap-datetimepicker-widget.dropdown-menu').remove();
             });
         });
-    </script><!-- FIM DO SCRIPT PARA UPLOAD DE IMAGEM DROP E OUTROS INPUTS DE FORMULÁRIOS-->
+    </script>
+
+    <!-- FIM DO SCRIPT PARA UPLOAD DE IMAGEM DROP E OUTROS INPUTS DE FORMULÃRIOS-->
+
+    <!-- INICO DO SCRIPT PARA TABELA DE LISTAGEM DE DADOS, SIMPLES & DINÃ‚MICO-->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.tabela1').dataTable({
+                "lengthMenu": [
+                    [15, 20, 30, 50, 100, -1],
+                    [15, 20, 30, 50, 100, "Todos"]
+                ],
+                "language": {
+                    "emptyTable": "Sem dados disponÃ­veis na tabela",
+                    "info": "<span class='text-primary' style='font-size: 12pt; left: 8%;'>Mostrar de _START_ a _END_ Registos(_TOTAL_ no total)</span>",
+                    "infoEmpty": "Mostrar de 0 a 0 registos",
+                    "infoFiltered": "(Filtrada de _MAX_  registos)",
+                    "lengthMenu": "<span class='text-primary' style='font-size:13pt; position: absolute; left: 1%;'>Mostrar _MENU_ </span>",
+                    "search": "<span class='text-primary' style='font-size: 13pt; float: left; left:-25%; position: relative;'>Pesquisar</span>",
+                    "zeroRecords": "<span style='color: red'>Nenhum registo correspondente encontrado</span>",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Ãšltimo",
+                        "previous": "Anterior",
+                        "next": "Proximo",
+                    }
+                }
+            });
+        });
+
+        jQuery(function($) {
+            //initiate dataTables plugin
+            var myTable = $('#dynamic-table')
+                //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                .DataTable({
+                    bAutoWidth: false,
+                    "aoColumns": [{
+                            "bSortable": false
+                        },
+                        null, null, null, null, null,
+                        {
+                            "bSortable": false
+                        }
+                    ],
+                    "aaSorting": [],
+
+                    select: {
+                        style: 'multi'
+                    }
+                });
+
+            $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+            new $.fn.dataTable.Buttons(myTable, {
+                buttons: [{
+                        "extend": "colvis",
+                        "text": "<i class='fa fa-search bigger-110 text-primary'></i> <span class='hidden'>Mostrar/Ocultar Colunas</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        columns: ':not(:first):not(:last)'
+                    },
+                    {
+                        "extend": "copy",
+                        "text": "<i class='fa fa-copy bigger-110 text-pink'></i> <span class='hidden'>Copiar para uma tabela</span>",
+                        "className": "btn btn-white btn-primary btn-bold"
+                    },
+                    {
+                        "extend": "csv",
+                        "text": "<i class='fa fa-database bigger-110 text-orange' style='color: orange'></i> <span class='hidden'>Exportar para CSV</span>",
+                        "className": "btn btn-white btn-primary btn-bold"
+                    },
+                    {
+                        "extend": "excel",
+                        "text": "<i class='fa fa-file-excel-o bigger-110 text-success' style='color: green'></i> <span class='hidden'>Exportar para Excel</span>",
+                        "className": "btn btn-white btn-primary btn-bold"
+                    },
+                    {
+                        "extend": "pdf",
+                        "text": "<i class='fa fa-file-pdf-o bigger-110 text-danger' style='color: red'></i> <span class='hidden'>Exportar para PDF</span>",
+                        "className": "btn btn-white btn-primary btn-bold"
+                    },
+                    {
+                        "extend": "print",
+                        "text": "<i class='fa fa-print bigger-110 text-default'></i> <span class='hidden'>Imprimir toda Tabela</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        autoPrint: false,
+                        message: 'This print was produced using the Print button for DataTables'
+                    }
+                ]
+            });
+            myTable.buttons().container().appendTo($('.tableTools-container'));
+
+            //style the message box
+            var defaultCopyAction = myTable.button(1).action();
+            myTable.button(1).action(function(e, dt, button, config) {
+                defaultCopyAction(e, dt, button, config);
+                $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+            });
+
+            var defaultColvisAction = myTable.button(0).action();
+            myTable.button(0).action(function(e, dt, button, config) {
+
+                defaultColvisAction(e, dt, button, config);
+
+                if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+                    $('.dt-button-collection')
+                        .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+                        .find('a').attr('href', '#').wrap("<li />")
+                }
+                $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+            });
+
+            ////
+
+            setTimeout(function() {
+                $($('.tableTools-container')).find('a.dt-button').each(function() {
+                    var div = $(this).find(' > div').first();
+                    if (div.length == 1) div.tooltip({
+                        container: 'body',
+                        title: div.parent().text()
+                    });
+                    else $(this).tooltip({
+                        container: 'body',
+                        title: $(this).text()
+                    });
+                });
+            }, 500);
+
+
+            //                    myTable.on( 'select', function ( e, dt, type, index ) {
+            //                        if ( type === 'row' ) {
+            //                            $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+            //                        }
+            //                    } );
+            //                    myTable.on( 'deselect', function ( e, dt, type, index ) {
+            //                        if ( type === 'row' ) {
+            //                            //COMENTEI PROPOSITADAMENTE
+            //                            $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+            //                            $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+            //                        }
+            //                    } );
+
+            /////////////////////////////////
+            //table checkboxes
+            $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+
+            //select/deselect all rows according to table header checkbox
+            $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function() {
+                var th_checked = this.checked; //checkbox inside "TH" table header
+
+
+                $('#dynamic-table').find('tbody > tr').each(function() {
+
+
+                    var row = this;
+                    if (th_checked) myTable.row(row).select();
+                    else myTable.row(row).deselect();
+                });
+            });
+
+            //select/deselect a row when the checkbox is checked/unchecked
+            $('#dynamic-table').on('click', 'td input[type=checkbox]', function() {
+
+
+                var row = $(this).closest('tr').get(0);
+                if (this.checked) myTable.row(row).deselect();
+                else myTable.row(row).select();
+            });
+
+            $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+
+            //And for the first simple table, which doesn't have TableTools or dataTables
+            //select/deselect all rows according to table header checkbox
+            var active_class = 'active';
+            $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function() {
+                var th_checked = this.checked; //checkbox inside "TH" table header
+
+                $(this).closest('table').find('tbody > tr').each(function() {
+                    var row = this;
+                    if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                    else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+                });
+            });
+            //select/deselect a row when the checkbox is checked/unchecked
+            $('#simple-table').on('click', 'td input[type=checkbox]', function() {
+                var $row = $(this).closest('tr');
+                if ($row.is('.detail-row ')) return;
+                if (this.checked) $row.addClass(active_class);
+                else $row.removeClass(active_class);
+            });
+
+            /********************************/
+            //add tooltip for small view action buttons in dropdown menu
+            $('[data-rel="tooltip"]').tooltip({
+                placement: tooltip_placement
+            });
+
+            //tooltip placement on right or left
+            function tooltip_placement(context, source) {
+                var $source = $(source);
+                var $parent = $source.closest('table')
+                var off1 = $parent.offset();
+                var w1 = $parent.width();
+
+                var off2 = $source.offset();
+                //var w2 = $source.width();
+
+                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                return 'left';
+            }
+
+            /***************/
+            $('.show-details-btn').on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('tr').next().toggleClass('open');
+                $(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+            });
+            /***************/
+        })
+    </script><!-- FIM DO SCRIPT PARA TABELA DE LISTAGEM DE DADOS, SIMPLES & DINÃ‚MICO-->
+
 
     <style type="text/css">
         #body {
@@ -1444,13 +1675,56 @@
             text-transform: uppercase
         }
 
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: 35px;
+        /* .select2-container--default .select2-selection--single .select2-selection__rendered {
+                line-height: 35px;
+            }
+            .select2-container .select2-selection--single {
+                height: 35px;
+            } */
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: calc(2.25rem + 2px);
+            /* padding: .375rem .75rem; */
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
         }
 
         .select2-container .select2-selection--single {
-            height: 35px;
+            height: 35px !important;
+            padding: 4px !important;
         }
+
+        .select2-container {
+            width: 100% !important;
+
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444 !important;
+        }
+
+        .form-group.has-info input,
+        .form-group.has-info select,
+        .form-group.has-info textarea {
+            color: #444 !important;
+        }
+
+        .vdpComponent.vdpWithInput#data_pago_banco>input {
+            padding: 6px !important;
+            width: 353px !important;
+        }
+
+        .error {
+            color: red;
+        }
+
 
         .modal-header#logomarca-header {
             padding: 15px;
@@ -1466,32 +1740,40 @@
             border-color: #47a447;
             padding: 0px 44px 0px 44px;
         }
-
-        .text-incomplete {
-            max-width: 159px;
-            display: inline-block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            text-align: left;
-            vertical-align: top;
-            line-height: 26px;
-            position: relative;
-            top: 6px;
-            font-size: 12pt;
-        }
-
-        .widget-box {
-            padding: 0;
-            box-shadow: none;
-            margin: 3px 0;
-            border: 2px solid #CCC;
-        }
-
-        .error {
-            color: red;
-        }
     </style>
-</body>
 
-</html>
+    @livewireScripts
+
+    <script>
+        window.addEventListener('printPdf', event => {
+            var data = base64ToArrayBuffer(event.detail.data);
+            var file = new Blob([data], {
+                type: "application/pdf",
+            });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+        })
+
+        function base64ToArrayBuffer(base64) {
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < scriptlen; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+        window.addEventListener('printLink', event => {
+            var data = event.detail.data;
+            window.open(data, '_blank');
+        })
+
+
+        window.addEventListener('closeModal', event => {
+                $('.closeModal').modal('hide');
+            }) <
+            /scriptlen;> <
+            /body>
+
+            <
+            /html>

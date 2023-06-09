@@ -26,7 +26,9 @@ use Illuminate\Support\Str;
                                 </span>
                                 <select wire:model="vendaOnline" class="form-control">
                                     <option value="N">Mostrar todos</option>
+                                    @if(auth()->user()->empresa->venda_online == 'Y')
                                     <option value="Y">Produto vendas online</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>

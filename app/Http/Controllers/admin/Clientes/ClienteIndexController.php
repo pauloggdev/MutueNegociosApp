@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\Traits\TraitPathRelatorio;
 use App\Repositories\Admin\BancoRepository;
 use App\Repositories\Admin\ClienteRepository;
 use Illuminate\Support\Facades\DB;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,13 +18,15 @@ class ClienteIndexController extends Component
     use WithPagination;
     use TraitEmpresa;
     use TraitPathRelatorio;
-
+    use LivewireAlert;
 
     public $search = null;
     public $byStatus = null;
     public $perpage = 10;
-
+    public $empresa;
     private $clienteRepository;
+    protected $listeners = ['checkVendaOnline'];
+
 
     public function boot(ClienteRepository $clienteRepository)
     {
@@ -33,9 +36,6 @@ class ClienteIndexController extends Component
     public function render()
     {
         $clientes = $this->clienteRepository->getClientes($this->byStatus, $this->search, $this->perpage);
-
-
-        
         return view('admin.clientes.index', [
             'clientes' => $clientes
         ])->layout('layouts.appAdmin');
@@ -66,5 +66,34 @@ class ClienteIndexController extends Component
         $this->dispatchBrowserEvent('printPdf', ['data' => base64_encode($report['response']->getContent())]);
         unlink($report['filename']);
         flush();
+    }
+    public function modalAtivarVendaOnline($empresa)
+    {
+        $this->empresa = $empresa;
+        $this->confirm('Deseja habilitar venda online', [
+            'onConfirmed' => 'checkVendaOnline',
+            'cancelButtonText' => 'Não',
+            'confirmButtonText' => 'Sim',
+        ]);
+    }
+    public function modalDesactivarVendaOnline($empresa)
+    {
+        $this->empresa = $empresa;
+        $this->confirm('Deseja desabilitar venda online', [
+            'onConfirmed' => 'checkVendaOnline',
+            'cancelButtonText' => 'Não',
+            'confirmButtonText' => 'Sim',
+        ]);
+    }
+
+    public function checkVendaOnline()
+    {
+        $vendaOnline = $this->empresa['venda_online'] === 'Y' ? 'N' : 'Y';
+        DB::connection('mysql2')->table('empresas')->where('referencia', $this->empresa['referencia'])->update([
+            'venda_online' => $vendaOnline
+        ]);
+        DB::connection('mysql')->table('empresas')->where('referencia', $this->empresa['referencia'])->update([
+            'venda_online' => $vendaOnline
+        ]);
     }
 }

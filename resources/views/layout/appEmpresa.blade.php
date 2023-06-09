@@ -288,7 +288,7 @@ if (Auth::guard('web')->check()) {
                         </li>
 
                         <li class="hover">
-                        <a href="{{route('unidadeMedidas.index')}}">
+                            <a href="{{route('unidadeMedidas.index')}}">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 UNIDADE DE MEDIDA
                             </a>
@@ -504,7 +504,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/notadebito">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                               NOTA DE DÉBITO
+                                NOTA DE DÉBITO
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -532,7 +532,7 @@ if (Auth::guard('web')->check()) {
                         <li class="hover">
                             <a href="/empresa/produtos/transferencia">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                               TRANSFERÊNCIA DE PRODUTOS
+                                TRANSFERÊNCIA DE PRODUTOS
                             </a>
                             <b class="arrow"></b>
                         </li>
@@ -556,40 +556,7 @@ if (Auth::guard('web')->check()) {
                     </ul>
                 </li>
 
-                <li class="hover">
-                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon fa fa-file-text"></i>
-                        <span class="menu-text">IVA</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="hover">
-                            <a href="/empresa/taxaIva">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                 TAXAS DO IVA
-                            </a>
 
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href="/empresa/motivoIva">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                              MOTIVOS DE ISENÇÃO
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href="/empresa/gerarSaft">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                GERAR FICHEIRO SAFT
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
                 @if(Auth::user()->hasRole('Super-Admin'))
 
                 <li class="hover">
@@ -624,7 +591,7 @@ if (Auth::guard('web')->check()) {
 
                             <a href="/empresa/vendas-mensal">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                VENDAS MENSAL 
+                                VENDAS MENSAL
                             </a>
 
                             <b class="arrow"></b>
@@ -638,6 +605,33 @@ if (Auth::guard('web')->check()) {
                         </li>
                     </ul>
                 </li>
+                @if(auth()->user()->empresa->venda_online == 'Y')
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-shopping-cart"></i>
+                        <span class="menu-text">VENDAS ONLINE</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="hover">
+                            <a href="/empresa/cupons-desconto">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                GERAR CUPON DESCONTO
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/produtos/destaques">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                PRODUTOS DESTAQUES
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                @endif
                 @endif;
                 <li class="hover">
                     <a href="/empresa/inventarios" style="color: #ffffff">
@@ -753,6 +747,40 @@ if (Auth::guard('web')->check()) {
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-file-text"></i>
+                        <span class="menu-text">IVA</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="hover">
+                            <a href="/empresa/taxaIva">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                TAXAS DO IVA
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href="/empresa/motivoIva">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                MOTIVOS DE ISENÇÃO
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href="/empresa/gerarSaft">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                GERAR FICHEIRO SAFT
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
                 <li class="">
                     <a href="{{route('manual.index')}}">
                         <i class="menu-icon fa fa-download"></i>
@@ -862,7 +890,7 @@ if (Auth::guard('web')->check()) {
     </div><!-- /.main-container -->
 
     <script type="text/javascript">
-        window.Laravel = {!!json_encode(['user'=>Auth::user()?Auth::user():null,'roles'=>Auth::user()->roles,'isSuperAdmin'=>(Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('Admin')),'isFuncionario'=>Auth::user()->hasRole('Funcionario')])!!};
+        window.Laravel = {!!json_encode(['user'=>Auth::user()?Auth::user():null,'roles'=>Auth::user()->roles, 'isSuperAdmin' => (Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('Admin')),'isFuncionario'=>Auth::user()->hasRole('Funcionario')])!!};
     </script>
 
 
@@ -924,15 +952,15 @@ if (Auth::guard('web')->check()) {
     <script type="text/javascript">
         window.baseUrl = "{{config('app.url', 'http://localhost:8000')}}";
         window.Laravel = {
-            json_encode(['csrfToken'=>csrf_token(),
-                'roles'=>Auth::user()-> roles,
+            json_encode(['csrfToken' => csrf_token(),
+                'roles' => Auth::user()->roles,
                 'user' => [
-                    'authenticated'=>auth()->check(),
-                    'id'=>auth()->check()?auth()->user()->id:null,
-                    'nome'=>auth()->check()?auth()->user()->name:null,
-                    'email'=>auth()->check()?auth()->user()->email:null,
+                    'authenticated' => auth()->check(),
+                    'id' => auth()->check() ? auth()-> user()-> id : null,
+                    'nome' => auth()->check() ? auth()->user()->name : null,
+                    'email' => auth()->check() ? auth()->user()->email : null,
                 ],
-                'user'=>Auth::user(),
+                'user' => Auth::user(),
             ]);
         };
     </script>
@@ -1717,35 +1745,35 @@ if (Auth::guard('web')->check()) {
     @livewireScripts
 
     <script>
+        window.addEventListener('printPdf', event => {
+            var data = base64ToArrayBuffer(event.detail.data);
+            var file = new Blob([data], {
+                type: "application/pdf",
+            });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+        })
 
-   window.addEventListener('printPdf', event => {
-       var data = base64ToArrayBuffer(event.detail.data);
-       var file = new Blob([data], {
-           type: "application/pdf",
-       });
-       var fileURL = URL.createObjectURL(file);
-       window.open(fileURL);
-   })
-
-   function base64ToArrayBuffer(base64) {
-       var binary_string = window.atob(base64);
-       var len = binary_string.length;
-       var bytes = new Uint8Array(len);
-       for (var i = 0; i <scriptlen; i++) {
-           bytes[i] = binary_string.charCodeAt(i);
-       }
-       return bytes.buffer;
-   }
-   window.addEventListener('printLink', event => {
-       var data = event.detail.data;
-       window.open(data,'_blank' );
-   })
+        function base64ToArrayBuffer(base64) {
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < scriptlen; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+        window.addEventListener('printLink', event => {
+            var data = event.detail.data;
+            window.open(data, '_blank');
+        })
 
 
-   window.addEventListener('closeModal', event => {
-       $('.closeModal').modal('hide');
-   })
-</scriptlen;>
-</body>
+        window.addEventListener('closeModal', event => {
+                $('.closeModal').modal('hide');
+            }) <
+            /scriptlen;> <
+            /body>
 
-</html>
+            <
+            /html>

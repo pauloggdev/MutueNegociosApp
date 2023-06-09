@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\empresa\Cliente;
 use App\Models\empresa\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,8 +31,14 @@ class MvClienteAuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->messages(), 401);
         }
-        $user = User::where('email', $request->email)
+        $user = User::with('cliente')->where('email', $request->email)
             ->orwhere('telefone', $request->email)->where('tipo_user_id', 4)->first();
+
+        $cliente = Cliente::where('user_id', $user->id)
+        ->where('empresa_id', $user->empresa_id)
+        ->first();
+
+        // dd($cliente);
         if ($user)
             $user->tokens()->delete();
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -41,12 +48,15 @@ class MvClienteAuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => [
-                'id' => $user->id,
+                'id' => (string)$user->id,
                 'uuid' => $user->uuid,
                 'name' => $user->name,
                 'username' =>$user->username,
                 'email' => $user->email,
                 'telefone' => $user->telefone,
+                'endereco' => isset($cliente->endereco) ? $cliente->endereco:null,
+                'nif' => isset($cliente->nif)?$cliente->nif:null,
+                'cidade' => isset($cliente->cidade)?$cliente->cidade:null,
                 'status_senha_id' => $user->status_senha_id,
                 'foto' => $user->foto
             ]

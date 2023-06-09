@@ -220,4 +220,40 @@ class CarrinhoProdutoController extends Controller
         //     'message'=>'Operação realizada com sucesso!'
         // ], 200);
     }
+    public function encreaseCarrinhoQtyProduto(Request $request)
+    {
+        $message = "";
+        $produto = $this->getProduto($request->uuid);
+        if (!$produto) {
+            return response()->json([
+                'error' => "Produto não encontrado"
+            ]);
+        }
+        $carrinho = CarrinhoProduto::with('produto')->where('produto_id', $produto->id)
+            ->where('cliente_id', auth()->user()->id)
+            ->first();
+
+        if (!$carrinho) {
+            return response()->json([
+                'data' => null,
+                'message' => "Produto não encontrado no carrinho"
+            ]);
+        }
+
+        if (isset($request['codigoDesconto']) && $request['codigoDesconto']) {
+            $codigoDesconto = $request['codigoDesconto'];
+        } else {
+            $codigoDesconto = null;
+        }
+
+        if ($carrinho) {
+            $carrinho->quantidade = $carrinho->quantidade + 1;
+            $carrinho->save();
+            $message = "Mais uma unidade reduzida com sucesso!";
+        } else {
+            CarrinhoProduto::where('id', $carrinho->id)->delete();
+            $message = "Produto removido com sucesso!";
+        }
+        return $this->getCarrinhoProdutos($message, $request);
+    }
 }

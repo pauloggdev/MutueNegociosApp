@@ -74,7 +74,7 @@ class BancoRepository
     }
 
 
-    public function getBancos($byStatus, $search, $perpage)
+    public function getBancos($byStatus = 1, $search = null, $perpage = 10)
     {
         $bancos = Bancos::with(['statuGeral', 'coordernadaBancaria'])->when($byStatus, function ($query) use ($byStatus) {
             $query->where('status_id', $byStatus);

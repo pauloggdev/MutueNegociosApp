@@ -11,7 +11,7 @@ class FacturaController extends Controller
 
     public function listarFacturas()
     {
-        $data['facturas'] = Factura::with(
+        $data['facturas'] = Factura::latest()->with(
             [
                 'tipoUser', 'tipoDocumento', 'facturas_items',
                 'formaPagamento', 'armazem',

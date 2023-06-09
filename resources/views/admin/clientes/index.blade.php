@@ -79,10 +79,18 @@
                                         <td>{{$cliente->email}}</td>
                                         <td>
                                             <a href="{{ route('admin.clientes.detalhes', $cliente->id) }}" class="pink"><i class="ace-icon fa fa-eye bigger-150 bolder success pink"></i></a>
+                                            @if($cliente->venda_online == 'Y')
+                                            <a wire:click="modalDesactivarVendaOnline({{ $cliente }})" style="cursor: pointer" class="pink">
+                                                <i class="ace-icon fa fa-check bigger-150 bolder sucess text-success"></i>
+                                            </a>
+                                            @else
+                                            <a wire:click="modalAtivarVendaOnline({{ $cliente }})" style="cursor: pointer" class="pink">
+                                                <i class="ace-icon fa fa-remove bigger-150 bolder danger text-danger"></i>
+                                            </a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>

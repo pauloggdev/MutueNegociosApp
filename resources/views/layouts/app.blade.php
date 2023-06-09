@@ -51,8 +51,6 @@ if (Auth::guard('web')->check()) {
     <meta name="theme-color" content="#ffffff">
     {{-- FIM FAVICON  --}}
 
-
-
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
 
     @yield('css_dashboard')
@@ -562,45 +560,7 @@ if (Auth::guard('web')->check()) {
                     </ul>
                 </li>
 
-                <li class="hover">
-                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
-                        <i class="menu-icon fa fa-file-text"></i>
-                        <span class="menu-text">IVA</span>
 
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-
-                    <b class="arrow"></b>
-
-                    <ul class="submenu">
-                        <li class="hover">
-                            <a href="/empresa/taxaIva">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                DEFINIR TAXAS DO IVA
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href="/empresa/motivoIva">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                MOTIVO ISENÇÃO
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
-                            <a href=" /empresa/gerarSaft">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                GERAR O FICHEIO SAFT
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
                 @if(Auth::user()->hasRole('Super-Admin'))
 
                 <li class="hover">
@@ -649,6 +609,33 @@ if (Auth::guard('web')->check()) {
                         </li>
                     </ul>
                 </li>
+                @if(auth()->user()->empresa->venda_online == 'Y')
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-shopping-cart"></i>
+                        <span class="menu-text">VENDAS ONLINE</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="hover">
+                            <a href="/empresa/cupons-desconto">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                GERAR CUPON DESCONTO
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover">
+                            <a href="/empresa/produtos/destaques">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                PRODUTOS DESTAQUES
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                @endif
                 @endif;
                 <li class="hover">
                     <a href="/empresa/inventarios" style="color: #ffffff">
@@ -690,7 +677,7 @@ if (Auth::guard('web')->check()) {
                             <a href="/empresa/definir-parametros">
                                 <i class="menu-icon fa fa-pencil" style="color: white;"></i>
                                 DEFINIR PARAMETROS
-+                            </a>
+                                + </a>
 
                             <b class="arrow"></b>
                         </li>
@@ -764,6 +751,45 @@ if (Auth::guard('web')->check()) {
                         <span class="menu-text">CENTRO DE CUSTOS</span>
                     </a>
                     <b class="arrow"></b>
+                </li>
+                <li class="hover">
+                    <a href="#" class="dropdown-toggle" style="color: #ffffff">
+                        <i class="menu-icon fa fa-file-text"></i>
+                        <span class="menu-text">IVA</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="hover">
+                            <a href="/empresa/taxaIva">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DEFINIR TAXAS DO IVA
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href="/empresa/motivoIva">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                MOTIVO ISENÇÃO
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="hover">
+                            <a href=" /empresa/gerarSaft">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                GERAR O FICHEIO SAFT
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
                 </li>
                 <li class="">
                     <a href="{{route('manual.index')}}">
@@ -1630,12 +1656,13 @@ if (Auth::guard('web')->check()) {
     </script><!-- FIM DO SCRIPT PARA TABELA DE LISTAGEM DE DADOS, SIMPLES & DINÃ‚MICO-->
 
     <style type="text/css">
-        .help-block{
+        .help-block {
             color: red;
-    font-weight: bold;
-    margin-top: -4px;
-    position: absolute;
+            font-weight: bold;
+            margin-top: -4px;
+            position: absolute;
         }
+
         #body {
             padding-right: 0px !important;
         }
@@ -1662,6 +1689,7 @@ if (Auth::guard('web')->check()) {
             position: relative;
             text-transform: uppercase
         }
+
         .botoes {
             left: 0%;
             border-radius: 15px;
@@ -1939,5 +1967,4 @@ if (Auth::guard('web')->check()) {
             transform: rotate(360deg);
         }
     }
-
 </style>

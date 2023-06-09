@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <!-- PÁGINA INICIAL DE CONTEÚDOS -->
-                
+
 
                 <div class="row">
                     <div class="space-6"></div>
@@ -61,7 +61,7 @@
                             </div>
                             </div>
                         </a>
-                        
+
                         <a href="/admin/listar-pedidos">
                             <div class="infobox infobox-green" style="height:90px">
                             <div class="infobox-icon">
@@ -73,7 +73,7 @@
                             </div>
                             </div>
                         </a>
-                        
+
                         <a href="/admin/listar-pedidos">
                              <div class="infobox infobox-green2" style="height:90px">
                             <div class="infobox-icon">
@@ -85,7 +85,7 @@
                             </div>
                             </div>
                         </a>
-                       
+
                        <a href="/admin/listar-pedidos">
                             <div class="infobox infobox-orange2" style="height:90px">
                             <div class="infobox-icon">
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                        </a>
-                       
+
                        <a href="/admin/bancos">
 
                             <div class="infobox infobox-orange2">
@@ -120,14 +120,14 @@
                                     Licenças mais vendido
                                 </h5>
 
-                                
+
                             </div>
 
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div id="piechart-placeholder"></div>
 
-                                   
+
                                 </div>
                                 <!-- /.widget-main -->
                             </div>
@@ -177,11 +177,11 @@ export default {
     components: {
         Select2,
         BarChart
-        
+
     },
 
     props: [
-    "dashboards", 
+    "dashboards",
     "auth",
     "operacaomensal",
     "countusers",
@@ -234,10 +234,10 @@ export default {
     },
 
     methods: {
-        
 
-       
-        
+
+
+
     },
 
     mounted() {
@@ -266,3 +266,4 @@ export default {
     color: red;
 }
 </style>
+

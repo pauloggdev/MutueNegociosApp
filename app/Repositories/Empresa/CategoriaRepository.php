@@ -240,20 +240,14 @@ class CategoriaRepository
 
     public function update($data)
     {
-
         $categoria = $this->entity::where('empresa_id', auth()->user()->empresa_id)
             ->where('id', $data['id'])
             ->update([
                 'status_id' => $data['status_id'],
                 'designacao' => $data['designacao'],
-                'canal_id' => $data['canal_id'] ? $data['canal_id'] : 2,
+                'canal_id' => isset($data['canal_id'])  ? $data['canal_id'] : 2,
                 'imagem' => $data['newImagem'] ? env('APP_URL') . "upload/" . $this->uploadFile($data['newImagem'], $data['imagem']) : $data['imagem']
             ]);
-
         return $categoria;
     }
-
-
-    //   const result = categoriasComHierarquia(categorias);
-    //   console.log(result);
 }

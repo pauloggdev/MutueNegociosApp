@@ -216,6 +216,7 @@
                                     @endif
                                 </div>
                             </div>
+                            @if(auth()->user()->empresa->venda_online == 'Y')
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-12">
                                     <label class="control-label bold label-select2" for="venda_online">Deseja que o produto seja vendido na loja?</label>
@@ -224,6 +225,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
                                     <label class="control-label bold label-select2" for="imagem_produto">Imagem principal<b class="red fa fa-question-circle"></b></label>

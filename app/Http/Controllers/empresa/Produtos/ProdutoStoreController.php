@@ -56,7 +56,7 @@ class ProdutoStoreController extends Controller
                 'motivo_isencao_id' => $request->motivo_isencao_id ?? 8, //Transmissão de bens e serviço não sujeita
                 'quantidade_minima' => $request->quantidade_minima ?? 0,
                 'quantidade_critica' => $request->quantidade_critica ?? 0,
-                'imagem_produto' => $request->imagem_produto ? $request->imagem_produto->store("/produtos") : NULL,
+                'imagem_produto' => $request->imagem_produto ? $request->imagem_produto->store("/produtos") : 'produtos/default.png',
                 'referencia' => Keygen::numeric(9)->generate(),
                 'stocavel' => $request->stocavel,
                 'empresa_id' => auth()->user()->empresa_id

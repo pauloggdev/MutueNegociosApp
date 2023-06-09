@@ -13,8 +13,18 @@ class FechoCaixaController extends Controller
 
     public function imprimirFechoCaixaPorOperador(Request $request){
 
+
         $dataInicio = $request->dataInicio." 00:00";
         $dataFim = $request->dataFim. " 23:59";
+
+
+        return response()->json([
+            'data' => [
+                'inicio' => $dataInicio,
+                'fim' => $dataInicio
+            ],
+            'message' => 'sucesso'
+        ]);
 
         $formatoPeriodo = date('d/m/Y', strtotime($request->dataInicio)). " à ". date('d/m/Y', strtotime($request->dataFim));
 

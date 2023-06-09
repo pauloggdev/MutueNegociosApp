@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Bancos\BancoCreateController;
 use App\Http\Controllers\Api\Bancos\BancoIndexController;
 use App\Http\Controllers\Api\Bancos\BancoShowController;
 use App\Http\Controllers\Api\Bancos\BancoUpdateController;
+use App\Http\Controllers\Api\Bancos\MVBancoMutueController;
 use App\Http\Controllers\Api\Categorias\CategoriaIndexController;
 use App\Http\Controllers\Api\Classificacao\ClassificarProdutoCrontroller;
 use App\Http\Controllers\Api\ClienteController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Api\Clientes\ClienteCreateController;
 use App\Http\Controllers\Api\Clientes\ClienteIndexController;
 use App\Http\Controllers\Api\Clientes\ClienteShowController;
 use App\Http\Controllers\Api\Clientes\ClienteUpdateController;
+use App\Http\Controllers\Api\Comprovativo\MVComprovativoDeCompraController;
 use App\Http\Controllers\Api\FabricanteController;
 use App\Http\Controllers\Api\Fabricantes\FabricanteCreateController;
 use App\Http\Controllers\Api\Fabricantes\FabricanteIndexController;
@@ -45,6 +47,7 @@ use App\Http\Controllers\Api\PaisController;
 use App\Http\Controllers\Api\Produtos\ProdutoIndexController;
 use App\Http\Controllers\Api\Produtos\ProdutoCreateController;
 use App\Http\Controllers\Api\Produtos\ProdutoUpdateController;
+use App\Http\Controllers\Api\ProdutosDestaques\MVProdutoDestaqueIndexController;
 use App\Http\Controllers\Api\RelatorioVendasController;
 use App\Http\Controllers\Api\StatuGeralController;
 use App\Http\Controllers\Api\TaxaIvaController;
@@ -54,19 +57,13 @@ use App\Http\Controllers\Api\UtilizadorPortal\MvUserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\empresa\CategoriaController;
 use App\Http\Controllers\empresa\ClienteController as EmpresaClienteController;
-use App\Http\Controllers\empresa\Facturas\FacturasIndexController;
 use App\Http\Controllers\empresa\LicencaController as EmpresaLicencaController;
 use App\Http\Controllers\empresa\StockController;
 use App\Http\Controllers\empresa\UnidadeController;
 use App\Http\Controllers\Portal\CarrinhoProdutoController;
-use App\Http\Controllers\Portal\CarrinhoProdutoCrontroller;
-use App\Http\Controllers\Portal\CouponDescontoProdutoController;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\TipoEmpresaController;
-
-
 use App\Http\Controllers\Portal\PortalProdutoController;
-use Illuminate\Http\Request;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 /*
@@ -114,6 +111,7 @@ Route::group(['prefix' => 'portal'], function () {
     Route::get("/produto/detalhes/{id}",  [PortalProdutoController::class, 'getPodutoDetalhes']);
     Route::get("/produtos/pesquisar/{id}",  [PortalProdutoController::class, 'pesquisarProdutoById']);
     Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);
+    Route::get('/produtos/destaques', [MVProdutoDestaqueIndexController::class, 'mv_listarProdutosDestaque']);
 
     Route::get("/listarCategorias",  [CategoriaIndexController::class, 'mv_listarCategoriasSemPaginacao']);
 
@@ -137,7 +135,7 @@ Route::group(['prefix' => 'portal'], function () {
         Route::post('/add/produto', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
         Route::post('/add/coupon/desconto', [CarrinhoProdutoController::class, 'addCouponDesconto']);
         Route::get('/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
-        Route::delete('/remover/produto/carrinho', [CarrinhoProdutoController::class, 'removerCarrinho']);
+        Route::post('/remover/produto/carrinho', [CarrinhoProdutoController::class, 'removerCarrinho']);
         // Route::get("/user/meAuth", [MvClienteAuthController::class, 'me']);
         Route::post('/carrinho/encrease/qty/produto', [CarrinhoProdutoController::class, 'encreaseCarrinhoQtyProduto']);
         Route::post('/carrinho/decrease/qty/produto', [CarrinhoProdutoController::class, 'decreaseCarrinhoQtyProduto']);
@@ -145,6 +143,8 @@ Route::group(['prefix' => 'portal'], function () {
         Route::get('/carrinho/get/my/produtos', [CarrinhoProdutoController::class, 'getCarrinhoProdutos']);
         Route::delete('/remover/produto/carrinho/{id}', [CarrinhoProdutoController::class, 'removerCarrinho']);
         Route::get('/listar/carrinho/produto/{uuid}', [CarrinhoProdutoController::class, 'getCarrinhoProduto']);
+        //Produtos em destaques
+
     });
     // @Zuadas Rotas do Carrinho
 });
@@ -168,24 +168,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('validarEmpresa', [RegisterController::class, 'validarEmpresa']);
 Route::post('register', [RegisterController::class, 'register']);
 
+//RECUPERAÇÃO DE SENHA MUTUE NEGÓCIOS MOBILE
+Route::post('recuperacaoDeSenha', [UserController::class, 'recuperacaoDeSenha']);
+
 //empresa api mutue negocios api
 Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
+
+
+
+
+
     Route::get('buscarDadosTeste/{id}', [ClassificarProdutoCrontroller::class, 'buscarDadosTeste']);
     // Route::get('add/produto/{id}', [CarrinhoProdutoController::class, 'addProdutoNoCarrinho']);
     Route::post('classificarProduto', [ClassificarProdutoCrontroller::class, 'mv_classificarProduto']);
     //Home
     Route::get('countDashboard', [HomeController::class, 'countDashboard']);
-    // Route::get('quantidadeUtilizadores', [UserController::class, 'quantidadeUtilizadores']);
-    // Route::get('quantidadeClientes', [ClienteIndexController::class, 'quantidadeClientes']);
-    // Route::get('quantidadeArmazens', [ArmazemIndexController::class, 'quantidadeArmazens']);
-    // Route::get('quantidadeFornecedores', [FornecedorIndexController::class, 'quantidadeFornecedores']);
-    // Route::get('quantidadeFabricantes', [FabricanteIndexController::class, 'quantidadeFabricantes']);
-    // Route::get('quantidadeBancos', [BancoIndexController::class, 'quantidadeBancos']);
-    // Route::get('quantidadeProdutos', [ProdutoIndexController::class, 'quantidadeProdutos']);
-    // Route::get('quantidadesVendas', [FacturaIndexController::class, 'quantidadesVendas']);
-    // Route::get('totalVendas', [FacturaIndexController::class, 'totalVendas']);
-    // Route::get('listarGraficoVendasMensal', [FacturaIndexController::class, 'listarGraficoVendasMensal']);
-    // Route::get('listarSeisProdutosMaisVendidos', [ProdutoIndexController::class, 'listarSeisProdutosMaisVendidos']);
 
     //Fim home
     Route::post('produtos/actualizarStock', [ActualizarStockController::class, 'actualizarStock']);
@@ -217,14 +214,11 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     //Existencias
     Route::get('listarExistenciaPeloProduto', [StockController::class, 'listarExistenciaPeloProduto']);
 
-
-
     //CATEGORIA DE PRODUTOS
     Route::get('categorias', [CategoriaController::class, 'listarCategorias']);
 
     //UNIDADE DE MEDIDAS DE PRODUTOS
     Route::get('unidadeMedidas', [UnidadeController::class, 'listarUnidadeMedidas']);
-
 
     //ARMAZENS
     Route::get('armazens', [ArmazemIndexController::class, 'listarArmazens']);
@@ -271,8 +265,8 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     //UTILIZADORES
     Route::post('alterarSenha', [UserUpdatePasswordController::class, 'updatePassword']);
     //FECHO DE CAIXA
-    Route::get('imprimirFechoCaixa', [FechoCaixaController::class, 'imprimirFechoCaixa']);
-    Route::get('imprimirFechoCaixaPorOperador', [FechoCaixaController::class, 'imprimirFechoCaixaPorOperador']);
+    Route::post('imprimirFechoCaixa', [FechoCaixaController::class, 'imprimirFechoCaixa']);
+    Route::post('imprimirFechoCaixaPorOperador', [FechoCaixaController::class, 'imprimirFechoCaixaPorOperador']);
 
     //Clientes
     // Route::get('clientes', [ClienteController::class, 'getClientes']);
@@ -297,8 +291,13 @@ Route::middleware(['auth:sanctum'])->prefix('empresa')->group(function () {
     Route::get("/listarProdutosFavoritos",  [MVProdutoFavoritoController::class, 'mv_listarProdutosFavoritos']);
     Route::post("/checkFavorito",  [MVProdutoFavoritoController::class, 'checkFavorito']);
     Route::get("/isProdutoFavorito/{produtoId}",  [MVProdutoFavoritoController::class, 'isProdutoFavorito']);
-});
+    Route::get("/listarBancos",  [MVBancoMutueController::class, 'listarBancos']);
 
+    //ENVIAR COMPROVATIVO COMPRA
+    Route::post("/enviarComprovativoCompra",  [MVComprovativoDeCompraController::class, 'enviarComprovativoDeCompra']);
+
+
+});
 
 //empresa api mutue vendas api
 Route::get("/listarProdutos",  [ProdutoIndexController::class, 'mv_listarProdutos']);

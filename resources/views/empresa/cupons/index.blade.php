@@ -1,15 +1,13 @@
-@section('title','Categorias')
+<?php
+use Carbon\Carbon;
 
+?>
+@section('title','Cupons desconto')
 <div>
-
-
     <div class="row">
-
-        <!-- VER DETALHES  -->
-
         <div class="page-header" style="left: 0.5%; position: relative">
             <h1>
-                Categorias de Produtos
+                CUPONS DE DESCONTO
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
                     Listagem
@@ -46,17 +44,18 @@
 
                         <div class="col-xs-12 widget-box widget-color-green" style="left: 0%">
                             <div class="clearfix">
-                                <a href="{{ route('categorias.create') }}" title="emitir novo recibo" class="btn btn-success widget-box widget-color-blue" id="botoes">
-                                    <i class="fa icofont-plus-circle"></i> Nova Categoria
+                                <a href="{{ route('cupon.create') }}" title="emitir novo recibo" class="btn btn-success widget-box widget-color-blue" id="botoes">
+                                    <i class="fa icofont-plus-circle"></i> Gerar Cupon desconto
                                 </a>
-                                <a title="Imprimir Categoria" wire:click.prevent="imprimirCategoria" class="btn btn-primary widget-box widget-color-blue" id="botoes">
-                                    <span wire:loading wire:target="imprimirCategoria" class="loading"></span>
+                                <a title="imprimir cupon" href="#" wire:click.prevent="imprimirCupon" class="btn btn-primary widget-box widget-color-blue" id="botoes">
+                                    <span wire:loading wire:target="imprimirClientes" class="loading"></span>
                                     <i class="fa fa-print text-default"></i> Imprimir
                                 </a>
+
                                 <div class="pull-right tableTools-container"></div>
                             </div>
                             <div class="table-header widget-header">
-                                Todas Categorias do sistema
+                                Todos os cupons desconto do sistema
                             </div>
 
                             <!-- div.dataTables_borderWrap -->
@@ -64,44 +63,33 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Imagem</th>
-                                            <th>designação</th>
-                                            <th style="text-align: center">Status</th>
-                                            <th>Ações</th>
+                                            <th>Código</th>
+                                            <th>Desconto(%)</th>
+                                            <th>Data expiração</th>
+                                            <th style="text-align: center">Usado?</th>
+                                            <th style="text-align: center">Expirado?</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($categorias as $categoria)
+                                        @foreach($cupons as $cupon)
                                         <tr>
-                                            <td><img src="{{$categoria['imagem']}}" width="120px" height="80px" alt="{{$categoria['designacao']}}"></td>
-                                            @if(isset($categoria['categoria']))
-                                            <td>{{$categoria['categoria']['designacao'] == $categoria['designacao']? $categoria['categoria']['designacao']:$categoria['categoria']['designacao']."/". $categoria['designacao']}}</td>
-                                            @else
-                                            <td>{{ $categoria['designacao'] }}</td>
-                                            @endif
+                                            <td>{{$cupon['codigo']}}</td>
+                                            <td>{{number_format($cupon['percentagem'],1,",",".")}} %</td>
+                                            <td><?= date_format(date_create($cupon['data_expiracao']), 'd/m/Y H:i:s') ?></td>
                                             <td class="hidden-480" style="text-align: center">
-                                                <span class="label label-sm <?= $categoria['statuGeral']['id'] == 1 ? 'label-success' : 'label-warning' ?>" style="border-radius: 20px;">{{$categoria['statuGeral']['designacao'] }}</span>
+                                                <span class="label label-sm <?= $cupon['used'] == 'N' ? 'label-success' : 'label-warning' ?>" style="border-radius: 20px;">{{ $cupon['used'] == 'N'?'Não':'Sim' }}</span>
                                             </td>
-
-                                            <td>
-                                                <div class="hidden-sm hidden-xs action-buttons">
-                                                    <a href="{{ route('categorias.edit', $categoria->id) }}" class="pink" title="Editar este registo">
-                                                        <i class="ace-icon fa fa-pencil bigger-150 bolder success text-success"></i>
-                                                    </a>
-                                                    <!-- @if(!count($categoria['produtos']))
-                                                    <a href="{{ route('categorias.addSubCategoria', $categoria->id) }}" class="pink" title="Adicionar sub categorias">
-                                                        <i class="ace-icon fa fa-pencil bigger-150 bolder success text-success"></i>
-                                                    </a>
-                                                    @endif -->
-                                                </div>
+                                            <td class="hidden-480" style="text-align: center">
+                                                <span class="label label-sm <?= $cupon['used'] == 'N' ? 'label-success' : 'label-warning' ?>" style="border-radius: 20px;">{{ $cupon['used'] == 'N'?'Não':'Sim' }}</span>
                                             </td>
                                         </tr>
                                         @endforeach
+
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>

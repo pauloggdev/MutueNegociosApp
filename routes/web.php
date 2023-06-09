@@ -158,6 +158,8 @@ use App\Http\Controllers\empresa\CentroCustos\CentroCustoRelatorioIndexControlle
 use App\Http\Controllers\empresa\CentroCustos\CentroCustoUpdateController;
 use App\Http\Controllers\empresa\Clientes\ClienteExtratoController;
 use App\Http\Controllers\empresa\Clientes\FornecedorIndexController as ClientesFornecedorIndexController;
+use App\Http\Controllers\empresa\CuponDesconto\CuponDescontoCreateController;
+use App\Http\Controllers\empresa\CuponDesconto\CuponDescontoIndexController;
 use App\Http\Controllers\empresa\Empresa\EmpresaUpdateController;
 use App\Http\Controllers\empresa\EntradaProduto\EntradaProdutoCreateController;
 use App\Http\Controllers\empresa\EntradaProduto\EntradaProdutoIndexController;
@@ -176,6 +178,8 @@ use App\Http\Controllers\empresa\Marcas\MarcaUpdateController;
 use App\Http\Controllers\empresa\ModeloDocumentos\ModeloDocumentoController;
 use App\Http\Controllers\empresa\Permissao\PermissaoIndexController;
 use App\Http\Controllers\empresa\Permissao\SemPermissaoController;
+use App\Http\Controllers\empresa\ProdutoDestaques\ProdutoDestaqueCreateController;
+use App\Http\Controllers\empresa\ProdutoDestaques\ProdutoDestaqueIndexController;
 use App\Http\Controllers\empresa\Produtos\ProdutoIndexController;
 use App\Http\Controllers\empresa\Roles\RoleCreateController;
 use App\Http\Controllers\empresa\Roles\RoleIndexController;
@@ -483,10 +487,13 @@ Route::group(['middleware' => ['auth:empresa']], function () {
         Route::get('empresa/assinaturas', AssinaturaIndexController::class)->name('assinaturas.index');
 
         Route::middleware(['LicencaTerminado'])->group(function () {
-
+            //CUPONS DESCONTO
+            Route::get('/empresa/cupons-desconto', CuponDescontoIndexController::class)->name('cuponDesconto.index');
+            Route::get('/empresa/produtos/destaques', ProdutoDestaqueIndexController::class)->name('produtosDestaques.index');
+            Route::get('/empresa/produto/destaque/novo', ProdutoDestaqueCreateController::class)->name('produtoDestaque.create');
+            Route::get('/empresa/gerar/cupon/desconto', CuponDescontoCreateController::class)->name('cupon.create');
             //Sem Permissão
             Route::get('/empresa/sempermissao', SemPermissaoController::class)->name('semPermissao.index');
-
             //Produtos
             Route::get('/empresa/produtos', ProdutoIndexController::class)->name('produtos.index');
             Route::get('/empresa/produtos/create', ProdutoCreateController::class)->name('produto.create')->middleware('hasPermission:gerir produtos');
@@ -518,13 +525,11 @@ Route::group(['middleware' => ['auth:empresa']], function () {
             Route::get('/empresa/anulacao/documento/factura', AnulacaoDocumentoFacturaCreateController::class)->name('anulacaoDocumentoFactura.create')->middleware('hasPermission:gerir anular documento');
             Route::get('/empresa/anulacao/documento/recibo', AnulacaoDocumentoReciboCreateController::class)->name('anulacaoDocumentoRecibo.create')->middleware('hasPermission:gerir anular documento');
 
-
             Route::get('/empresa/retificacao/documento', RetificacaoDocumentoIndexController::class)->name('notaCreditoRetificacaoDoc.index');
             Route::get('/empresa/retificacao/documento/novo', RetificacaoDocumentoCreateController::class)->name('notaCreditoRetificacaoDoc.create')->middleware('hasPermission:gerir rectificar documento');
 
             // Route::get('/empresa/facturas/anulacao', [OperacaoController::class, 'anulacaoFacturaIndex']);
             Route::get('/empresa/facturas/rectificacao/novo', [OperacaoController::class, 'criarRectificacaoFactura']);
-
             //Clientes
             Route::get('/empresa/cliente/novo', ClienteCreateController::class)->name('clientes.create')->middleware('hasPermission:gerir clientes');
             Route::get('/empresa/clientes', ClienteIndexController::class)->name('clientes.index');

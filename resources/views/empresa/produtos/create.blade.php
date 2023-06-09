@@ -229,17 +229,24 @@
                                     @endif
                                 </div>
                             </div>
+                            @if(auth()->user()->empresa->venda_online == 'Y')
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-12">
+
                                     <label class="control-label bold label-select2" for="venda_online">Deseja que o produto seja vendido na loja?</label>
                                     <div style="margin-bottom: 15px;">
                                         <input type="checkbox" wire:model="produto.venda_online" class="form-control" id="venda_online" data-target="form_supply_price" style="position: absolute;left: 5px; width:40px;cursor: pointer;" />
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
+                                    @if(auth()->user()->empresa->venda_online == 'Y')
                                     <label class="control-label bold label-select2" for="imagem_produto">Imagem principal<b class="red fa fa-question-circle"></b></label>
+                                    @else
+                                    <label class="control-label bold label-select2" for="imagem_produto">Imagem principal</label>
+                                    @endif
                                     <div class="input-group">
                                         <input type="file" accept="application/image/*" wire:model="produto.imagem_produto" class="form-control" id="imagem_produto" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('produto.imagem_produto') ? 'border-color: #ff9292;' : '' ?>" />
                                         <span class="input-group-addon" id="basic-addon1">

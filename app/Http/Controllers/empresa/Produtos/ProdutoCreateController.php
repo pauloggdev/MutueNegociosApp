@@ -156,7 +156,11 @@ class ProdutoCreateController extends Component
             'produto.status_id' => ['required'],
             'produto.codigo_taxa' => ['required'],
             'produto.fabricante_id' => ['required'],
-            'produto.imagem_produto' => ['required'],
+            'produto.imagem_produto' => [function ($attr, $imagem_produto, $fail) {
+                if (auth()->user()->empresa->venda_online == 'Y' && !$imagem_produto) {
+                    $fail("Informe a imagem");
+                }
+            }]
 
         ];
         $messages = [
@@ -165,7 +169,6 @@ class ProdutoCreateController extends Component
             'produto.fabricante_id.required' => 'É obrigatório o fabricante',
             'produto.preco_venda.required' => 'É obrigatório o preço de venda',
             'produto.status_id.required' => 'É obrigatório o status',
-            'produto.imagem_produto.required' => 'Informe a imagem principal',
             'produto.unidade_medida_id' => ''
         ];
         $this->validate($rules, $messages);
@@ -190,7 +193,7 @@ class ProdutoCreateController extends Component
                 'motivo_isencao_id' => !isset($this->produto['motivo_isencao_id']) && !$this->produto['motivo_isencao_id'] ? $this->produto['motivo_isencao_id'] : 8, //Transmissão de bens e serviço não sujeita
                 'quantidade_minima' => $this->produto['quantidade_minima'] ?? 0,
                 'quantidade_critica' => $this->produto['quantidade_critica'] ?? 0,
-                'imagem_produto' => env('APP_URL') . "upload/" . $this->uploadFile($this->produto['imagem_produto']),
+                'imagem_produto' => $this->produto['imagem_produto'] ? env('APP_URL') . "upload/" . $this->uploadFile($this->produto['imagem_produto']) : env('APP_URL') . "upload/" . 'produtos/default.png',
                 'referencia' => Keygen::numeric(9)->generate(),
                 'stocavel' => $this->produto['stocavel'],
                 'empresa_id' => auth()->user()->empresa_id
@@ -199,7 +202,6 @@ class ProdutoCreateController extends Component
             if (count($this->produto['imagens']) > 0) {
                 $this->inserirArquivoAdicionaisDB($produtId);
             }
-
             DB::table('existencias_stocks')->insertGetId([
                 'produto_id' => $produtId,
                 'armazem_id' => $this->produto['armazem_id'],

@@ -95,42 +95,45 @@ class UserPortalRepository
 
     public function updateUser(Request $request, $uuid)
     {
-
-        if (isset($request['foto']) && !empty($request['foto']) && $request['foto'] != 'utilizadores/cliente/avatarEmpresa.png') {
-            $path = public_path() . "\\upload\\" . $request['foto'];
-            if (file_exists($path)) {
-                unlink(public_path() . "\\upload\\" . $request['foto']);
+        try {
+            DB::beginTransaction();
+            if (isset($request['foto']) && !empty($request['foto']) && $request['foto'] != 'utilizadores/cliente/avatarEmpresa.png') {
+                $path = public_path() . "\\upload\\" . $request['foto'];
+                if (file_exists($path)) {
+                    unlink(public_path() . "\\upload\\" . $request['foto']);
+                }
+                $foto = $request->foto->store('/utilizadores/cliente/');
+            } else {
+                $foto = 'utilizadores/cliente/avatarEmpresa.png';
             }
-            $foto = $request->foto->store('/utilizadores/cliente/');
-        } else {
-            $foto = 'utilizadores/cliente/avatarEmpresa.png';
+
+            $user = $this->user->where('uuid', $uuid)->update([
+                'name' => $request['name'],
+                'username' => $request['name'],
+                'email' => $request['email'],
+                'telefone' => $request['telefone'],
+                'foto' => $request['foto'] ? $foto : auth()->user()->foto
+            ]);
+
+            $user = $this->user::where('uuid', $uuid)->first();
+            $cliente = $this->cliente->where('user_id', $user->id)
+                ->where('empresa_id', auth()->user()->empresa_id)
+                ->update([
+                    'nome' => $request['name'],
+                    'pessoa_contacto' => $request['name'],
+                    'email' => $request['email'],
+                    'telefone_cliente' => $request['telefone'],
+                    'endereco' => $request['endereco'],
+                    'nif' => $request['nif'],
+                    'operador' => $user->name,
+                    'cidade' => $request['cidade'],
+                ]);
+            DB::commit();
+            return $user;
+        } catch (\Throwable $th) {
+            DB::rollBack();
         }
-
-        $user = $this->user->where('uuid', $uuid)->update([
-            'name' => $request['name'],
-            'username' => $request['name'],
-            'email' => $request['email'],
-            'telefone' => $request['telefone'],
-            'foto' => $foto
-        ]);
-
-
-        $user = $this->user::where('uuid', $uuid)->first();
-
-        $cliente = $this->cliente->where('user_id', $user->id)->update([
-            'nome' => $request['name'],
-            'pessoa_contacto' => $request['name'],
-            'email' => $request['email'],
-            'telefone_cliente' => $request['telefone'],
-            'endereco' => $request['endereco'],
-            'nif' => $request['cidade'],
-            'operador' => $user->name,
-            'cidade' => $request['cidade'],
-        ]);
-        // DB::commit();
-        return $user;
     }
-
     public function getUsers($search = null)
     {
         $users = $this->user::with(['statuGeral', 'perfis'])->search(trim($search))

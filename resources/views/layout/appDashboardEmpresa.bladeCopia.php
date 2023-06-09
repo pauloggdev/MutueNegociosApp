@@ -1344,10 +1344,10 @@
                 //'user' => Auth::user(),
                 'roles' => Auth::user()->roles,
                 'user' => [
-                    'authenticated' => auth() - > check(),
-                    'id' => auth() - > check() ? auth() - > user() - > id : null,
-                    'nome' => auth() - > check() ? auth() - > user() - > name : null,
-                    'email' => auth() - > check() ? auth() - > user() - > email : null,
+                    'authenticated' => auth()->check(),
+                    'id' => auth()->check()?auth()->user()->id : null,
+                    'nome' => auth()->check()?auth()->user()-> name : null,
+                    'email' => auth()->check()?auth()->user()-> email : null,
                 ],
                 'user' => Auth::user(),
             ]) !!

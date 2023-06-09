@@ -48,7 +48,8 @@ class ProdutoRepository implements ProdutoRepositoryInterface
             ->where('venda_online', 'Y')
             ->search(trim($search))->paginate();
     }
-    public function mv_listarComentarioPorProduto($produtoId){
+    public function mv_listarComentarioPorProduto($produtoId)
+    {
         return $this->classificacao::where('produto_id', $produtoId)->get();
     }
     public function mv_listarProdutos($search)
@@ -170,94 +171,82 @@ class ProdutoRepository implements ProdutoRepositoryInterface
     }
     public function store(Request $request)
     {
-        // $message = [
-        //     'designacao.required' => 'É obrigatório o nome',
-        //     'categoria_id.required' => 'É obrigatório a categoria',
-        //     'fabricante_id.required' => 'É obrigatório o fabricante',
-        //     'preco_venda.required' => 'É obrigatório o preço de venda',
-        //     'status_id.required' => 'É obrigatório o status',
-        //     'stocavel.required' => 'É obrigatório o estocavel',
-        //     'unidade_medida_id.required' => 'É obrigatório a unidade',
-        //     'armazem_id.required' => 'É obrigatório o armazém',
-        //     'codigo_taxa.required' => 'É obrigatório a taxa',
-        // ];
+        try {
 
-        // $validator = Validator::make($request->all(), [
-        //     'designacao' => ['required'],
-        //     'categoria_id' => ['required'],
-        //     'preco_venda' => ['required', function ($attr, $precoVenda, $fail) {
-        //         if ($precoVenda < 0) {
-        //             $fail('O preço de venda não pode ser negativo');
-        //         }
-        //     }],
-        //     'status_id' => ['required'],
-        //     'codigo_taxa' => ['required'],
-        //     'stocavel' => ['required'],
-        //     'unidade_medida_id' => ['required'],
-        //     'fabricante_id' => ['required'],
-        //     'armazem_id' => ['required'],
-        //     'imagem_produto' => 'max:1024'
-        // ], $message);
+            DB::beginTransaction();
+            $produtId = DB::table('produtos')->insertGetId([
+                'uuid' => Str::uuid(),
+                'designacao' => $request->designacao,
+                'preco_venda' => $request->preco_venda ?? 0,
+                'preco_compra' => $request->preco_compra ?? 0,
+                'categoria_id' => $request->categoria_id,
+                'unidade_medida_id' => $request->unidade_medida_id,
+                'fabricante_id' => $request->fabricante_id,
+                'venda_online' => isset($request['venda_online']) && $request['venda_online'] ? $request['venda_online'] : 'N',
+                'user_id' => auth()->user()->id,
+                'canal_id' => $request->canal_id ?? 2,
+                'status_id' => $request->status_id ?? 1,
+                'codigo_taxa' => auth()->user()->empresa->tipo_regime_id != 1 ? 1 : $request->codigo_taxa,
+                'motivo_isencao_id' => $request->motivo_isencao_id ?? 8, //Transmissão de bens e serviço não sujeita
+                'quantidade_minima' => $request->quantidade_minima ?? 0,
+                'quantidade_critica' => $request->quantidade_critica ?? 0,
+                'imagem_produto' => $request['imagem_produto'] ? env('APP_URL') . "upload/" . $this->uploadFile($request['imagem_produto']) : env('APP_URL') . "upload/" . 'produtos/default.png',
+                'referencia' => Keygen::numeric(9)->generate(),
+                'data_expiracao' => $request->data_expiracao ?? NULL,
+                'descricao' => $request->descricao ?? NULL,
+                'stocavel' => $request->stocavel,
+                'empresa_id' => auth()->user()->empresa_id
+            ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors()->messages(), 400);
-        // }
-        // try {
+            if ($request['imagens']) {
+                $this->inserirArquivoAdicionaisDB($request, $produtId);
+            }
 
-        //     DB::beginTransaction();
-        $produtId = DB::table('produtos')->insertGetId([
-            'uuid' => Str::uuid(),
-            'designacao' => $request->designacao,
-            'preco_venda' => $request->preco_venda ?? 0,
-            'preco_compra' => $request->preco_compra ?? 0,
-            'categoria_id' => $request->categoria_id,
-            'unidade_medida_id' => $request->unidade_medida_id,
-            'fabricante_id' => $request->fabricante_id,
-            'user_id' => auth()->user()->id,
-            'canal_id' => $request->canal_id ?? 2,
-            'status_id' => $request->status_id ?? 1,
-            'codigo_taxa' => auth()->user()->empresa->tipo_regime_id != 1 ? 1 : $request->codigo_taxa,
-            'motivo_isencao_id' => $request->motivo_isencao_id ?? 8, //Transmissão de bens e serviço não sujeita
-            'quantidade_minima' => $request->quantidade_minima ?? 0,
-            'quantidade_critica' => $request->quantidade_critica ?? 0,
-            'imagem_produto' => $request->imagem_produto ? $request->imagem_produto->store("/produtos") : NULL,
-            'referencia' => Keygen::numeric(9)->generate(),
-            'data_expiracao' => $request->data_expiracao ?? NULL,
-            'descricao' => $request->descricao ?? NULL,
-            'stocavel' => $request->stocavel,
-            'empresa_id' => auth()->user()->empresa_id
-        ]);
+            DB::table('existencias_stocks')->insertGetId([
+                'produto_id' => $produtId,
+                'armazem_id' => $request->armazem_id,
+                'quantidade' => isset($request->stocavel) && $request->stocavel == 'Sim' ? $request->quantidade ?? 0 : 0,
+                'user_id' => $request->user_id,
+                'canal_id' => $request->canal_id ?? 2,
+                'status_id' => $request->status_id ?? 1,
+                'empresa_id' => auth()->user()->empresa_id,
+                'created_at' => Carbon::now()->format('Y-m-d'),
+                'updated_at' => Carbon::now()->format('Y-m-d'),
+            ]);
 
-        DB::table('existencias_stocks')->insertGetId([
-            'produto_id' => $produtId,
-            'armazem_id' => $request->armazem_id,
-            'quantidade' => isset($request->stocavel) && $request->stocavel == 'Sim' ? $request->quantidade ?? 0 : 0,
-            'user_id' => $request->user_id,
-            'canal_id' => $request->canal_id ?? 2,
-            'status_id' => $request->status_id ?? 1,
-            'empresa_id' => auth()->user()->empresa_id,
-            'created_at' => Carbon::now()->format('Y-m-d'),
-            'updated_at' => Carbon::now()->format('Y-m-d'),
-        ]);
+            DB::table('actualizacao_stocks')->insert([
+                'produto_id' => $produtId,
+                'empresa_id' => auth()->user()->empresa_id,
+                'quantidade_antes' => 0,
+                'quantidade_nova' => isset($request->stocavel) && $request->stocavel == 'Sim' ? $request->quantidade ?? 0 : 0,
+                'user_id' => auth()->user()->id,
+                'tipo_user_id' => 2, //empresa
+                'canal_id' => 4,
+                'status_id' => $request->status_id ?? 1,
+                'armazem_id' => $request->armazem_id,
+                'created_at' => Carbon::now()->format('Y-m-d'),
+                'updated_at' => Carbon::now()->format('Y-m-d'),
+            ]);
+            DB::commit();
+            return $produtId;
+        } catch (\Exception $th) {
+            DB::rollBack();
+        }
+    }
+    public function inserirArquivoAdicionaisDB($request, $produtoId): void
+    {
 
-        DB::table('actualizacao_stocks')->insert([
-            'produto_id' => $produtId,
-            'empresa_id' => auth()->user()->empresa_id,
-            'quantidade_antes' => 0,
-            'quantidade_nova' => isset($request->stocavel) && $request->stocavel == 'Sim' ? $request->quantidade ?? 0 : 0,
-            'user_id' => auth()->user()->id,
-            'tipo_user_id' => 2, //empresa
-            'canal_id' => 4,
-            'status_id' => $request->status_id ?? 1,
-            'armazem_id' => $request->armazem_id,
-            'created_at' => Carbon::now()->format('Y-m-d'),
-            'updated_at' => Carbon::now()->format('Y-m-d'),
-        ]);
-        DB::commit();
-        //     return $produtId;
-        // } catch (\Exception $th) {
-        //     DB::rollBack();
-        // }
+        foreach ($request['imagens'] as $imagem) {
+            $path = $this->uploadFile($imagem);
+            DB::table('produto_imagens')->insertGetId([
+                'url' => env('APP_URL') . "upload/" . $path,
+                'produto_id' => $produtoId,
+            ]);
+        }
+    }
+    public function uploadFile($imagem)
+    {
+        return Storage::disk('public')->putFile('produtos', $imagem);
     }
 
     public function update(Request $request, int $produtoId)
