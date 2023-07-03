@@ -1,19 +1,22 @@
-<?php
+@section('title','Categorias')
 
-use Carbon\Carbon;
-?>
-@section('title','Produtos em destaque')
 <div>
+
+
     <div class="row">
+
+        <!-- VER DETALHES  -->
+
         <div class="page-header" style="left: 0.5%; position: relative">
             <h1>
-                PRODUTOS EM DESTAQUES
+                Categorias de Produtos
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
                     Listagem
                 </small>
             </h1>
         </div>
+
         <div class="col-md-12">
             <div class>
                 <form class="form-search" method="get" action>
@@ -24,7 +27,7 @@ use Carbon\Carbon;
                                     <i class="ace-icon fa fa-search"></i>
                                 </span>
 
-                                <input type="text" wire:model="search" autofocus autocomplete="on" class="form-control search-query" placeholder="Buscar por nome do cliente, numeração do recibo" />
+                                <input type="text" wire:model="search" autofocus autocomplete="on" class="form-control search-query" placeholder="Buscar por nome do cliente, nif, telefone, conta corrente" />
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary btn-lg upload">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-130"></span>
@@ -43,41 +46,53 @@ use Carbon\Carbon;
 
                         <div class="col-xs-12 widget-box widget-color-green" style="left: 0%">
                             <div class="clearfix">
-                                <a href="{{ route('produtoDestaque.create') }}" title="emitir novo recibo" class="btn btn-success widget-box widget-color-blue" id="botoes">
-                                    <i class="fa icofont-plus-circle"></i> Adicionar Produto em destaque
+                                <a href="{{ route('categorias.create') }}" title="emitir novo recibo" class="btn btn-success widget-box widget-color-blue" id="botoes">
+                                    <i class="fa icofont-plus-circle"></i> Nova Categoria
                                 </a>
-
+                                <a title="Imprimir Categoria" wire:click.prevent="imprimirCategoria" class="btn btn-primary widget-box widget-color-blue" id="botoes">
+                                    <span wire:loading wire:target="imprimirCategoria" class="loading"></span>
+                                    <i class="fa fa-print text-default"></i> Imprimir
+                                </a>
                                 <div class="pull-right tableTools-container"></div>
                             </div>
                             <div class="table-header widget-header">
-                                Todas produtos em destaques
+                                Todas Categorias do sistema
                             </div>
+
+                            <!-- div.dataTables_borderWrap -->
                             <div>
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Produto</th>
-                                            <th>Designacao</th>
-                                            <th>Descrição</th>
+                                            <th>Imagem</th>
+                                            <th>designação</th>
+                                            <th style="text-align: center">Status</th>
                                             <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($destaques as $destaque)
+                                        @foreach($categorias as $categoria)
                                         <tr>
-                                            <td>{{ $destaque['id'] }}</td>
-                                            <td>{{ $destaque['produto']['designacao'] }}</td>
-                                            <td>{{ Str::upper($destaque['designacao'])}}</td>
-                                            <td>{{$destaque['descricao']}}</td>
+                                            <td><img src="{{$categoria['imagem']}}" width="120px" height="80px" alt="{{$categoria['designacao']}}"></td>
+                                            @if(isset($categoria['categoria']))
+                                            <td>{{$categoria['categoria']['designacao'] == $categoria['designacao']? $categoria['categoria']['designacao']:$categoria['categoria']['designacao']."/". $categoria['designacao']}}</td>
+                                            @else
+                                            <td>{{ $categoria['designacao'] }}</td>
+                                            @endif
+                                            <td class="hidden-480" style="text-align: center">
+                                                <span class="label label-sm <?= $categoria['statuGeral']['id'] == 1 ? 'label-success' : 'label-warning' ?>" style="border-radius: 20px;">{{$categoria['statuGeral']['designacao'] }}</span>
+                                            </td>
+
                                             <td>
                                                 <div class="hidden-sm hidden-xs action-buttons">
-                                                    <a href="{{ route('produtoDestaque.edit', $destaque->uuid) }}" class="pink" title="Editar este registo">
+                                                    <a href="{{ route('categorias.edit', $categoria->id) }}" class="pink" title="Editar este registo">
                                                         <i class="ace-icon fa fa-pencil bigger-150 bolder success text-success"></i>
                                                     </a>
-                                                    <a title="Eliminar este Registro" style="cursor:pointer;" wire:click="modalDel({{json_encode($destaque->uuid)}})">
-                                                        <i class="ace-icon fa fa-trash-o bigger-150 bolder danger red"></i>
+                                                    <!-- @if(!count($categoria['produtos']))
+                                                    <a href="{{ route('categorias.addSubCategoria', $categoria->id) }}" class="pink" title="Adicionar sub categorias">
+                                                        <i class="ace-icon fa fa-pencil bigger-150 bolder success text-success"></i>
                                                     </a>
+                                                    @endif -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -86,10 +101,11 @@ use Carbon\Carbon;
                                 </table>
                             </div>
                         </div>
+
                     </form>
-                    <div>{{$destaques->links()}}</div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>

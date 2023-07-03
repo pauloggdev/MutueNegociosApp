@@ -9,7 +9,7 @@
 
         <div class="page-header" style="left: 0.5%; position: relative">
             <h1>
-                Categorias de Produtos
+                CATEGORIAS DE PRODUTO
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
                     Listagem
@@ -64,21 +64,18 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Imagem</th>
+                                            <th>#</th>
                                             <th>designação</th>
                                             <th style="text-align: center">Status</th>
                                             <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($categorias as $categoria)
+                                        @foreach($categorias as $key=> $categoria)
                                         <tr>
-                                            <td><img src="{{$categoria['imagem']}}" width="120px" height="80px" alt="{{$categoria['designacao']}}"></td>
-                                            @if(isset($categoria['categoria']))
-                                            <td>{{$categoria['categoria']['designacao'] == $categoria['designacao']? $categoria['categoria']['designacao']:$categoria['categoria']['designacao']."/". $categoria['designacao']}}</td>
-                                            @else
-                                            <td>{{ $categoria['designacao'] }}</td>
-                                            @endif
+                                            <td>{{++$key}}</td>
+                                            <td>{{$categoria['designacao']}}</td>
+
                                             <td class="hidden-480" style="text-align: center">
                                                 <span class="label label-sm <?= $categoria['statuGeral']['id'] == 1 ? 'label-success' : 'label-warning' ?>" style="border-radius: 20px;">{{$categoria['statuGeral']['designacao'] }}</span>
                                             </td>
@@ -87,6 +84,9 @@
                                                 <div class="hidden-sm hidden-xs action-buttons">
                                                     <a href="{{ route('categorias.edit', $categoria->id) }}" class="pink" title="Editar este registo">
                                                         <i class="ace-icon fa fa-pencil bigger-150 bolder success text-success"></i>
+                                                    </a>
+                                                    <a title="Eliminar este Registro" style="cursor:pointer;" wire:click="modalDel({{json_encode($categoria->id)}})">
+                                                        <i class="ace-icon fa fa-trash-o bigger-150 bolder danger red"></i>
                                                     </a>
                                                     <!-- @if(!count($categoria['produtos']))
                                                     <a href="{{ route('categorias.addSubCategoria', $categoria->id) }}" class="pink" title="Adicionar sub categorias">

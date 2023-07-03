@@ -31,7 +31,7 @@
                     <div class="tabbable">
                         <div class="tab-content profile-edit-tab-content">
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label class="control-label bold label-select2" for="nomeCliente">Nome da Categoria <b class="red fa fa-question-circle"></b></label>
                                     <div class="input-group">
                                         <input type="text" wire:model="categoria.designacao" class="form-control" id="nomeCliente" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('categoria.designacao') ? 'border-color: #ff9292;' : '' ?>" />
@@ -45,6 +45,9 @@
                                     </span>
                                     @endif
                                 </div>
+
+                            </div>
+                            <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
                                     <label class="control-label bold label-select2" for="status_id">Status</label>
                                     <select wire:model="categoria.status_id" class="col-md-12 select2" id="status_id" style="height:35px;<?= $errors->has('marca.status_id') ? 'border-color: #ff9292;' : '' ?>">
@@ -58,7 +61,22 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="control-label bold label-select2" for="img_categoria">Imagem<b class="red fa fa-question-circle"></b></label>
+                                    <div class="input-group">
+                                        <input type="file" accept="application/image/*" wire:model="categoria.imagem" class="form-control" id="img_categoria" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('categoria.imagem') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
+                                    </div>
+                                    @if ($errors->has('categoria.imagem'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('categoria.imagem') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -73,6 +91,12 @@
                                     <span class="loading"></span>
                                     Aguarde...</span>
                             </button>
+
+                            &nbsp; &nbsp;
+                            <a href="{{ route('fornecedores.index') }}" class="btn btn-danger" type="reset" style="border-radius: 10px">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                Cancelar
+                            </a>
                         </div>
                     </div>
                 </div>

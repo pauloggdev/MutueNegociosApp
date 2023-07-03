@@ -17,8 +17,10 @@ class CategoriaIndexController extends Component
     use LivewireAlert;
     public $categoria;
     public $search = null;
-
+    public $categoriaId;
     private $categoriaRepository;
+    protected $listeners = ['deletarCategoria'];
+
 
 
     public function boot(CategoriaRepository $categoriaRepository)
@@ -36,7 +38,7 @@ class CategoriaIndexController extends Component
     {
         $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
 
-        $filename = "Categorias";
+        $filename = "categorias";
 
         $reportController = new ReportShowController();
         $report = $reportController->show(
@@ -54,6 +56,35 @@ class CategoriaIndexController extends Component
         $this->dispatchBrowserEvent('printPdf', ['data' => base64_encode($report['response']->getContent())]);
         unlink($report['filename']);
         flush();
+    }
+    public function modalDel($categoriaId)
+    {
+        $this->categoriaId = $categoriaId;
+        $this->confirm('Deseja apagar o item', [
+            'onConfirmed' => 'deletarCategoria',
+            'cancelButtonText' => 'Não',
+            'confirmButtonText' => 'Sim',
+        ]);
+    }
+    public function deletarCategoria($data)
+    {
+
+        if ($data['value']) {
+            try {
+                $this->categoriaRepository->deletarCategoria($this->categoriaId);
+                $this->confirm('Operação realizada com sucesso', [
+                    'showConfirmButton' => false,
+                    'showCancelButton' => false,
+                    'icon' => 'success'
+                ]);
+            } catch (\Throwable $th) {
+                $this->confirm('Não permitido eliminar', [
+                    'showConfirmButton' => false,
+                    'showCancelButton' => false,
+                    'icon' => 'warning'
+                ]);
+            }
+        }
     }
 
 }

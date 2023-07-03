@@ -180,6 +180,7 @@ use App\Http\Controllers\empresa\Permissao\PermissaoIndexController;
 use App\Http\Controllers\empresa\Permissao\SemPermissaoController;
 use App\Http\Controllers\empresa\ProdutoDestaques\ProdutoDestaqueCreateController;
 use App\Http\Controllers\empresa\ProdutoDestaques\ProdutoDestaqueIndexController;
+use App\Http\Controllers\empresa\ProdutoDestaques\ProdutoDestaqueUpdateController;
 use App\Http\Controllers\empresa\Produtos\ProdutoIndexController;
 use App\Http\Controllers\empresa\Roles\RoleCreateController;
 use App\Http\Controllers\empresa\Roles\RoleIndexController;
@@ -491,6 +492,7 @@ Route::group(['middleware' => ['auth:empresa']], function () {
             Route::get('/empresa/cupons-desconto', CuponDescontoIndexController::class)->name('cuponDesconto.index');
             Route::get('/empresa/produtos/destaques', ProdutoDestaqueIndexController::class)->name('produtosDestaques.index');
             Route::get('/empresa/produto/destaque/novo', ProdutoDestaqueCreateController::class)->name('produtoDestaque.create');
+            Route::get('/empresa/produto/destaque/editar/{uuid}', ProdutoDestaqueUpdateController::class)->name('produtoDestaque.edit');
             Route::get('/empresa/gerar/cupon/desconto', CuponDescontoCreateController::class)->name('cupon.create');
             //Sem Permissão
             Route::get('/empresa/sempermissao', SemPermissaoController::class)->name('semPermissao.index');

@@ -52,6 +52,7 @@ class CategoriaUpdateController extends Component
             'categoria.designacao' => 'required',
             'categoria.status_id' => '',
             'categoria.canal_id' => ''
+
         ];
         $messages = [
             'categoria.designacao.required' => 'Informe o nome da Categoria',
@@ -60,10 +61,8 @@ class CategoriaUpdateController extends Component
         $this->validate($rules, $messages);
         $this->categoriaRepository->update($this->categoria);
         $this->mount($this->categoria['id']);
-        $this->confirm('Operação realizada com sucesso', [
-            'showConfirmButton' => false,
-            'showCancelButton' => false,
-            'icon' => 'success'
-        ]);
+        $this->alert('success', 'Operação realizada com sucesso');
     }
+
+
 }

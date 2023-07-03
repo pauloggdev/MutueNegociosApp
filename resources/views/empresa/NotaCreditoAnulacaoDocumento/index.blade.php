@@ -32,7 +32,6 @@
                 </div>
             </form>
         </div>
-
         <div class>
             <div class="row">
                 <form id="adimitirCandidatos" method="POST" action>
@@ -46,14 +45,11 @@
                             <a href="{{ route('anulacaoDocumentoRecibo.create') }}" title="emitir novo recibo" class="btn btn-success widget-box widget-color-blue" id="botoes">
                                 <i class="fa icofont-plus-circle"></i> anular recibos
                             </a>
-
                             <div class="pull-right tableTools-container"></div>
                         </div>
                         <div class="table-header widget-header">
                             Todos documentos anulado no sistema
                         </div>
-
-                        <!-- div.dataTables_borderWrap -->
                         <div>
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
@@ -70,7 +66,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
                                     @foreach($notaCreditos as $key=>$notaCredito)
                                     <tr>
                                         <td>{{ $notaCredito->numeracaoDocumento }}</td>
@@ -83,15 +78,12 @@
                                         <td style="text-align: center">
                                             <span class="label label-sm <?= $notaCredito->retornaStock == 'Sim' ? 'label-success' : 'label-danger' ?>"><?= $notaCredito->retornaStock ?></span>
                                         </td>
-
-
                                         <td>
-
                                             <a title="Reimprimir o recibo" style="cursor: pointer">
-                                                <span wire:click="printNotaCredito({{$notaCredito}})">
+                                                <span wire:click="printNotaCredito({{json_encode($notaCredito->id)}})">
                                                     <i class="ace-icon fa fa-print bigger-160"></i>
                                                 </span>
-                                                <span wire:loading wire:target="printNotaCredito({{$notaCredito}})" class="loading">
+                                                <span wire:loading wire:target="printNotaCredito({{json_encode($notaCredito->id)}})" class="loading">
                                                     <i class="ace-icon fa fa-print bigger-160"></i>
                                                 </span>
                                             </a>

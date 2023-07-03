@@ -32,8 +32,13 @@ class NotaCreditoAnulacaoDocumentoRepository
         $documentosAnulados = $this->notaCredito::latest()->with(['cliente', 'tipoDocumento', 'factura', 'recibo', 'recibo.factura'])
             ->where('tipoNotaCredito', 2)
             ->where('empresa_id', auth()->user()->empresa_id)->search(trim($search))->paginate();
-
         return $documentosAnulados;
+    }
+    public function listarNotaCreditoAnulacao($notaCreditoId){
+
+        return $this->notaCredito::where('id', $notaCreditoId)
+            ->where('empresa_id', auth()->user()->empresa_id)->first();
+
     }
     public function salvarNotaCreditoAnularRecibo(array $data)
     {

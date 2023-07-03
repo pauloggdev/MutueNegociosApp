@@ -205,7 +205,6 @@ class CategoriaRepository
             'empresa_id' => auth()->user()->empresa_id,
             'status_id' => 1,
             'canal_id' => isset($data['canal_id'])  ? $data['canal_id'] : 2,
-            'imagem' => env('APP_URL') . "upload/" . $this->uploadFile($data['imagem'])
         ]);
 
         $this->entity::where('id', $categoria->id)->update([
@@ -249,5 +248,10 @@ class CategoriaRepository
                 'imagem' => $data['newImagem'] ? env('APP_URL') . "upload/" . $this->uploadFile($data['newImagem'], $data['imagem']) : $data['imagem']
             ]);
         return $categoria;
+    }
+    public function deletarCategoria($id){
+
+        return $this->entity::where('empresa_id', auth()->user()->empresa_id)
+        ->where('id', $id)->delete();
     }
 }

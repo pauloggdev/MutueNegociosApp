@@ -1,9 +1,9 @@
-@section('title','Novo produto em destaque')
+@section('title','Atualizar produto em destaque')
 <div class="row">
     <div class="space-6"></div>
     <div class="page-header" style="left: 0.5%; position: relative">
         <h1>
-            ADICIONAR PRODUTO EM DESTAQUE
+            ATUALIZAR PRODUTO EM DESTAQUE
         </h1>
     </div>
     <div class="row">
@@ -35,7 +35,7 @@
                                     <label class="control-label bold label-select2" for="produtoId">Buscar produto<b class="red fa fa-question-circle"></b></label>
                                     <div wire:ignore>
                                         <!-- <select wire:model="destaque.produtoId" id="produtoId" class="col-md-12 select3" style="height:35px;"> -->
-                                        <select wire:model="destaque.produtoId" id="produtoId" class="col-md-12" style="height:35px;<?= $errors->has('destaque.produtoId') ? 'border-color: #ff9292;' : '' ?>">
+                                        <select wire:model="destaque.produtoId" id="produtoId" disabled class="col-md-12" style="height:35px;<?= $errors->has('destaque.produtoId') ? 'border-color: #ff9292;' : '' ?>">
                                             <option value="">Selecione...</option>
                                             @foreach($produtos as $produto)
                                             <option value="{{ $produto->id }}">{{ $produto->designacao }}</option>
@@ -51,7 +51,7 @@
                                 <div class="col-md-6">
                                     <label class="control-label bold label-select2" for="designacao">Designação<b class="red fa fa-question-circle"></b></label>
                                     <div class="input-group">
-                                        <input type="text" wire:model="destaque.designacao" class="form-control" id="designacao" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('destaque.designacao') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <input type="text" wire:model="destaque.designacao"  class="form-control" id="designacao" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('destaque.designacao') ? 'border-color: #ff9292;' : '' ?>" />
                                         <span class="input-group-addon" id="basic-addon1">
                                             <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
                                         </span>
@@ -81,12 +81,12 @@
 
                     <div class="clearfix form-actions">
                         <div class="col-md-offset-3 col-md-9">
-                            <button class="search-btn" type="submit" style="border-radius: 10px" wire:click.prevent="salvarProdutoDestaque">
-                                <span wire:loading.remove wire:target="salvarProdutoDestaque">
+                            <button class="search-btn" type="submit" style="border-radius: 10px" wire:click.prevent="atualizarProdutoDestaque">
+                                <span wire:loading.remove wire:target="atualizarProdutoDestaque">
                                     <i class="ace-icon fa fa-check bigger-110"></i>
                                     Salvar
                                 </span>
-                                <span wire:loading wire:target="salvarProdutoDestaque">
+                                <span wire:loading wire:target="atualizarProdutoDestaque">
                                     <span class="loading"></span>
                                     Aguarde...</span>
                             </button>

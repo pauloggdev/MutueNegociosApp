@@ -1,9 +1,15 @@
+<?php
+
+use Illuminate\Support\Str;
+
+?>
+
 @section('title','editar categoria')
 <div class="row">
     <div class="space-6"></div>
     <div class="page-header" style="left: 0.5%; position: relative">
         <h1>
-            EDITAR CATEGORIA
+            ADICIONAR SUB-CATEGORIA DE: <b>{{Str::upper($categoria['designacao'])}}</b>
         </h1>
     </div>
     <div class="row">
@@ -28,38 +34,50 @@
         <div class="col-md-12">
             <form class="filter-form form-horizontal validation-form" id="validation-form">
                 <div class="second-row">
+                    <button wire:click.prevent="addSubCategoria">+</button>
                     <div class="tabbable">
                         <div class="tab-content profile-edit-tab-content">
+                            @foreach($subCategorias as $key=> $subCategoria)
                             <div class="form-group has-info bold" style="left: 0%; position: relative">
                                 <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="nomeCliente">Nome da Categoria <b class="red fa fa-question-circle"></b></label>
+                                    <label class="control-label bold label-select2" for="subCategoria.{{$key}}.Designacao">Nome da Categoria <b class="red fa fa-question-circle"></b></label>
                                     <div class="input-group">
-                                        <input type="text" wire:model="categoria.designacao" class="form-control" id="nomeCliente" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('categoria.designacao') ? 'border-color: #ff9292;' : '' ?>" />
-                                        <span class="input-group-addon" id="basic-addon1">
+                                        <input type="text" wire:model="subCategorias.{{$key}}.designacao" class="form-control" id="subCategoria.{{$key}}.Designacao" autofocus style="height: 35px; font-size: 10pt;<?= $errors->has('subCategorias.{{$key}}.designacao') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon.{{$key}}.">
                                             <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
                                         </span>
                                     </div>
-                                    @if ($errors->has('categoria.designacao'))
+                                    @if ($errors->has('subCategorias.{{$key}}.designacao'))
                                     <span class="help-block" style="color: red; font-weight: bold">
-                                        <strong>{{ $errors->first('categoria.designacao') }}</strong>
+                                        <strong>{{ $errors->first('subCategorias.$key.designacao') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label bold label-select2" for="status_id">Status</label>
-                                    <select wire:model="categoria.status_id" class="col-md-12 select2" id="status_id" style="height:35px;<?= $errors->has('marca.status_id') ? 'border-color: #ff9292;' : '' ?>">
-                                        <option value="1">Ativo</option>
-                                        <option value="2">Desactivo</option>
-
-                                    </select>
-                                    @if ($errors->has('categoria.status_id'))
-                                    <span class="help-block" style="color: red; font-weight: bold">
-                                        <strong>{{ $errors->first('categoria.status_id') }}</strong>
+                                    <label class="control-label bold label-select2" for="newImg.{{$key}}.categoria">Imagem</label>
+                                    <div class="input-group">
+                                        <input type="file" accept="application/image/*" wire:model="subCategorias.{{$key}}.imagem" class="form-control" id="newImg.{{$key}}.categoria" style="height: 35px; font-size: 10pt;<?= $errors->has('subCategoria.{{$key}}.imagem') ? 'border-color: #ff9292;' : '' ?>" />
+                                        <span class="input-group-addon" id="basic-addon1.{{$key}}.">
+                                            <i class="ace-icon fa fa-info bigger-150 text-info" data-target="form_supply_price_smartprice"></i>
+                                        </span>
+                                    </div>
+                                    @if ($errors->has('subCategorias.{{$key}}.imagem'))
+                                    <span class="help-block" style="color: red; font-weight: bold;position:absolute;">
+                                        <strong>{{ $errors->first('subCategorias.$key.imagem') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-
+                                <div>
+                                <a title="Eliminar este Registro" style="    cursor: pointer;
+    position: absolute;
+    right: -10px;
+    top: 36px;" wire:click.prevent="removerSubCategoria({{$key}})">
+                                    <i class="ace-icon fa fa-trash-o bigger-150 bolder danger red"></i>
+                                </a>
                             </div>
+                            </div>
+
+                            @endforeach
 
                         </div>
                     </div>

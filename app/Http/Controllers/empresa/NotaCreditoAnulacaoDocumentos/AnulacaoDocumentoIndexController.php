@@ -48,8 +48,10 @@ class AnulacaoDocumentoIndexController extends Component
 
         return view('empresa.NotaCreditoAnulacaoDocumento.index', $data);
     }
-    public function printNotaCredito($notaCredito)
+    public function printNotaCredito($notaCreditoId)
     {
+        $notaCredito = $this->notaCreditoAnulacaoDocumentoRepository->listarNotaCreditoAnulacao($notaCreditoId);
+
         $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
         $DIR = public_path() . '/upload/documentos/empresa/modelosFacturas/a4/';
 

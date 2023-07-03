@@ -9,6 +9,7 @@ class ProdutoDestaque extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'produto_id',
         'designacao',
         'descricao',

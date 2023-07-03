@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\empresa\Categorias;
+
+use App\Models\empresa\Pais;
+use App\Models\empresa\TiposCliente;
 use App\Repositories\Empresa\CategoriaRepository;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -32,13 +35,17 @@ class CategoriaCreateController extends Component
 
     public function salvarCategoria()
     {
+
         $rules = [
+
             'categoria.designacao' => 'required',
-            'categoria.status_id' => 'required',
+            'categoria.imagem' => 'required',
+
         ];
         $messages = [
-            'categoria.designacao.required' => 'Informe a designacao',
-            'categoria.status_id.required' => 'Informe o status',
+            'categoria.designacao.required' => 'Informe o nome da marca',
+            'categoria.imagem.required' => 'Informe a imagem',
+
         ];
 
         $this->validate($rules, $messages);

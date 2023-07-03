@@ -1,39 +1,43 @@
 <?php
 
-namespace App\Http\Controllers\empresa\Clientes;
+namespace App\Http\Controllers\empresa\Categorias;
 
 use App\Http\Controllers\empresa\ReportShowController;
 use App\Models\empresa\Pais;
 use App\Models\empresa\TiposCliente;
-use App\Repositories\Empresa\ClienteRepository;
+use App\Repositories\Empresa\CategoriaRepository;
+use App\Repositories\Empresa\FornecedorRepository;
+use App\Repositories\Empresa\MarcaRepository;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
-class ClienteIndexController extends Component
+class CategoriaIndexController extends Component
 {
-
     use LivewireAlert;
-
-    public $cliente;
+    public $categoria;
     public $search = null;
-    private $clienteRepository;
+
+    private $categoriaRepository;
 
 
-
-    public function boot(ClienteRepository $clienteRepository)
+    public function boot(CategoriaRepository $categoriaRepository)
     {
-        $this->clienteRepository = $clienteRepository;
+        $this->categoriaRepository = $categoriaRepository;
     }
 
     public function render()
     {
-        $data['clientes'] = $this->clienteRepository->getClientes($this->search);
-        return view('empresa.clientes.index', $data);
+        $data['categorias']= $this->categoriaRepository->getCategorias($this->search);
+        return view('empresa.categorias.index',$data);
     }
-    public function imprimirClientes(){
+
+    public function imprimirCategoria()
+    {
         $logotipo = public_path() . '/upload//' . auth()->user()->empresa->logotipo;
-        $filename = "clientes";
+
+        $filename = "Categorias";
+
         $reportController = new ReportShowController();
         $report = $reportController->show(
             [
@@ -50,7 +54,6 @@ class ClienteIndexController extends Component
         $this->dispatchBrowserEvent('printPdf', ['data' => base64_encode($report['response']->getContent())]);
         unlink($report['filename']);
         flush();
-
     }
 
 }
