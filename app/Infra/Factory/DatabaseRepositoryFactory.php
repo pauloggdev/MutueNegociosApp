@@ -2,6 +2,7 @@
 
 namespace App\Infra\Factory;
 use App\Domain\Factory\RepositoryFactory;
+use App\Infra\Repository\CarrinhoRepository;
 use App\Infra\Repository\CouponDescontoRepository;
 use App\Infra\Repository\FaturaVendaOnlineRepository;
 use App\Infra\Repository\PagamentoVendaOnlineRepository;
@@ -27,5 +28,8 @@ class DatabaseRepositoryFactory implements RepositoryFactory
     public function createCouponDescontoRepository():CouponDescontoRepository
     {
         return new CouponDescontoRepository();
+    }
+    public function createCarrinhoRepository():CarrinhoRepository{
+        return new CarrinhoRepository();
     }
 }

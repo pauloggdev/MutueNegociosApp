@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Factory\RepositoryFactory;
 use App\Http\Controllers\admin\AtivacaoLicencaController;
 use App\Http\Controllers\admin\BancoController;
 use App\Http\Controllers\admin\ConfiguracaoController;
@@ -219,7 +220,11 @@ use Illuminate\Support\Str;
 Auth::routes();
 
 
-// Route::get('/uuid', function () {
+Route::get('/uuid', function () {
+
+    //$userRepository = new \App\Infra\Repository\UserRepository();
+    //$user = $userRepository->getUser('211f5b80-f0f9-4efe-ab7e-db6e06a49eba');
+    //dd($user);
 
 //     return view("alert.msg_criacao_empresa_mobile");
 
@@ -231,7 +236,8 @@ Auth::routes();
 //             'uuid' => Str::uuid()
 //         ]);
 //     }
-// });
+
+});
 
 Route::get('/user_perfil', function () {
 

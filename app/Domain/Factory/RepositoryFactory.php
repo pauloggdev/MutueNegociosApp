@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Domain\Factory;
+use App\Infra\Repository\CarrinhoRepository;
 use App\Infra\Repository\CouponDescontoRepository;
 use App\Infra\Repository\FaturaVendaOnlineRepository;
 use App\Infra\Repository\PagamentoVendaOnlineRepository;
@@ -12,4 +13,5 @@ interface RepositoryFactory
     public function createUserRepository():UserRepository;
     public function createFaturaPagamentoVendaOnlineRepository():FaturaVendaOnlineRepository;
     public function createCouponDescontoRepository():CouponDescontoRepository;
+    public function createCarrinhoRepository():CarrinhoRepository;
 }

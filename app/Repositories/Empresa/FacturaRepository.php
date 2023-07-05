@@ -129,7 +129,6 @@ class FacturaRepository
     }
     public function buscarFacturaPelaNumeracao($facturaSearch = null)
     {
-
         $factura = Factura::with(['cliente', 'facturas_items', 'facturas_items.produto'])
             ->where('anulado', 1)
             ->where('empresa_id', auth()->user()->empresa_id)
