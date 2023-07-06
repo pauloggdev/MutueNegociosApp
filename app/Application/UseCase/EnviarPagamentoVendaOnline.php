@@ -44,7 +44,7 @@ class EnviarPagamentoVendaOnline
             $request->bancoId,
             $request->iban
         );
-        $outputPagamento = $this->pagamentoVendaOnlineRepository->salvar($pagamentoVendaOnline);
+        //$outputPagamento = $this->pagamentoVendaOnlineRepository->salvar($pagamentoVendaOnline);
         $carrinhos = $this->carrinhoRepository->getCarrinhos();
         if($request->codigoCoupon){
             $coupon = $this->couponDescontoRepository->getCoupon($request->codigoCoupon);
@@ -71,11 +71,14 @@ class EnviarPagamentoVendaOnline
             $request->observacao,
             $couponDesconto
         );
+
         foreach ($carrinhos as $carrinho){
             $faturaItem = new FaturaItemsVendaOnline($carrinho->produto->preco_venda, $carrinho->quantidade, $carrinho->produto->tipoTaxa->taxa);
             $fatura->addItem($faturaItem);
         }
         $outputFatura = $this->faturaVendaOnlineRepository->salvar($fatura);
+        return;
+
         $usersNotificados = $this->userRepository->emaisUserParaNotificar();
         $mensagem = "Notificação de pagamento de uma fatura para vendas online";
         try {
