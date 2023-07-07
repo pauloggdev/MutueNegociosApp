@@ -3,13 +3,13 @@
 @section('content')
 
 <section class="content">
-    <Dashboard-admin-component 
-    :countusers="{{$countusers}}" 
-    :countclientes="{{$countclientes}}" 
-    :countlicencas="{{$countlicencas}}" 
-    :countlicencasativas="{{$countlicencasativas}}" 
-    :countlicencaspendente="{{$countlicencaspendente}}" 
-    :countlicencasrejeitada="{{$countlicencasrejeitada}}" 
+    <Dashboard-admin-component
+    :countusers="{{$countusers}}"
+    :countclientes="{{$countclientes}}"
+    :countlicencas="{{$countlicencas}}"
+    :countlicencasativas="{{$countlicencasativas}}"
+    :countlicencaspendente="{{$countlicencaspendente}}"
+    :countlicencasrejeitada="{{$countlicencasrejeitada}}"
     :licencaativasmensal="{{$licencaativasmensal}}"
     :countbancos="{{$countbancos}}"></Dashboard-admin-component>
 </section>
@@ -34,12 +34,11 @@
             var data = []
 
             licencas.forEach(licenca => {
-
                 data.push({
                     label:licenca.designacao.toUpperCase(),
-                    data:licenca.quantidade,   
+                    data:licenca.quantidade,
                 })
-                
+
             });
             //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
             //but sometimes it brings up errors with normal resize event handlers
@@ -48,7 +47,7 @@
                 'width': '90%',
                 'min-height': '150px'
             });
-           
+
 
             function drawPieChart(placeholder, data, position) {
                 $.plot(placeholder, data, {
@@ -90,6 +89,6 @@
 
 
         })();
-      </script>      
+      </script>
     <!-- Scripts para gráficos estatisticos do dashboard fim -->
 @endsection

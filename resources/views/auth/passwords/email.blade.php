@@ -1,14 +1,10 @@
 @component('frontOffice/header', ['title'=>'Recuperar senha'])
 @endcomponent
-
 <div class="hero row align-items-center">
-
     <div class="col-md-6">
-        <!-- <h2>Best & Trusted</h2> -->
         <h2><span>Mutue</span> Negócios</h2>
         <h2>A solução da sua empresa</h2><br>
     </div>
-
     <div class="col-md-6">
         <div class="form">
             <h3>Informe o email</h3>
@@ -25,8 +21,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
-
-                <button class="btn btn-block" type="submit">{{ __('redefinição a senha') }}</button>
+                <button class="btn btn-block" type="submit">{{ __('redefinir a senha') }}</button>
             </form>
         </div>
     </div>

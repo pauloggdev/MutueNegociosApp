@@ -26,13 +26,13 @@ class HomeController extends Component
 
         $data['licencasMaisVendido'] = DB::connection('mysql')
             ->select('
-        select licencas.designacao, count(activacao_licencas.licenca_id) AS quantidade, 
-        SUM(licencas.valor) AS total_preco from activacao_licencas 
-        INNER JOIN licencas ON activacao_licencas.licenca_id = licencas.id 
-        where activacao_licencas.data_activacao 
-        GROUP by activacao_licencas.licenca_id 
+        select licencas.designacao, count(activacao_licencas.licenca_id) AS quantidade,
+        SUM(licencas.valor) AS total_preco from activacao_licencas
+        INNER JOIN licencas ON activacao_licencas.licenca_id = licencas.id
+        where activacao_licencas.data_activacao
+        GROUP by activacao_licencas.licenca_id
         order by count(activacao_licencas.licenca_id) desc
-        
+
         ');
 
         $currentYear = now()->year;

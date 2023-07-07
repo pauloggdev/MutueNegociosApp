@@ -41,9 +41,9 @@
                             <a href="{{ route('admin.taxas.create') }}" title="emitir novo recibo" class="btn btn-success widget-box widget-color-blue" id="botoes">
                                 <i class="fa icofont-plus-circle"></i> Nova taxa
                             </a>
-                            <a title="Lista de bancos" href="" target="blank" class="btn btn-primary widget-box widget-color-blue url" id="botoes">
+                            <!-- <a title="Lista de bancos" href="" target="blank" class="btn btn-primary widget-box widget-color-blue url" id="botoes">
                                 <i class="fa fa-print text-default"></i> Imprimir
-                            </a>
+                            </a> -->
 
                             <div class="pull-right tableTools-container"></div>
                         </div>

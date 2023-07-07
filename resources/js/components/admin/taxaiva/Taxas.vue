@@ -40,7 +40,7 @@
                     <div class="col-xs-12 widget-box widget-color-green" style="left: 0%;">
                         <div class="clearfix">
                             <a href="#criar_taxa" data-toggle="modal" title="Adicionar novo taxa" class="btn btn-success widget-box widget-color-blue" id="botoes">
-                                <i class="fa icofont-plus-circle"></i> Nova taxa
+                                <i class="fa icofont-plus-circle"></i> Nova taxa2
                             </a>
                             <div class="pull-right tableTools-container"></div>
                         </div>
@@ -105,7 +105,7 @@
                                             </div>
                                         </td> -->
                                     </tr>
-                                   
+
                                 </tbody>
                             </table>
                         </div>

@@ -49,6 +49,7 @@ class ResetPasswordController extends Controller
     public function reset(Request $request)
     {
 
+
         $request->validate($this->rules(), $this->validationErrorMessages());
         $this->connection1 = DB::connection('mysql')->table("users_admin")->where("email", $request->get("email"))->first();
         $this->connection2 = DB::connection('mysql2')->table("users_cliente")->where("email", $request->get("email"))->first();
@@ -68,6 +69,7 @@ class ResetPasswordController extends Controller
         }
 
         if (!$this->connection1 && !$this->connection2) {
+
 
             // Here we will attempt to reset the user's password. If it is successful we
             // will update the password on an actual user model and persist it to the

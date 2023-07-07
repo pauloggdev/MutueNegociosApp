@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\Empresa;
+use App\Models\empresa\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +55,8 @@ class LoginController extends Controller
     {
 
 
+
+
         $TIPO_ADMIN = 1;
         $TIPO_EMPRESA = 2;
 
@@ -77,8 +82,11 @@ class LoginController extends Controller
                 return $this->sendLockoutResponse($request);
             }
 
-            if ($this->attemptLogin($request)) {
 
+
+
+
+            if ($this->attemptLogin($request)) {
                 return $this->sendLoginResponse($request);
             }
 
@@ -153,6 +161,15 @@ class LoginController extends Controller
         }
 
         if (auth()->guard('empresa')->attempt($credentials)) {
+
+            $user = User::with('empresa')->where('telefone', $request->email)
+            ->orWhere('email', $request->email)
+            ->orWhere('username', $request->email)
+            ->first();
+
+            Empresa::where('referencia', $user->empresa->referencia)->update([
+                'ultimo_acesso' => Carbon::now()
+            ]);
             return redirect('empresa/home');
         } else {
             return $this->sendFailedLoginResponse($request);

@@ -59,11 +59,11 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nome</th>
-                                        <th>Tipo empresa</th>
                                         <th>Regime</th>
                                         <th>NIF</th>
                                         <th>Telefone</th>
                                         <th>E-mail</th>
+                                        <th>Ultimo acesso</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -72,11 +72,15 @@
                                     <tr>
                                         <td>{{$cliente->id}}</td>
                                         <td>{{Str::upper($cliente->nome)}}</td>
-                                        <td>{{$cliente->tipocliente->designacao}}</td>
                                         <td>{{$cliente->tiporegime->Designacao}}</td>
                                         <td>{{$cliente->nif}}</td>
                                         <td>{{$cliente->pessoal_Contacto}}</td>
                                         <td>{{$cliente->email}}</td>
+                                        @if($cliente->ultimo_acesso)
+                                        <td><?=date_format(new DateTime($cliente->ultimo_acesso), 'd/m/Y H:i') ?></td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>
                                             <a href="{{ route('admin.clientes.detalhes', $cliente->id) }}" class="pink"><i class="ace-icon fa fa-eye bigger-150 bolder success pink"></i></a>
                                             @if($cliente->venda_online == 'Y')

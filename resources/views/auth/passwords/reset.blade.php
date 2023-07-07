@@ -34,7 +34,7 @@
                 @enderror
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmar nova senha">
 
-                <button class="btn btn-block" type="submit">{{ __('redefinição a senha') }}</button>
+                <button class="btn btn-block" type="submit">{{ __('redefinir a senha') }}</button>
             </form>
         </div>
     </div>

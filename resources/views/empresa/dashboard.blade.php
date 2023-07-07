@@ -5,20 +5,20 @@
 
 
 <section class="content">
-    <Dashboard-component 
-    :countusers="{{$countusers}}" 
-    :countclientes="{{$countclientes}}" 
-    :countarmazens="{{$countarmazens}}" 
-    :countfornecedores="{{$countfornecedores}}" 
-    :countfabricantes="{{$countfabricantes}}" 
-    :countbancos="{{$countbancos}}" 
-    :countprodutos="{{$countprodutos}}" 
-    :countvendas="{{$countvendas}}" 
+    <Dashboard-component
+    :countusers="{{$countusers}}"
+    :countclientes="{{$countclientes}}"
+    :countarmazens="{{$countarmazens}}"
+    :countfornecedores="{{$countfornecedores}}"
+    :countfabricantes="{{$countfabricantes}}"
+    :countbancos="{{$countbancos}}"
+    :countprodutos="{{$countprodutos}}"
+    :countvendas="{{$countvendas}}"
     :counttotalvendas="{{$counttotalvendas}}"
-    :vendasmensal="{{$vendasmensal}}" 
+    :vendasmensal="{{$vendasmensal}}"
     :auth="{{$auth}}" :guard="{{$guard}}">
 
-    
+
 </Dashboard-component>
 </section>
 @endsection
@@ -45,8 +45,12 @@
 
             vendas.forEach(venda => {
                 const descricao = venda.descricao_produto.toUpperCase();
-                data.push({ label:descricao.slice(0,30), data:venda.quantidade,})
-                
+                data.push(
+                    {
+                        label:descricao.slice(0,30),
+                        data:venda.quantidade
+                    })
+
             });
             //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
             //but sometimes it brings up errors with normal resize event handlers
@@ -55,7 +59,7 @@
                 'width': '90%',
                 'min-height': '150px'
             });
-           
+
 
             function drawPieChart(placeholder, data, position) {
                 $.plot(placeholder, data, {

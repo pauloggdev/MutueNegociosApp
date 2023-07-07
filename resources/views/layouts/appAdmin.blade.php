@@ -350,7 +350,7 @@ if (Auth::guard('web')->check()) {
             <div class="footer-inner">
                 <div class="footer-content">
                     <span class="bigger-90" style="">
-                        <a href="https://www.ramossoft.com/" class="text-primary">&copy; <?php echo date('Y') ?><span class="bolder" style=""> Mutue negócios. Todos os direitos reservados</span></a>
+                        <a href="#" class="text-primary">&copy; <?php echo date('Y') ?><span class="bolder" style=""> Mutue negócios. Todos os direitos reservados</span></a>
                     </span>
                     &nbsp; &nbsp;
                 </div>
