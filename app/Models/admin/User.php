@@ -130,4 +130,8 @@ class User extends Authenticatable
                 ->orwhere("telefone", "like", $term);
         });
     }
+    public function isSuperAdmin()
+    {
+        return true;
+    }
 }

@@ -24,7 +24,7 @@
 
                     <div class="col-sm-7">
                         <!-- Usuarios -->
-                        <a href="/admin/usuarios">
+                        <a href="/admin/utilizadores">
                             <div class="infobox infobox-green">
                                 <div class="infobox-icon">
                                     <i class="ace-icon fa fa-users"></i>
@@ -38,7 +38,7 @@
                         </a>
 
                         <!-- Clientes -->
-                        <a href="/admin/cliente-empresa">
+                        <a href="/admin/clientes">
                             <div class="infobox infobox-blue2">
                                 <div class="infobox-icon">
                                     <i class="ace-icon glyphicon glyphicon-user"></i>
@@ -62,7 +62,7 @@
                             </div>
                         </a>
 
-                        <a href="/admin/listar-pedidos">
+                        <a href="/admin/pedidos/licenca">
                             <div class="infobox infobox-green" style="height:90px">
                             <div class="infobox-icon">
                                 <i class="ace-icon fa fa-shopping-cart"></i>
@@ -74,7 +74,7 @@
                             </div>
                         </a>
 
-                        <a href="/admin/listar-pedidos">
+                        <a href="/admin/pedidos/licenca">
                              <div class="infobox infobox-green2" style="height:90px">
                             <div class="infobox-icon">
                                 <i class="ace-icon fa fa-shopping-cart"></i>
@@ -86,7 +86,7 @@
                             </div>
                         </a>
 
-                       <a href="/admin/listar-pedidos">
+                       <a href="/admin/pedidos/licenca">
                             <div class="infobox infobox-orange2" style="height:90px">
                             <div class="infobox-icon">
                                 <i class="ace-icon fa fa-shopping-cart"></i>
@@ -126,8 +126,6 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div id="piechart-placeholder"></div>
-
-
                                 </div>
                                 <!-- /.widget-main -->
                             </div>

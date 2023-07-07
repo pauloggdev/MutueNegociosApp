@@ -3,12 +3,16 @@
 namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bancos extends Model
 {
+    use SoftDeletes;
+
     protected $connection = 'mysql';
     protected $table = 'bancos';
     protected $keyType = 'string';
+
 
     protected $fillable = [
         'designacao',
