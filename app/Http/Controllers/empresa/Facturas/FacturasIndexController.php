@@ -17,17 +17,15 @@ use PHPJasper\PHPJasper;
 
 class FacturasIndexController extends Component
 {
-
     use TraitEmpresaAutenticada;
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
 
 
     public $search;
     private $facturaRepository;
     private $parametroRepository;
-
-
 
 
     public function boot(FacturaRepository $facturaRepository, ParametroRepository $parametroRepository)
@@ -45,8 +43,6 @@ class FacturasIndexController extends Component
 
     public function imprimirFactura($facturaId)
     {
-
-
         $empresa =  DB::connection('mysql2')->table('parametro_impressao')
             ->where('empresa_id', auth()->user()->empresa_id)
             ->orwhere('empresa_id', NULL)

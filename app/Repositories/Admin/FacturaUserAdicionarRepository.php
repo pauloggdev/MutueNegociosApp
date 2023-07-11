@@ -147,12 +147,12 @@ class FacturaUserAdicionarRepository
             DB::rollBack();
         }
     }
-    public function enviarComprovativoFacturaUserAdicionado($comprovativo, $userId)
+    public function enviarComprovativoFacturaUserAdicionado($data, $userId)
     {
 
         $facturaId = $this->entity::where('user_id_adicionado', $userId)->first()->id;
 
-        $comprovativoAnexado = $comprovativo->store('/documentos/admin/comprovativos');
+        $comprovativoAnexado = $data['comprovativoPgtFactura']->store('/documentos/admin/comprovativos');
         $comprovativoAnterior = DB::connection('mysql')->table('comprovativos_facturas')->where('factura_id', $facturaId)->first();
         if ($comprovativoAnterior) {
             $path = public_path() . "\\upload\\" . $comprovativoAnterior->comprovativo_pgt_recibos;
@@ -164,6 +164,7 @@ class FacturaUserAdicionarRepository
         return DB::connection('mysql')->table('comprovativos_facturas')->insertGetId([
             'factura_id' => $facturaId,
             'comprovativo_pgt_recibos' => $comprovativoAnexado,
+            'numero_operacao_bancaria' => $data['numero_operacao_bancaria'],
             'status_id' => 1
         ]);
     }

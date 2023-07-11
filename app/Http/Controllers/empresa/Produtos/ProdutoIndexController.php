@@ -15,6 +15,7 @@ class ProdutoIndexController extends Component
     public $vendaOnline = 'N';
 
 
+
     public function boot(ProdutoRepository $produtoRepository)
     {
         $this->produtoRepository = $produtoRepository;

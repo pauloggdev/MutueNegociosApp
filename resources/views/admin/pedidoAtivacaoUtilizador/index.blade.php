@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Str;
 ?>
-
 @section('title','Pedidos licenças')
 <div class="row">
 
@@ -89,6 +88,7 @@ use Illuminate\Support\Str;
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th>Nº Operação bancaria</th>
                                         <th>Descrição</th>
                                         <th style="text-align:center">Ações</th>
                                     </tr>
@@ -97,6 +97,7 @@ use Illuminate\Support\Str;
 
                                     @foreach($comprovativos as $comprovativo)
                                     <tr>
+                                        <td>{{ $comprovativo->numero_operacao_bancaria}}</td>
                                         <td>Comprovativo para activação do utilizador: <strong>{{ Str::upper($comprovativo->factura->nome_utilizador_adicionado)}}</strong></td>
                                         <td style="text-align:center">
                                             <a class="pink" title="Imprimir a factura a pagar" wire:click="imprimirFactura({{$comprovativo}})" style="cursor: pointer;">
@@ -108,13 +109,23 @@ use Illuminate\Support\Str;
                                             <a class="pink" title="visualizar dado da empresa" href="#visualizarComprovativo" data-toggle="modal" wire:click="visualizarComprovativo({{$comprovativo}})" style="cursor: pointer;">
                                                 <i class="ace-icon fa fa-eye bigger-150 bolder success pink"></i>
                                             </a>
-                                            @if($comprovativo->status_id != 3)
+                                            @if($comprovativo->status_id == 1)
+                                            <a class="pink" title="Rejeitar pedido de activação utilizador" href="#modalRejeicaoActivacaoUtilizador" data-toggle="modal" wire:click="modalRejeicaoActivacaoUtilizador({{$comprovativo}})" style="cursor: pointer;">
+                                                <i class="ace-icon fa fa-remove bigger-150 bolder danger text-danger"></i>
+                                            </a>
+                                            @endif
+                                            @if($comprovativo->status_id == 2)
                                             <a class="pink" title="Rejeitar pedido de activação utilizador" href="#modalRejeicaoActivacaoUtilizador" data-toggle="modal" wire:click="modalRejeicaoActivacaoUtilizador({{$comprovativo}})" style="cursor: pointer;">
                                                 <i class="ace-icon fa fa-remove bigger-150 bolder danger text-danger"></i>
                                             </a>
                                             @endif
 
                                             @if($comprovativo->status_id == 3)
+                                            <a class="pink" title="Aceitar pedido de activação de utilizador" wire:click="modalActivarUtilizador({{$comprovativo}})" style="cursor: pointer;">
+                                                <i class="ace-icon fa fa-check bigger-150 bolder sucess text-success"></i>
+                                            </a>
+                                            @endif
+                                            @if($comprovativo->status_id == 1)
                                             <a class="pink" title="Aceitar pedido de activação de utilizador" wire:click="modalActivarUtilizador({{$comprovativo}})" style="cursor: pointer;">
                                                 <i class="ace-icon fa fa-check bigger-150 bolder sucess text-success"></i>
                                             </a>

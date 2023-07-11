@@ -10,21 +10,37 @@ use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class UsuarioIndexController extends Component
 {
 
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
     use LivewireAlert;
     use WithFileUploads;
+
+
 
     public $banco;
     public $userId;
     public $search = null;
     public $utilizadorId;
     public $comprovativoPgtFactura;
+    public $numero_operacao_bancaria;
     private $userRepository;
     private $facturaUserAdicionarRepository;
     protected $listeners = ['deletarUtilizador'];
+
+    public function updatingSearch()
+    {
+        $this->emit('refresh');
+    }
+    public function paginationView()
+    {
+        return 'livewire::' . (property_exists($this, 'paginationTheme') ? $this->paginationTheme : 'tailwind');
+    }
 
     public function boot(UserRepository $userRepository, FacturaUserAdicionarRepository $facturaUserAdicionarRepository)
     {
@@ -112,17 +128,30 @@ class UsuarioIndexController extends Component
     }
     public function enviarComprovativo()
     {
-
         $rules = [
             'comprovativoPgtFactura' => 'required',
+            'numero_operacao_bancaria' => ['required', function ($attr, $numeroOperacaoBancaria, $fail) {
+                $numeroOperacaoBancaria = DB::connection('mysql')->table('comprovativos_facturas')->where('numero_operacao_bancaria', $numeroOperacaoBancaria)->first();
+                if ($numeroOperacaoBancaria) {
+                    $fail("Número de operação já utilizado");
+                    return;
+                }
+            }]
         ];
         $messages = [
-            'comprovativoPgtFactura.required' => 'Anexa o comprovativo'
+            'comprovativoPgtFactura.required' => 'Anexa o comprovativo',
+            'numero_operacao_bancaria.required' => 'Informe o número de operação bancária',
         ];
 
         $this->validate($rules, $messages);
 
-        $comprovativo = $this->facturaUserAdicionarRepository->enviarComprovativoFacturaUserAdicionado($this->comprovativoPgtFactura, $this->userId);
+        $data = [
+            'comprovativoPgtFactura' => $this->comprovativoPgtFactura,
+            'numero_operacao_bancaria' => $this->numero_operacao_bancaria
+
+        ];
+
+        $comprovativo = $this->facturaUserAdicionarRepository->enviarComprovativoFacturaUserAdicionado($data, $this->userId);
 
         if ($comprovativo) {
             $this->confirm('Comprovativo enviado, aguarda activação do utilizador', [
@@ -156,4 +185,5 @@ class UsuarioIndexController extends Component
         unlink($report['filename']);
         flush();
     }
+
 }

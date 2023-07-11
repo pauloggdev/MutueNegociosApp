@@ -51,7 +51,9 @@ if (Auth::guard('web')->check()) {
     <meta name="theme-color" content="#ffffff">
     {{-- FIM FAVICON  --}}
 
+
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+
 
     @yield('css_dashboard')
 
@@ -1966,5 +1968,12 @@ if (Auth::guard('web')->check()) {
             -o-transform: rotate(360deg);
             transform: rotate(360deg);
         }
+    }
+    .page-item button{
+        padding: 6px 14px 5px;
+    background-color: #428BCA;
+    color: rgb(255, 255, 255);
+    border: 1px solid;
+
     }
 </style>

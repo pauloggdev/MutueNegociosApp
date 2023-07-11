@@ -241,13 +241,13 @@ if (Auth::guard('web')->check()) {
                             </a>
                             <b class="arrow"></b>
                         </li>
-{{--                        <li class="hover">--}}
-{{--                            <a href="{{ route('pedidosActivacaoUtilizador') }}">--}}
-{{--                                <i class="menu-icon fa fa-caret-right"></i>--}}
-{{--                                PEDIDOS ACTIVAÇÃO UTILIZADOR--}}
-{{--                            </a>--}}
-{{--                            <b class="arrow"></b>--}}
-{{--                        </li>--}}
+                       <li class="hover">
+                           <a href="{{ route('pedidosActivacaoUtilizador') }}">
+                               <i class="menu-icon fa fa-caret-right"></i>
+                              PEDIDOS ACTIVAÇÃO UTILIZADOR
+                          </a>
+                           <b class="arrow"></b>
+                     </li>
                     </ul>
                 </li>
                 <li class="hover">

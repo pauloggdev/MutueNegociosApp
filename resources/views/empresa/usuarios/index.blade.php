@@ -1,21 +1,102 @@
 @section('title','Usuários')
 <div>
+
+    <div class="modal fade" id="enviarComprovativo" wire:ignore.self>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close red bolder" data-dismiss="modal">×</button>
+                    <h4 class="smaller">
+                        <i class="ace-icon fa fa-plus-circle bigger-150 blue"></i>COMPROVATIVO DE PAGAMENTO DA FATURA
+                    </h4>
+
+                </div>
+
+                <div class="modal-body">
+                    <div class="row" style="left: 0%; position: relative;">
+
+                        <div class="col-md-12">
+                            <form class="filter-form form-horizontal validation-form">
+                                <div class="second-row">
+                                    <div class="tabbable">
+                                        <div class="tab-content profile-edit-tab-content">
+                                            <div id="dados_motivo" class="tab-pane in active">
+                                                <div class="form-group has-info">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label bold label-select2" for="numero_operacao_bancaria">Número de operação bancária<b class="red fa fa-question-circle"></b></label>
+                                                        <div>
+                                                            <input type="text" autofocus wire:model="numero_operacao_bancaria" id="numero_operacao_bancaria" class="col-md-12 col-xs-12 col-sm-4" style="height: 35px; font-size: 10pt;<?= $errors->has('numero_operacao_bancaria') ? 'border-color: #ff9292;' : '' ?>" />
+                                                        </div>
+                                                        @if ($errors->has('numero_operacao_bancaria'))
+                                                        <span class="help-block" style="color: red; font-weight: bold;top: 67px;">
+                                                            <strong>{{ $errors->first('numero_operacao_bancaria') }}</strong>
+                                                        </span>
+                                                        @endif
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="form-group has-info">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label bold label-select2" for="comprovativoPgtFactura">Comprovativo bancário<b class="red fa fa-question-circle"></b></label>
+                                                        <div>
+                                                            <input type="file" wire:model="comprovativoPgtFactura" class="form-control" id="nomeUtilizador" style="height: 35px; font-size: 10pt;<?= $errors->has('comprovativoPgtFactura') ? 'border-color: #ff9292;' : '' ?>" />
+                                                        </div>
+                                                        @if ($errors->has('comprovativoPgtFactura'))
+                                                    <span class="help-block" style="color: red; font-weight: bold">
+                                                        <strong>{{ $errors->first('comprovativoPgtFactura') }}</strong>
+                                                    </span>
+                                                    @endif
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="clearfix form-actions">
+                                            <div class="col-md-9" style="display: flex;justify-content: center;width:100%;">
+                                                <button class="search-btn" style="border-radius: 10px" wire:click.prevent="enviarComprovativo">
+
+                                                    <span wire:loading.remove wire:target="enviarComprovativo">
+                                                        ENVIAR COMPROVATIVO
+                                                    </span>
+                                                    <span wire:loading wire:target="enviarComprovativo">
+                                                        <span class="loading"></span>
+                                                        Aguarde...</span>
+
+
+
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- CRIAR INVENTARIO -->
-    <div id="enviarComprovativo" class="modal fade" wire:ignore>
+    <div id="enviarComprovativo1" class="modal fade" wire:ignore>
         <div class="modal-dialog modal-lg" style="left: 6%; position: relative">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <button type="button" class="close red bolder" data-dismiss="modal">×</button>
                     <h4 class="smaller">
-                        <i class="ace-icon fa fa-plus-circle bigger-150 blue"></i> Comprovativo de pagamento da factura
+                        <i class="ace-icon fa fa-plus-circle bigger-150 blue"></i> Comprovativo de pagamento da factura 02
                     </h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <form enctype="multipart/form-data" class="filter-form form-horizontal validation-form" id>
-                            <div class="second-row" style="display: flex;
-    justify-content: center;">
-                                <div class="col-md-6">
+                            <div class="second-row" style="display: flex;justify-content: center;">
+
+                                <div class="col-md-12">
                                     <input type="file" wire:model="comprovativoPgtFactura" class="form-control" id="nomeUtilizador" style="height: 35px; font-size: 10pt;<?= $errors->has('user.name') ? 'border-color: #ff9292;' : '' ?>" />
                                 </div>
                                 @if ($errors->has('comprovativoPgtFactura'))
@@ -23,6 +104,12 @@
                                     <strong>{{ $errors->first('comprovativoPgtFactura') }}</strong>
                                 </span>
                                 @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="numero_operacao_bancaria">Numero operação bancária</label>
+                                    <input type="text" wire:model="numero_operacao_bancaria" class="form-control" id="numero_operacao_bancaria" style="height: 35px; font-size: 10pt;<?= $errors->has('numero_operacao_bancaria') ? 'border-color: #ff9292;' : '' ?>" />
+                                </div>
                             </div>
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-3 col-md-9">
@@ -146,8 +233,8 @@
                                 </table>
                             </div>
                         </div>
+                        {{$users->links()}}
                     </form>
-                    {{$users->links()}}
                 </div>
             </div>
         </div>

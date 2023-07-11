@@ -121,13 +121,13 @@ class AdminPedidosAtivacaoUtilizadorIndexController extends Component
         DB::connection('mysql')->table('comprovativos_facturas')
             ->where('id', $this->comprovativo['id'])
             ->update([
-                'status_id' => 1, //activo
+                'status_id' => 2, //activo
                 'user_id' => auth()->user()->id
             ]);
         DB::connection('mysql2')->table('users_cliente')
             ->where('id', $this->comprovativo['factura']['user_id_adicionado'])
             ->update([
-                'status_id' => 1, //activo
+                'status_id' => 2, //activo
                 'statusUserAdicional' => 1 //activo
             ]);
 
